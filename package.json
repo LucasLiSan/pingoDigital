@@ -1,0 +1,27 @@
+{
+  "name": "pingodigital",
+  "version": "1.0.0",
+  "description": "Site da escola",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon index.js"
+  },
+  "author": "Lucas de Lima Santana & Francielly Cristina Pereira",
+  "license": "ISC",
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.4",
+    "docxtemplater": "^3.51.2",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "ip": "^2.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.9.0",
+    "mongoose": "^8.7.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.7",
+    "path": "^0.12.7",
+    "pizzip": "^3.1.7"
+  },
+  "type": "module"
+}
