@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
+//
 const nameSchema = new mongoose.Schema ({
     nome: String,
-    nomeSocial: String,
-    nomeAfetivo: String
+    nomeSocial: {type: String, default: null},
+    nomeAfetivo: {type: String, default: null}
 });
 
 const bornSchema = new mongoose.Schema({
