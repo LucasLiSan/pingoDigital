@@ -9,7 +9,7 @@ const addressSchema = new mongoose.Schema({
     estado: String,
     cep: String,
     dataInicio: { type: Date, default: Date.now }, //Data da inserção da informação
-    dataFim: Date //Data da troca de informação se houver
+    dataFim: {type: Date, default: null} //Data da troca de informação se houver
 });
 
 const Address = mongoose.model('Address', addressSchema);

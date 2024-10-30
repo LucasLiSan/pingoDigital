@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
+import Health from "./studentsHealth.js";
+import HealthRecord from "./studentsHealthRecord.js";
+import Address from "./studentsAddress.js";
+import Academic from "./studentsAcademicHistory.js"
 
-//
+//nomes do aluno
 const nameSchema = new mongoose.Schema ({
     nome: String,
     nomeSocial: {type: String, default: null},
     nomeAfetivo: {type: String, default: null}
 });
 
+const twinSchema = new mongoose.Schema ({
+    nome: String,
+});
+
+//informações sobre o nascimento
 const bornSchema = new mongoose.Schema({
     dataNascimento: Date,
     cidade: String,
@@ -15,11 +24,82 @@ const bornSchema = new mongoose.Schema({
     dataRegistro: Date
 });
 
-const documentsSchema = new mongoose.Schema({
-    tipo: String,
-    documento: String
+//Esquemas para armazenamento de documentos
+const certidaoAntigaSchema = new mongoose.Schema({
+    livro: String,
+    folha: String,
+    numero: String,
+    municipioComarca: String,
+    ufComarca: String,
+    distrito: String,
+    dataExpedicao: Date
 });
 
+const certidaoNovaSchema = new mongoose.Schema({
+    numeroMatricula: String,
+    municipioComarca: String,
+    ufComarca: String,
+    distrito: String,
+    dataExpedicao: Date
+});
+
+const rgSchema = new mongoose.Schema({
+    numero: String,
+    emissao: Date,
+    orgaoEmissor: String,
+    ufOrgaoEmissor: String
+});
+
+const simpleDocumentSchema = new mongoose.Schema({
+    numero: String
+});
+
+const documentsSchema = new mongoose.Schema({
+    tipo: { 
+        type: String, 
+        enum: [
+            "Certidão de Nascimento (Antiga)", 
+            "Certidão de Nascimento (Nova)", 
+            "RG", 
+            "CPF", 
+            "SUS", 
+            "NIS"
+        ],
+        required: true 
+    },
+    documento: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        default: function() {
+            if (this.tipo === "Certidão de Nascimento (Antiga)") return {};
+            if (this.tipo === "Certidão de Nascimento (Nova)") return {};
+            if (this.tipo === "RG") return {};
+            return { numero: "" }; // Para CPF, SUS, NIS
+        }
+    }
+});
+
+documentsSchema.pre('validate', function(next) {
+    switch (this.tipo) {
+        case "Certidão de Nascimento (Antiga)":
+            this.documento = new certidaoAntigaSchema(this.documento);
+            break;
+        case "Certidão de Nascimento (Nova)":
+            this.documento = new certidaoNovaSchema(this.documento);
+            break;
+        case "RG":
+            this.documento = new rgSchema(this.documento);
+            break;
+        case "CPF":
+        case "SUS":
+        case "NIS":
+            this.documento = new simpleDocumentSchema(this.documento);
+            break;
+    }
+    next();
+});
+
+//Esquema de pais e responsáveis
 const parentSchema = new mongoose.Schema({
     filiacaoUm: {
         nome: {type: String},
@@ -35,67 +115,46 @@ const legalParentSchema = new mongoose.Schema({
     responsavel: {
         type: String,
         default: function() { 
-            return (this.filiacaoUm && this.filiacaoUm.nome) || 
-                   (this.filiacaoDois && this.filiacaoDois.nome) || 
+            return this.filiacao?.filiacaoUm?.nome || 
+                   this.filiacao?.filiacaoDois?.nome || 
                    "Sem responsável informado"; 
         }
     },
     parentesco: {
         type: String,
         default: function() {
-            return (this.filiacaoUm && this.filiacaoUm.parentesco) || 
-                   (this.filiacaoDois && this.filiacaoDois.parentesco) || 
+            return this.filiacao?.filiacaoUm?.parentesco || 
+                   this.filiacao?.filiacaoDois?.parentesco || 
                    "Pai ou Mãe"; 
         }
     }
 });
 
-const healthSchema = new mongoose.Schema({
-    alergia: {
-        tipo: { type: String, default: "Não" },
-        laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo"], default: "Sem Laudo" }
-    },
-    doencaCronica: {
-        tipo: { type: String, default: "Não" },
-        laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo"], default: "Sem Laudo" }
-    },
-    restricaoAlimentar: {
-        tipo: { type: String, default: "Não" },
-        laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo"], default: "Sem Laudo" }
-    },
-    deficiencia: {
-        tipo: { type: String, default: "Não" },
-        laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo"], default: "Sem Laudo" }
-    },
-    participacaoEducacaoFisica: {
-        permitido: { type: Boolean, default: true },
-        laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo"], default: "Sem Laudo" }
-    }
-});
-
+//Esquema principal
 const studentSchema = new mongoose.Schema({
     rm: Number,
-    nome: [nameSchema],
-    nascimento: [bornSchema],
+    nome: nameSchema, 
+    nascimento: bornSchema,
     sexo: String,
     racaCor: {type: String, default: "NÃO INFORMADO"},
-    documentos: [documentsSchema], // Documentos de identidade e identificação
+    documentos: [documentsSchema],
     ra: String,
-    filiacao: [parentSchema], // Nomes dos pais como consta na certidão
+    filiacao: parentSchema,
     responsavel: {
         type: legalParentSchema,
         default: function() {
-            // Caso nenhum responsável seja informado, assume os pais como padrão
             return {
-                responsavel: this.filiacao[0]?.filiacaoUm?.nome || this.filiacao[0]?.filiacaoDois?.nome || 'Sem responsável informado',
-                parentesco: this.filiacao[0]?.filiacaoUm?.parentesco || this.filiacao[0]?.filiacaoDois?.parentesco || 'Pai ou Mãe'
+                responsavel: this.filiacao?.filiacaoUm?.nome || this.filiacao?.filiacaoDois?.nome || 'Sem responsável informado',
+                parentesco: this.filiacao?.filiacaoUm?.parentesco || this.filiacao?.filiacaoDois?.parentesco || 'Pai ou Mãe'
             };
         }
     },
-    enderecoAtual: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }, // Referência para o endereço atual
-    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência para o histórico acadêmico
-    "saude": [healthSchema],
-    "transporteEscolar": String
+    gemeo: {type: String, default: "Não"},
+    nomeGemeo: [twinSchema],
+    enderecoAtual: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
+    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }],
+    saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde
+    transporteEscolar: String
 });
 
 const Student = mongoose.model('Student', studentSchema);
