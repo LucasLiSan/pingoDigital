@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
+//Ficha de aproveitamento
 
+import mongoose from "mongoose";
 
 const gradeSchema = new mongoose.Schema({
     bimestre: {

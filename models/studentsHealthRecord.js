@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const healthRecordSchema = new mongoose.Schema({
     tipoCondicao: { 
         type: String, 
-        enum: ["Alergia", "Doença Crônica", "Restrição Alimentar", "Deficiência", "Participação em Educação Física"], 
+        enum: ["Alergia", "Doença Crônica", "Restrição Alimentar", "Deficiência", "TEA", "Participação em Educação Física"], 
         required: true 
     },
     descricao: { type: String, required: true },  // Detalhe sobre a condição
@@ -21,7 +21,7 @@ const healthRecordSchema = new mongoose.Schema({
     },
 
     // Campo CID (opcional para Laudo e Atestado)
-    cid: { type: String, default: "" },  // Código Internacional de Doenças, opcional
+    cid: { type: String, default: "Nada consta" },  // Código Internacional de Doenças, opcional
 
     // Campos específicos para Atestados
     diasAtestado: { type: Number },  // Quantidade de dias do atestado
