@@ -205,7 +205,8 @@ const studentSchema = new mongoose.Schema({
             "Branca",
             "Indigena",
             "Amararela"
-        ], default: "NÃO INFORMADO"}, //Raça-Cor auto declarada
+        ], default: "NÃO INFORMADO"
+    }, //Raça-Cor auto declarada
     documentos: [documentsSchema], //Documento aninhado "Documentos"
     ra: String, //Registro do aluno (Estado de São Paulo)
     inep: String, //Registro do aluno (MEC)
@@ -223,7 +224,7 @@ const studentSchema = new mongoose.Schema({
     nomeGemeo: [twinSchema], //Nome do gemeo se houver
     enderecoAtual: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }, // Referência ao modelo de endereços
     contatos: [contatoSchema],
-    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica
+    vidaAcademica: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica
     saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde
     boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins
     historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'AcademicHistoryFull' }],
