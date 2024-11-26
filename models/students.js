@@ -153,9 +153,9 @@ const studentSchema = new mongoose.Schema({
     gemeo: {type: String, default: "Não"},
     nomeGemeo: [twinSchema],
     enderecoAtual: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }, // Referência ao modelo de endereços
-    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica
-    saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde
-    boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins
+    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica (studentsAcademicHistory)
+    saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde (studentsHealth)
+    boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins (studentsGrades)
     transporteEscolar: String
 });
 

@@ -1,3 +1,5 @@
+//HISTÓRICO SALAS
+
 import mongoose from "mongoose";
 
 const academicSchema = new mongoose.Schema({

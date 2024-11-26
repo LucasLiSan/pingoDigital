@@ -1,3 +1,5 @@
+//INFORMAÇÕES DE LAUDOS/RELATÓRIOS E ATESTADOS MÉDICOS
+
 import mongoose from 'mongoose';
 
 const healthRecordSchema = new mongoose.Schema({

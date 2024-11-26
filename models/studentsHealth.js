@@ -1,3 +1,5 @@
+//INFORMAÇÕES DE SAÚDE
+
 import mongoose from 'mongoose';
 
 const healthSchema = new mongoose.Schema({
