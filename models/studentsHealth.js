@@ -24,6 +24,11 @@ const healthSchema = new mongoose.Schema({
         tipo: { type: String, default: "Não" },
         laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo", "Não se aplica"], default: "Não se aplica" }
     },
+
+    TEA: {
+        tipo: { type: String, default: "Não" },
+        laudo: { type: String, enum: ["Laudado", "Em Investigação", "Sem Laudo", "Não se aplica"], default: "Não se aplica" }
+    },
     
     participacaoEducacaoFisica: {
         tipo: { type: String, default: "Sim" },

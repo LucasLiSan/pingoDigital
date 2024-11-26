@@ -130,17 +130,48 @@ const legalParentSchema = new mongoose.Schema({
     }
 });
 
+//Autorização de saída do aluno
+const authorizationSchema = new mongoose.Schema({
+    nome: { type: String, required: true }, // Nome da pessoa autorizada
+    relacao: { type: String, required: true }, // Relação com o aluno
+    telefone: [{ type: String, required: true }], // Lista de números de telefone
+    documentos: {
+        rg: { type: String, required: true }, // Número do RG
+        cpf: { type: String, required: true }  // Número do CPF
+    },
+    foto: { type: String, required: true }, // URL ou caminho da foto
+    ativa: { type: Boolean, default: true }, // Indica se a autorização está ativa
+    dataCadastro: { type: Date, default: Date.now }, // Data de cadastro
+    dataBloqueio: { type: Date, default: null }, // Data de bloqueio, caso desativado
+    historico: [
+        {
+            evento: { type: String, required: true, enum: ["Cadastro", "Bloqueio", "Ativação", "Edição"] },
+            data: { type: Date, default: Date.now }, // Data do evento
+            detalhes: { type: String } // Detalhes adicionais do evento
+        }
+    ]
+});
+
+
 //Esquema principal
 const studentSchema = new mongoose.Schema({
-    rm: Number,
-    nome: nameSchema, 
-    nascimento: bornSchema,
-    sexo: String,
-    racaCor: {type: String, default: "NÃO INFORMADO"},
-    documentos: [documentsSchema],
-    ra: String,
-    inep: String,
-    filiacao: parentSchema,
+    rm: Number, //Número de registro do aluno na escola
+    nome: nameSchema, //Nome do aluno
+    nascimento: bornSchema, //Data de nascimento DD/MM/AAAA
+    sexo: {type: String, enum: ["M", "F"]}, //Sexo do aluno "M - Masculino", "F - Feminino"
+    racaCor: {
+        type: String, 
+        enum: [
+            "Preta",
+            "Parda",
+            "Branca",
+            "Indigena",
+            "Amararela"
+        ], default: "NÃO INFORMADO"}, //Raça-Cor auto declarada
+    documentos: [documentsSchema], //Documento aninhado "Documentos"
+    ra: String, //Registro do aluno (Estado de São Paulo)
+    inep: String, //Registro do aluno (MEC)
+    filiacao: parentSchema, //Nome do pais conforme a certidão
     responsavel: {
         type: legalParentSchema,
         default: function() {
@@ -149,14 +180,19 @@ const studentSchema = new mongoose.Schema({
                 parentesco: this.filiacao?.filiacaoUm?.parentesco || this.filiacao?.filiacaoDois?.parentesco || 'Pai ou Mãe'
             };
         }
-    },
-    gemeo: {type: String, default: "Não"},
-    nomeGemeo: [twinSchema],
+    }, //Responsáveis legais da criança
+    gemeo: {type: String, enum: ["Sim", "Não"], default: "Não"}, //Gemeo
+    nomeGemeo: [twinSchema], //Nome do gemeo se houver
     enderecoAtual: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }, // Referência ao modelo de endereços
-    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica (studentsAcademicHistory)
-    saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde (studentsHealth)
-    boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins (studentsGrades)
-    transporteEscolar: String
+<<<<<<< HEAD
+historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica
+saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde
+boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins
+autorizacaoSaida: [authorizationSchema],
+transporteEscolar: String //Transporte escolar
+=======
+    
+>>>>>>> 6b7580c5215e971302293679ad04bcb8655df397
 });
 
 const Student = mongoose.model('Student', studentSchema);
