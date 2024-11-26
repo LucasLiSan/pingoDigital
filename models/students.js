@@ -4,6 +4,7 @@ import HealthRecord from "./studentsHealthRecord.js";
 import Address from "./studentsAddress.js";
 import Academic from "./studentsAcademicHistory.js";
 import ReportCard from "./studentsGrades.js";
+import AcademicHistoryFull from "./studentsGradesReport.js";
 
 //nomes do aluno
 const nameSchema = new mongoose.Schema ({
@@ -127,7 +128,14 @@ const legalParentSchema = new mongoose.Schema({
                    this.filiacao?.filiacaoDois?.parentesco || 
                    "Pai ou Mãe"; 
         }
-    }
+    },
+    historico: [
+        {
+            evento: { type: String, required: true, enum: ["Cadastro", "Remoção", "Adição", "Edição"] },
+            data: { type: Date, default: Date.now }, // Data do evento
+            detalhes: { type: String } // Detalhes adicionais do evento
+        }
+    ]
 });
 
 //Autorização de saída do aluno
@@ -152,6 +160,36 @@ const authorizationSchema = new mongoose.Schema({
     ]
 });
 
+//Telefones de contato
+const contatoSchema = new mongoose.Schema({
+    proprietario: { type: String, required: true }, // Nome do dono da linha
+    telefone: { type: String, required: true }, // Número telefone
+    whatsapp: { type: String, enum: ["S", "N"] }, // Se número é whatsapp
+    historico: [
+        {
+            evento: { type: String, required: true, enum: ["Cadastro", "Cancelado", "Bloqueio", "Ativação", "Edição"] },
+            data: { type: Date, default: Date.now }, // Data do evento
+            detalhes: { type: String } // Detalhes adicionais do evento
+        }
+    ]
+});
+
+// Subdocumento para armazenar informações de transporte escolar e histórico de uso
+const transporteEscolarSchema = new mongoose.Schema({
+    tipo: { 
+        type: String, 
+        enum: ["Zona Rural", "Raio Maior que 2km", "Outros"], 
+        required: true 
+    }, // Indica o tipo de transporte
+    historico: [
+        {
+            dataInicio: { type: Date, required: true }, // Data de início do uso do transporte
+            dataFim: { type: Date, default: null }, // Data de término do uso do transporte
+            enderecoRelacionado: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }, // Relaciona com o endereço
+            observacoes: { type: String, default: null } // Detalhes adicionais
+        }
+    ]
+});
 
 //Esquema principal
 const studentSchema = new mongoose.Schema({
@@ -184,15 +222,20 @@ const studentSchema = new mongoose.Schema({
     gemeo: {type: String, enum: ["Sim", "Não"], default: "Não"}, //Gemeo
     nomeGemeo: [twinSchema], //Nome do gemeo se houver
     enderecoAtual: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }, // Referência ao modelo de endereços
-<<<<<<< HEAD
-historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica
-saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde
-boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins
-autorizacaoSaida: [authorizationSchema],
-transporteEscolar: String //Transporte escolar
-=======
-    
->>>>>>> 6b7580c5215e971302293679ad04bcb8655df397
+    contatos: [contatoSchema],
+    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Academic' }], // Referência ao modelo de vida academica
+    saude: { type: mongoose.Schema.Types.ObjectId, ref: 'Health' },  // Referência ao modelo de saúde
+    boletins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ReportCard' }], // Referência aos boletins
+    historicoAcademico: [{ type: mongoose.Schema.Types.ObjectId, ref: 'AcademicHistoryFull' }],
+    autorizacaoSaida: [authorizationSchema],
+    transporteEscolar: transporteEscolarSchema, // Adiciona transporte escolar
+    transporteEscolarAtual: {
+        type: Boolean,
+        default: function () {
+            // Verifica se há um histórico ativo (sem data de término)
+            return this.transporteEscolar?.historico.some(h => !h.dataFim);
+        }
+    }
 });
 
 const Student = mongoose.model('Student', studentSchema);
