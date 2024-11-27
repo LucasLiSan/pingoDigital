@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 
 const addressSchema = new mongoose.Schema({
-    alunoId: { type: Schema.Types.ObjectId, ref: 'Student' }, // Relaciona o endereço ao aluno
+    funcionarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' }, // Relaciona o endereço ao funcionário
     logradouro: String,
     numero: Number, //Em caso de casa sem número deixar 0
     bairro: String,
@@ -23,5 +23,5 @@ const addressSchema = new mongoose.Schema({
     dataFim: {type: Date, default: null} //Data da troca de informação se houver
 });
 
-const Address = mongoose.model('Address', addressSchema);
-export default Address;
+const employeeAddress = mongoose.model('employeeAddress', addressSchema);
+export default employeeAddress;

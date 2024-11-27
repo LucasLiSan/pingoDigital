@@ -92,6 +92,7 @@ documentsSchema.pre('validate', function(next) {
         case "CPF":
         case "SUS":
         case "NIS":
+        case "CROSS":
             this.documento = new simpleDocumentSchema(this.documento);
             break;
     }
