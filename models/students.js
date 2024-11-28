@@ -50,8 +50,6 @@ const rgSchema = new mongoose.Schema({
     ufOrgaoEmissor: String
 });
 
-const simpleDocumentSchema = new mongoose.Schema({ numero: String });
-
 const documentsSchema = new mongoose.Schema({
     tipo: { 
         type: String, 
@@ -61,41 +59,32 @@ const documentsSchema = new mongoose.Schema({
             "RG", 
             "CPF", 
             "SUS", 
-            "NIS",
+            "NIS", 
             "CROSS"
         ],
         required: true 
     },
     documento: {
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.Mixed, // Mantém como genérico
         required: true,
-        default: function() {
-            if (this.tipo === "Certidão de Nascimento (Antiga)") return {};
-            if (this.tipo === "Certidão de Nascimento (Nova)") return {};
-            if (this.tipo === "RG") return {};
-            return { numero: "" }; // Para CPF, SUS, NIS, CROSS
-        }
     }
 });
 
-documentsSchema.pre('validate', function(next) {
-    switch (this.tipo) {
-        case "Certidão de Nascimento (Antiga)":
-            this.documento = new certidaoAntigaSchema(this.documento);
-            break;
-        case "Certidão de Nascimento (Nova)":
-            this.documento = new certidaoNovaSchema(this.documento);
-            break;
-        case "RG":
-            this.documento = new rgSchema(this.documento);
-            break;
-        case "CPF":
-        case "SUS":
-        case "NIS":
-        case "CROSS":
-            this.documento = new simpleDocumentSchema(this.documento);
-            break;
+// Middleware de validação (ajustado)
+documentsSchema.pre('validate', function (next) {
+    const subDocumentSchemas = {
+        "Certidão de Nascimento (Antiga)": certidaoAntigaSchema,
+        "Certidão de Nascimento (Nova)": certidaoNovaSchema,
+        "RG": rgSchema
+    };
+
+    if (subDocumentSchemas[this.tipo]) {
+        this.documento = new mongoose.Document(this.documento, subDocumentSchemas[this.tipo]);
+    } else {
+        // Para documentos simples, como CPF, SUS, NIS, CROSS
+        this.documento = { numero: this.documento.numero || '' };
     }
+
     next();
 });
 

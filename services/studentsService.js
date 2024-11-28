@@ -9,6 +9,7 @@ class studentService {
             return newStudent;
         } catch (error) {
             console.error("Erro ao cadastrar aluno:", error);
+            throw error; // Propaga o erro para o controller tratar
         }
     }
 

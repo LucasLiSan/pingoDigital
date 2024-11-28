@@ -1,6 +1,7 @@
 //ENDEREÇO
 
 import mongoose from 'mongoose';
+import Student from "./students.js";
 
 const addressSchema = new mongoose.Schema({
     alunoId: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' }, // Relaciona o endereço ao aluno
