@@ -132,7 +132,7 @@ const legalParentSchema = new mongoose.Schema({
     },
     historico: [
         {
-            evento: { type: String, required: true, enum: ["Cadastro", "Remoção", "Adição", "Edição"] },
+            evento: { type: String, required: true, enum: ["Cadastro", "Remoção", "Adição", "Edição"], default: "Cadastro" },
             data: { type: Date, default: Date.now }, // Data do evento
             detalhes: { type: String } // Detalhes adicionais do evento
         }
@@ -154,7 +154,7 @@ const authorizationSchema = new mongoose.Schema({
     dataBloqueio: { type: Date, default: null }, // Data de bloqueio, caso desativado
     historico: [
         {
-            evento: { type: String, required: true, enum: ["Cadastro", "Bloqueio", "Ativação", "Edição"] },
+            evento: { type: String, required: true, enum: ["Cadastro", "Bloqueio", "Ativação", "Edição"], default: "Cadastro" },
             data: { type: Date, default: Date.now }, // Data do evento
             detalhes: { type: String } // Detalhes adicionais do evento
         }

@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 
 const addressSchema = new mongoose.Schema({
-    alunoId: { type: Schema.Types.ObjectId, ref: 'Student' }, // Relaciona o endereço ao aluno
+    alunoId: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' }, // Relaciona o endereço ao aluno
     logradouro: String,
     numero: Number, //Em caso de casa sem número deixar 0
     bairro: String,
