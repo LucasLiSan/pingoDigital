@@ -13,6 +13,7 @@ import Student from "./models/students.js";
 
 /* ----------  IMPORTAÇÃO DE ROTAS ---------- */
 import studentRoutes from "./routes/studentsRoutes.js";
+import homeRoutes from './routes/homeRoute.js';
 
 /* ----------  INICIANDO O EXPRESS ---------- */
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', studentRoutes);
+app.use('/', homeRoutes);
 
 /* ----------\/ INICIANDO AS ROTAS(Endpoints) \/---------- */
 
