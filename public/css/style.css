@@ -1,0 +1,44 @@
+@import url('https://fonts.cdnfonts.com/css/recoleta');
+@import url('https://fonts.cdnfonts.com/css/bogart');
+@import url(https://db.onlinewebfonts.com/c/794a0de6a529290274465576a9a6990b?family=Block+Berthold+Regular);
+@import url('https://fonts.cdnfonts.com/css/lexend');
+
+:root {
+    --colorPalletOne: #612C8A;
+    --colorPalletTwo: #F4C301;
+    --colorPalletThree: #FF3366;
+    --fontOne: 'Lexend', sans-serif;;
+    --fontTwo: 'Bogart', sans-serif;
+    --fontThree: 'Recoleta', sans-serif;
+    --fontFour: 'Block Berthold Regular';
+}
+
+::-webkit-scrollbar {
+    width: 12px; /* Largura da scrollbar */
+    height: 12px; /* Altura para barras horizontais */
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Cor do fundo da barra */
+    border-radius: 6px; /* Arredondar a borda do track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--colorPalletThree); /* Cor do "thumb" (a parte que desliza) */
+    border-radius: 6px; /* Arredondar a borda do thumb */
+    border: 3px solid #f0f0f0; /* Cria um espaço entre o thumb e o track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--colorPalletTwo); /* Cor ao passar o mouse */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
