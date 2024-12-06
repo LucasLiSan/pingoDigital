@@ -19,14 +19,14 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #f0f0f0; /* Cor do fundo da barra */
+    background: #FFFFFF; /* Cor do fundo da barra */
     border-radius: 6px; /* Arredondar a borda do track */
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--colorPalletThree); /* Cor do "thumb" (a parte que desliza) */
     border-radius: 6px; /* Arredondar a borda do thumb */
-    border: 3px solid #f0f0f0; /* Cria um espaço entre o thumb e o track */
+    border: 3px solid #FFFFFF; /* Cria um espaço entre o thumb e o track */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -45,8 +45,11 @@ body {
 
 header {
     width: 100%;
-    height: 15rem;
-    background-color: #612C8A;
+    height: 20rem;
+    background-image: url("../assets/imgs/LogoHeader.webp");
+    background-size: inherit;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 nav {
@@ -59,51 +62,52 @@ nav {
 }
 
 nav > ul {
-    width: 30%;
+    width: 45%;
     height: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     list-style: none;
-    background-color: #F4C301;
+    border-bottom: solid 0.2rem var(--colorPalletOne);
+    font-family: var(--fontOne);
 }
 
 nav ul > li {
-    height: 100%;
     width: 20%;
+    height: 100%;
+    display: flex;
+}
+
+nav li > a {
+    width: 100%;
+    height: 100%;
     text-align: center;
     align-content: center;
+    text-decoration: none;
+    color: #000000;
 }
 
 .imgHome {
-    background-image: url(https://picsum.photos/id/237/200/300);
-    background-size: cover;
+    width: 5rem;
+}
+
+.imgHome a {
+    background-image: url("../assets/imgs/LogoHome.png");
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-nav ul > li:hover {
-    background-color: #612C8A;
-    color: #ffffff;
-}
-
-.subMenu ul {
-    list-style: none;
-    display: none;
-}
-
-.subMenu:hover > ul {
-    display: block;
-}
+nav a:hover { background-color: var(--colorPalletTwo); }
 
 main {
     width: 100%;
     height: 100rem;
-    background-color: #FF3366;
+    background-color: var(--colorPalletThree);
 }
 
 footer {
     width: 100%;
-    height: 4rem;
-    background-color: antiquewhite;
+    height: 10rem;
+    background-color: var(--colorPalletOne);
 }
