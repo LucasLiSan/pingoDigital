@@ -111,3 +111,11 @@ footer {
     height: 10rem;
     background-color: var(--colorPalletOne);
 }
+
+/* --- Responsividade --- */
+
+@media (width < 1440px) {
+    nav > ul {
+        width: 60%;
+    }
+}
