@@ -17,6 +17,9 @@ import homeRoutes from './routes/homeRoute.js';
 import docentesRoutes from './routes/docentesRoute.js';
 import sobreRoutes from "./routes/sobreRoute.js";
 import localizacaoRoutes from "./routes/localizacaoRoute.js";
+import calendarioRoutes from "./routes/calendarioRoutes.js";
+import cardapioRoutes from "./routes/cardapioRoutes.js";
+import transparenciaRoutes from "./routes/transparenciaRoutes.js";
 
 /* ----------  INICIANDO O EXPRESS ---------- */
 const app = express();
@@ -32,6 +35,9 @@ app.use('/', homeRoutes);
 app.use('/', docentesRoutes);
 app.use('/', sobreRoutes);
 app.use('/', localizacaoRoutes);
+app.use('/', calendarioRoutes);
+app.use('/', cardapioRoutes);
+app.use('/', transparenciaRoutes);
 
 /* ----------\/ INICIANDO AS ROTAS(Endpoints) \/---------- */
 
