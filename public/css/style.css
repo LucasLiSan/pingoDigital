@@ -43,6 +43,10 @@ body {
     height: 100vh;
 }
 
+.snowflake {
+    font-family: Arial, sans-serif; /* Set a clean font for Unicode snowflakes */
+}
+
 header {
     width: 100%;
     height: 20rem;
