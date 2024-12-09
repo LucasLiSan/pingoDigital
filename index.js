@@ -14,6 +14,9 @@ import Student from "./models/students.js";
 /* ----------  IMPORTAÇÃO DE ROTAS ---------- */
 import studentRoutes from "./routes/studentsRoutes.js";
 import homeRoutes from './routes/homeRoute.js';
+import docentesRoutes from './routes/docentesRoute.js';
+import sobreRoutes from "./routes/sobreRoute.js";
+import localizacaoRoutes from "./routes/localizacaoRoute.js";
 
 /* ----------  INICIANDO O EXPRESS ---------- */
 const app = express();
@@ -26,6 +29,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', studentRoutes);
 app.use('/', homeRoutes);
+app.use('/', docentesRoutes);
+app.use('/', sobreRoutes);
+app.use('/', localizacaoRoutes);
 
 /* ----------\/ INICIANDO AS ROTAS(Endpoints) \/---------- */
 

@@ -43,6 +43,14 @@ body {
     height: 100vh;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 header {
     width: 100%;
     height: 20rem;
@@ -81,15 +89,15 @@ nav ul > li {
 nav li > a {
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    align-content: center;
     text-decoration: none;
     color: #000000;
 }
 
-.imgHome {
-    width: 5rem;
-}
+.imgHome { width: 10%; }
 
 .imgHome a {
     background-image: url("../assets/imgs/LogoHome.png");
@@ -97,6 +105,8 @@ nav li > a {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.diff { width: 8%; }
 
 nav a:hover { background-color: var(--colorPalletTwo); }
 
@@ -109,7 +119,48 @@ main {
 footer {
     width: 100%;
     height: 10rem;
-    background-color: var(--colorPalletOne);
+    display: flex;
+    background-color: var(--colorPalletTwo);
+}
+
+.imgFooter {
+    width: 30%;
+    height: 100%;
+    background-image: url("../assets/imgs/LogoFooter.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.local {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    font-family: var(--fontTwo);
+}
+
+.local span {
+    width: 100%;
+    height: 1.5rem;
+    align-content: center;
+}
+
+.titleFooter {
+    font-family: var(--fontFour);
+    font-size: 1.5rem;
+}
+
+.local a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000000;
+}
+
+.local a:hover{
+    text-decoration: underline;
+    color: var(--colorPalletThree);
 }
 
 /* --- Responsividade --- */
