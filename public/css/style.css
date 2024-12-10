@@ -41,6 +41,7 @@
 body {
     width: 100vw;
     height: 100vh;
+    font-family: var(--fontFour);
 }
 
 .snowflake {
@@ -104,13 +105,14 @@ nav li > a {
 
 .diff { width: 8%; }
 
+.more { flex-wrap: wrap; }
+
 .more:hover > .subMenu{ display: block; }
 
 .subMenu {
     position: relative;
     display: none;
-    top: 5rem;
-    right: 30rem;
+    right: 21rem;
     width: 30rem;
     height: 9rem;
     background-color: var(--colorPalletOne);
@@ -137,6 +139,121 @@ main {
     height: 100rem;
     background-color: var(--colorPalletThree);
 }
+
+/* -- localizacao.ejs -- */
+
+.localizacao {
+    width: 100%;
+    height: 80%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: space-between;
+}
+
+.contactContainer{
+    width: 85%;
+    height: 40%;
+    background: #fff;
+    border-radius: 6px;
+    padding: 20px 60px 30px 40px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.contactContainer .contactContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contactContainer .contactContent .left-side{
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    position: relative;
+}
+
+.contactContent .left-side::before{
+    content: '';
+    position: absolute;
+    height: 70%;
+    width: 2px;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #afafb6;
+}
+
+.contactContent .left-side .details{
+    margin: 14px;
+    text-align: center;
+}
+
+.contactContent .left-side .details i{
+    font-size: 30px;
+    color: var(--colorPalletOne);
+    margin-bottom: 10px;
+}
+
+.contactContent .left-side .details .topic{
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--colorPalletOne);
+}
+
+.contactContent .left-side .details .text-one,
+.contactContent .left-side .details .text-two{
+    font-size: 14px;
+    color: #afafb6;
+}
+
+.details a { text-decoration: none; }
+
+.contactContainer .contactContent .right-side{
+    width: 75%;
+    margin-left: 75px;
+}
+
+.contactContent .right-side .topic-text{
+    font-size: 2rem;
+    font-weight: 600;
+    color: #3e2093;
+}
+
+.topic-text h1 {
+    width: 100%;
+    height: 2.5rem;
+    font-size: 2rem;
+    align-content: center;
+}
+
+.topic-text h2 {
+    width: 100%;
+    height: 1.5rem;
+    align-content: center;
+    font-family: var(--fontTwo);
+    font-size: 1rem;
+    color: #000000;
+}
+
+.searchBox {
+    width: 100%;
+    height: 25rem;
+}
+
+#search-neighborhood, #search-streets,
+#search-house {
+    padding: 1rem;
+    display: none;
+}
+
+/* -- -- */
 
 footer {
     width: 100%;

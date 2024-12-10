@@ -20,6 +20,7 @@ import localizacaoRoutes from "./routes/localizacaoRoute.js";
 import calendarioRoutes from "./routes/calendarioRoutes.js";
 import cardapioRoutes from "./routes/cardapioRoutes.js";
 import transparenciaRoutes from "./routes/transparenciaRoutes.js";
+import sectorRoutes from "./routes/sectorStreetsRoutes.js"
 
 /* ----------  INICIANDO O EXPRESS ---------- */
 const app = express();
@@ -38,9 +39,7 @@ app.use('/', localizacaoRoutes);
 app.use('/', calendarioRoutes);
 app.use('/', cardapioRoutes);
 app.use('/', transparenciaRoutes);
-
-/* ----------\/ INICIANDO AS ROTAS(Endpoints) \/---------- */
-
+app.use('/', sectorRoutes);
 
 /* ----------\/ INICIANDO SERVIDOR \/---------- */
 const port = 8080;

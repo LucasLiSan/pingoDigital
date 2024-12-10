@@ -1,8 +1,94 @@
 <%- include('partials/header.ejs') %>
 
             <main>
-                <section>
-                    <h1>LOCALIZAÇÃO escola</h1>
+                <section class="localizacao">
+                    <div class="contactContainer">
+                        <div class="contactContent">
+                            <div class="left-side">
+                                <div class="address details">
+                                    <a href="https://maps.app.goo.gl/TgZztnL5Yj343sj16" target="_blank"><i class="fas fa-map-marker-alt"></i>
+                                    <div class="topic">Endereço</div>
+                                    <div class="text-one">Rua Isabel Maria Vieira Eiró, s/n</div>
+                                    <div class="text-two">Jardim Eiji Matsumura</div></a>
+                                </div>
+                                <div class="phone details">
+                                    <a href="https://api.whatsapp.com/send?phone=551338225152" target="_blank"><i class="fas fa-phone-alt"></i>
+                                    <div class="topic">Telefone</div>
+                                    <div class="text-one">(13) 3822-5152</div></a>
+                                </div>
+                                <div class="email details">
+                                    <a href="mailto:emeb.pingodegentergt@gmail.com?subject=CONTATO" target="_blank"><i class="fas fa-envelope"></i>
+                                    <div class="topic">Email</div>
+                                    <div class="text-one">emeb.pingodegentergt@gmail.com</div></a>
+                                </div>
+                            </div>
+                            <div class="right-side">
+                                <div class="topic-text">EMEB PINGO DE GENTE</div>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1808.3056492151038!2d-47.83620264115585!3d-24.517199655932135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDMxJzAzLjUiUyA0N8KwNTAnMDkuNiJX!5e1!3m2!1spt-BR!2sbr!4v1732018816279!5m2!1spt-BR!2sbr" width="800" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contactContainer">
+                        <div class="contactContent">
+                            <div class="left-side">
+                                <div class="details" id="neighborhood">
+                                    <i class="fa-solid fa-tree-city"></i>
+                                    <div class="topic">BAIRRO</div>
+                                    <div class="text-one">PROCURAR POR BAIRRO</div>
+                                </div>
+                                <div class="details" id="streets">
+                                    <i class="fa-solid fa-road"></i>
+                                    <div class="topic">RUA</div>
+                                    <div class="text-one">PROCURAR POR RUA</div>
+                                </div>
+                                <div class="details" id="house">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div class="topic">ENDEREÇO</div>
+                                    <div class="text-one">PROCURAR POR ENDEREÇO EXATO</div>
+                                </div>
+                            </div>
+                            <div class="right-side">
+                                <div class="topic-text">
+                                    <h1>SETORIZAÇÃO - EMEB PINGO DE GENTE</h1>
+                                    <h2>Esses são os endereços atendidos pela EMEB Pingo de Gente. Caso o seu endereço não se encontre na lista, entre em contato com a escola</h2>
+                                </div>
+                                <div class="searchBox">
+                                    <div id="search-neighborhood">
+                                        <h2>BAIRRO</h2>
+                                        <div class="inputSearch">
+                                            <input type="text" name="search-neighborhood" id="input-neighborhood">
+                                        </div>
+                                        <div class="searchResult neighborhood">
+
+                                        </div>
+                                    </div>
+                                    <div id="search-streets">
+                                        <h2>RUA</h2>
+                                        <div class="inputSearch">
+                                            <input type="text" name="search-streets" id="input-streets">
+                                        </div>
+                                        <div class="searchResult streets">
+                                            
+                                        </div>
+                                    </div>
+                                    <div id="search-house">
+                                        <h2>CASA</h2>
+                                        <div class="inputSearch">
+                                            <label for="search-house-street">RUA</label>
+                                            <input type="text" name="search-house-street" id="search-house-street">
+                                            <label for="search-house-number">NÚMERO</label>
+                                            <input type="number" name="search-house-number" id="search-house-number">
+                                            <label for="search-house-neighborhood">BAIRRO</label>
+                                            <input type="text" name="search-house-neighborhood" id="search-house-street-neighborhood">
+                                        </div>
+                                        <div class="searchResult house">
+                                            
+                                        </div>
+                                    </div>
+                                </div>                             
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </main>
 
