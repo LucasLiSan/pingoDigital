@@ -74,7 +74,10 @@ nav > ul {
     align-items: center;
     list-style: none;
     border-bottom: solid 0.2rem var(--colorPalletOne);
+    border-radius: 1rem;
     font-family: var(--fontOne);
+    background: #FFFFFF;
+    box-shadow: 0.4rem 0.2rem 0px 0.1rem var(--colorPalletOne);
 }
 
 nav ul > li {
@@ -126,6 +129,18 @@ nav li > a {
 .subMenu a { color: #FFFFFF; }
 
 nav a:hover { background-color: var(--colorPalletTwo); }
+
+.first:hover {
+    background-color: var(--colorPalletTwo);
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.last:hover {
+    background-color: var(--colorPalletTwo);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
 
 .subMenu:hover { display: block; }
 
