@@ -1,3 +1,4 @@
+import Setor from "../models/sectorStreets.js";
 import sectorService from "../services/sectorStreetsService.js";
 import { ObjectId } from "mongodb";
 
@@ -12,7 +13,7 @@ const createNewSectorStreet = async (req, res) => {
     }
 };
 
-/* --- Listar todos os livros --- */
+/* --- Listar todos os setores --- */
 const getAllSectors = async (req, res) => {
     try {
         const sectors = await sectorService.getAll();
@@ -23,7 +24,44 @@ const getAllSectors = async (req, res) => {
     }
 }
 
-/* --- Listar um livro --- */
+/* --- Listar todos os bairros de forma unica --- */
+const getUniqueNeighborhoods = async (req, res) => {
+    try {
+        const neighborhoods = await Setor.distinct("bairro");
+        res.status(200).json({ neighborhoods }); // Cód. Status 200: OK
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ err: 'Erro interno do servidor.' }); // Cód. Status 500: Internal Server Error
+    }
+};
+
+/* --- Buscar bairros e ruas filtrados pelo setor e opcionalmente por bairro --- */
+const getStreetsBySectorAndNeighborhood = async (req, res) => {
+    try {
+        const { setor, bairro } = req.query;
+
+        // Verificar se "setor" está presente
+        if (!setor) {
+            return res.status(400).json({ error: "O campo 'setor' é obrigatório." });
+        }
+
+        // Montar o filtro dinâmico
+        const filter = { setor };
+        if (bairro) {
+            filter.bairro = bairro;
+        }
+
+        const streets = await Setor.find(filter, { bairro: 1, rua: 1, _id: 0 });
+
+        // Retornar as ruas encontradas
+        res.status(200).json({ streets });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro interno do servidor." });
+    }
+};
+
+/* --- Listar um setor --- */
 const getOneSector = async (req, res) => {
     try {
         if(ObjectId.isValid(req.params.id)) {
@@ -38,7 +76,7 @@ const getOneSector = async (req, res) => {
     }
 }
 
-/* --- Atualizar informações do livro --- */
+/* --- Atualizar informações do setores --- */
 const updateSector = async (req, res) => {
     try {
         if(ObjectId.isValid(req.params.id)) {
@@ -55,7 +93,7 @@ const updateSector = async (req, res) => {
     }
 }
 
-/* --- Deletar livro --- */
+/* --- Deletar setor --- */
 const deleteSector = async (req, res) => {
     try {
         if(ObjectId.isValid(req.params.id)) {
@@ -71,4 +109,4 @@ const deleteSector = async (req, res) => {
     }
 }
 
-export default { createNewSectorStreet, getAllSectors, getOneSector, updateSector, deleteSector };
+export default { createNewSectorStreet, getAllSectors, getOneSector, getUniqueNeighborhoods, getStreetsBySectorAndNeighborhood, updateSector, deleteSector };

@@ -10,13 +10,19 @@ sectorRoutes.post("/setor", sectorStreetsController.createNewSectorStreet);
 /* 2º Endpoint: Listar todos os setor */
 sectorRoutes.get("/setores", sectorStreetsController.getAllSectors);
 
-/* 3º Endpoint: Listar um setor */
+/* 3º Endpoint: Listar bairros únicos */
+sectorRoutes.get("/setor", sectorStreetsController.getUniqueNeighborhoods);
+
+/* 4º Endpoint: Buscar ruas por setor e bairro */
+sectorRoutes.get("/ruas", sectorStreetsController.getStreetsBySectorAndNeighborhood);
+
+/* 5º Endpoint: Listar um setor */
 sectorRoutes.get("/setor/:id", sectorStreetsController.getOneSector);
 
-/* 4º Endpoint: Atualizar um setor */
+/* 6º Endpoint: Atualizar um setor */
 sectorRoutes.put("/setor/:id", sectorStreetsController.updateSector);
 
-/* 5º Endpoint: Deletar um setor */
+/* 7º Endpoint: Deletar um setor */
 sectorRoutes.delete("/setor/:id", sectorStreetsController.deleteSector);
 
 export default sectorRoutes;
