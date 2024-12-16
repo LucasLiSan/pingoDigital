@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const sectorStreetsSchema = new mongoose.Schema ({
     rua: { type: String, required: true, trim: true },
+    nomeAnterior: { type: String, required: false, trim: true },
     bairro: { type: String, required: true, trim: true },
     numero: { type: String, required: true },
     setor: { type: String, required: true },

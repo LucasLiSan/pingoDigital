@@ -320,6 +320,7 @@ main {
 .searchResult p {
     height: 1.7rem;
     align-content: center;
+    text-transform: uppercase;
 }
 
 .searchResult p:nth-child(odd) {
