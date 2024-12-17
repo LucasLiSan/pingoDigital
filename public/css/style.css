@@ -317,6 +317,8 @@ main {
     overflow: auto;
 }
 
+.searchResult h3 { text-transform: uppercase; }
+
 .searchResult p {
     height: 1.7rem;
     align-content: center;
@@ -336,6 +338,14 @@ main {
 
 .inputSearch select {
     width: 100%;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px dashed var(--colorPalletOne);
+}
+
+#input-streets {
+    width: 60%;
+    height: 50%;
     font-size: 1rem;
     text-align: center;
     border: 1px dashed var(--colorPalletOne);

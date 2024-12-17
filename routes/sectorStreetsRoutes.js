@@ -16,6 +16,8 @@ sectorRoutes.get("/setor", sectorStreetsController.getUniqueNeighborhoods);
 /* 4º Endpoint: Buscar ruas por setor e bairro */
 sectorRoutes.get("/ruas", sectorStreetsController.getStreetsBySectorAndNeighborhood);
 
+sectorRoutes.get("/nomeruas", sectorStreetsController.searchStreetsBySector);
+
 /* 5º Endpoint: Listar um setor */
 sectorRoutes.get("/setor/:id", sectorStreetsController.getOneSector);
 

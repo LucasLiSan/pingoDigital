@@ -2,12 +2,22 @@ import Setor from "../models/sectorStreets.js";
 
 class sectorService {
     /* --- Método CADASTRAR --- */
-    async create(rua, nomeAnterior, bairro, numero, setor, evento) {
+    async create(rua, nomeAnterior, bairro, numero, setor, evento, detalhes) {
         try {
-            const newSector = new Setor({ rua, nomeAnterior, bairro, numero, setor, historico: [{ evento }] });
+            const newSector = new Setor({
+                rua,
+                nomeAnterior,
+                bairro,
+                numero,
+                setor,
+                historico: [{ evento, detalhes }] // Adiciona "detalhes" ao histórico inicial
+            });
             await newSector.save();
             return newSector;
-        } catch (error) { console.log(error); }
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
     /* --- Método READ (LISTAR TODOS) --- */
@@ -27,22 +37,33 @@ class sectorService {
     }
 
     /* --- Método UPDATE --- */
-    async update(id, rua, nomeAnterior, bairro, numero, setor, evento) {
+    async update(id, rua, nomeAnterior, bairro, numero, setor, evento, detalhes) {
         try {
             const updatedSector = await Setor.findByIdAndUpdate(
                 id,
                 { rua, nomeAnterior, bairro, numero, setor },
                 { new: true } // Retorna o documento atualizado
             );
-
+    
             if (evento) {
                 await Setor.findByIdAndUpdate(
                     id,
-                    { $push: { historico: { evento } } } // Adiciona um novo evento no histórico
+                    { 
+                        $push: { 
+                            historico: { 
+                                evento, 
+                                detalhes // Inclui o campo "detalhes" no histórico
+                            } 
+                        } 
+                    }
                 );
             }
             console.log(`Alterações na rua id: ${id} feitas com sucesso`);
-        } catch (error) { console.log(error); }
+            return updatedSector;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
     /* --- Método DELETE --- */
