@@ -357,6 +357,109 @@ main {
 
 /* -- -- */
 
+/* -- login.ejs -- */
+
+.mainLogin { height: 47rem; }
+
+.login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.headLogos, .loginForm {
+    width: 30%;
+    height: 40%;
+    padding: 3rem;
+    align-content: center;
+    background: var(--colorPalletTwo);
+}
+
+.headLogos {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.loginForm label, .loginForm input { 
+    width: 70%;
+    height: 10%;
+    align-content: end;
+    margin: 0.2rem;
+}
+
+.loginForm input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+.recoveryPass {
+    width: 70%;
+    height: 10%;
+    margin: 0.4rem 0;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.recoveryPass a { color: var(--colorPalletOne); }
+.recoveryPass a:hover { color: var(--colorPalletThree); }
+
+.loginForm hr {
+    width: 80%;
+    margin: 2rem 0;
+    border: 1px solid var(--colorPalletThree);
+}
+
+#subBtn {
+    width: 30%;
+    height: 12%;
+    color: #FFFFFF;
+    font-weight: bolder;
+    border: none;
+    border-radius: 0.3rem;
+    background: var(--colorPalletOne);
+}
+
+#subBtn:hover {
+    background: var(--colorPalletThree);
+}
+
+.imgLogo {
+    width: 100%;
+    height: 50%;
+    background-image: url("../assets/imgs/LogoLogin2.webp");
+    background-size: inherit;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.headLogos h2, .headLogos h3 {
+    width: 100%;
+    height: 10%;
+    align-content: center;
+}
+
+.headLogos h2 { font-size: 2.5rem; }
+.headLogos h3 { font-size: 1.5rem; }
+
+/* -- -- */
+
 footer {
     width: 100%;
     height: 10rem;

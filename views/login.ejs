@@ -1,0 +1,26 @@
+<%- include('partials/header.ejs') %>
+
+            <main class="mainLogin">
+                <section class="login">
+                    <div class="headLogos">
+                        <div class="imgLogo"></div>
+                        <h2>Bem-vindo!</h2>
+                        <h3>Pingo de Gente, a sua escola onde você estiver.</h3>
+                    </div>
+                    <form action="" class="loginForm">
+                        <label for="user">USUÁRIO</label>
+                        <input type="text" name="user" placeholder="Insira seu usuário">
+
+                        <label for="password">SENHA</label>
+                        <input type="password" name="password" placeholder="Insira sua senha">
+
+                        <span class="recoveryPass"><a href="#">Esqueceu sua senha?</a><a href="#">Cadastre-se</a></span>
+
+                        <hr>
+
+                        <input type="submit" id="subBtn" value="ENTRAR">
+                    </form>
+                </section>
+            </main>
+
+<%- include('partials/footer.ejs') %>
