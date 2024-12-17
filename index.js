@@ -49,7 +49,7 @@ const myServer = ip.address();
 const renderPort = '0.0.0.0';
 console.log(myServer);
 
-app.listen(port, (error) => {
+app.listen(renderPort, (error) => {
     if(error) {console.log(error); }
     console.log(`API rodando em http://localhost:${port}.`);
 });
