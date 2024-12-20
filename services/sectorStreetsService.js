@@ -36,6 +36,44 @@ class sectorService {
         } catch (error) { console.log(error); }
     }
 
+    /* --- Buscar casa por rua, número e bairro --- */
+    async searchHouse(street, number, neighborhood) {
+        try {
+            const query = {
+                $or: [
+                    { rua: { $regex: street, $options: "i" } },
+                    { nomeAnterior: { $regex: street, $options: "i" } }
+                ]
+            };
+
+            if (neighborhood) {
+                query.bairro = neighborhood;
+            }
+
+            const results = await Setor.find(query);
+
+            if (number) {
+                return results.find((sector) => {
+                    const numCondition = sector.numero?.toLowerCase();
+                    if (numCondition.startsWith("acima")) {
+                        const threshold = parseInt(numCondition.replace("acima ", ""));
+                        return number >= threshold;
+                    }
+                    if (numCondition.startsWith("abaixo")) {
+                        const threshold = parseInt(numCondition.replace("abaixo ", ""));
+                        return number <= threshold;
+                    }
+                    return true; // "Todos" aceita qualquer número
+                });
+            }
+
+            return results.length ? results[0] : null;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
     /* --- Método UPDATE --- */
     async update(id, rua, nomeAnterior, bairro, numero, setor, evento, detalhes) {
         try {

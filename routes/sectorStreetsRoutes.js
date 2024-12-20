@@ -27,4 +27,7 @@ sectorRoutes.put("/setor/:id", sectorStreetsController.updateSector);
 /* 7º Endpoint: Deletar um setor */
 sectorRoutes.delete("/setor/:id", sectorStreetsController.deleteSector);
 
+/* 8º Endpoint: Buscar casa por rua, número e bairro */
+sectorRoutes.get("/search-house", sectorStreetsController.searchHouse);
+
 export default sectorRoutes;

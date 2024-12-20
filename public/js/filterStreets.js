@@ -133,3 +133,47 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300); // Aguarda 300ms após digitação
     });
 });
+
+
+// ---------- ABA CASAS ---------- //
+
+
+const searchHouseStreet = document.getElementById("search-house-street");
+const searchHouseNumber = document.getElementById("search-house-number");
+const inputNeighborhood = document.getElementById("input-neighborhood");
+const searchResult = document.querySelector(".searchResult.house");
+const matriculaDiv = document.getElementById("matricula");
+
+document.getElementById("search-house").addEventListener("input", async () => {
+    const street = searchHouseStreet.value.trim();
+    const number = parseInt(searchHouseNumber.value.trim());
+    const neighborhood = inputNeighborhood.value;
+
+    if (!street || isNaN(number)) {
+        searchResult.querySelector("#resultadoPesquisa h4").textContent = "ENDEREÇO NÃO LOCALIZADO";
+        matriculaDiv.style.display = "none";
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `/search-house?street=${encodeURIComponent(street)}&number=${number}&neighborhood=${encodeURIComponent(neighborhood)}`
+        );
+
+        if (!response.ok) throw new Error("Erro ao buscar endereço.");
+
+        const data = await response.json();
+
+        // Atualizar resultado
+        searchResult.querySelector("#resultadoPesquisa h4").textContent = data.setor;
+        if (data.setor === "EMEB Pingo de Gente") {
+            matriculaDiv.style.display = "flex";
+        } else {
+            matriculaDiv.style.display = "none";
+        }
+    } catch (error) {
+        console.error(error);
+        searchResult.querySelector("#resultadoPesquisa h4").textContent = "ENDEREÇO NÃO LOCALIZADO";
+        matriculaDiv.style.display = "none";
+    }
+});

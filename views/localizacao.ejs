@@ -1,5 +1,5 @@
 <%- include('partials/header.ejs') %>
-
+            <script src="/js/searchAddress.js"></script>
             <main class="mapResponsivo">
                 <section class="localizacao">
                     <div class="contactContainer">
@@ -83,11 +83,24 @@
                                             <input type="text" name="search-house-street" id="search-house-street">
                                             <label for="search-house-number">NÚMERO</label>
                                             <input type="number" name="search-house-number" id="search-house-number">
-                                            <label for="search-house-neighborhood">BAIRRO</label>
-                                            <input type="text" name="search-house-neighborhood" id="search-house-street-neighborhood">
                                         </div>
                                         <div class="searchResult house">
-                                            
+                                            <div id="resultadoPesquisa">
+                                                <h3>SEU ENDEREÇO PERTENCE A:</h3>
+                                                <h4></h4>
+                                            </div>
+                                            <div id="matricula">
+                                                <a href="https://forms.gle/4E1Aaejs2Fffd5hC9" target="_blank">REQUERIMENTO DE MATRÍCULA</a>
+                                                <ul class="docsMatricula">
+                                                    <li>Certidão de nascimento</li>
+                                                    <li>Carteira de vacinação</li>
+                                                    <li>Comprovante de residência</li>
+                                                    <li>Cartão do SUS</li>
+                                                    <li>Documento do responsável</li>
+                                                </ul>
+                                                <p>ENVIE OS DOCUMENTOS PARA O WHATSAPPP</p>
+                                                <a id="numero" href="https://api.whatsapp.com/send?phone=551338225152" target="_blank">(13)3822-5152</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>                             
@@ -96,5 +109,5 @@
                     </div>
                 </section>
             </main>
-
+            <script src="/js/filterStreets.js"></script>
 <%- include('partials/footer.ejs') %>

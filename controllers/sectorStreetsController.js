@@ -106,6 +106,31 @@ const getOneSector = async (req, res) => {
     }
 }
 
+/* --- Listar endereço exato --- */
+const searchHouse = async (req, res) => {
+    try {
+        const { street, number, neighborhood } = req.query;
+
+        if (!street) {
+            return res.status(400).json({ error: "O campo 'street' é obrigatório." });
+        }
+
+        const house = await sectorService.searchHouse(street, parseInt(number), neighborhood);
+
+        if (!house) {
+            return res.status(404).json({ message: "ENDEREÇO NÃO LOCALIZADO" });
+        }
+
+        res.status(200).json({
+            setor: house.setor,
+            message: house.setor === "EMEB Pingo de Gente" ? "Display Flex" : ""
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Erro interno do servidor." });
+    }
+};
+
 /* --- Atualizar informações do setores --- */
 const updateSector = async (req, res) => {
     try {
@@ -159,5 +184,6 @@ export default {
     getStreetsBySectorAndNeighborhood,
     updateSector,
     deleteSector,
-    searchStreetsBySector
+    searchStreetsBySector,
+    searchHouse
 };
