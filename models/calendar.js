@@ -1,28 +1,24 @@
 import mongoose from "mongoose";
 
-const EventoSchema = new mongoose.Schema({
-    data_evento: { type: String, required: true, trim: true }, // Usando string para data no formato "DD/MM/YYYY"
-    descricao_evento: { type: String, required: true, trim: true },
-    participantes: [{ type: String, trim: true }] // Lista de participantes
+const eventoSchema = new mongoose.Schema ({
+    data_evento: {type: Date},
+    descricao_evento: {type: String},
+    participantes: [String]
 });
 
-const DiaSchema = new mongoose.Schema({
-    dia: { type: Number, required: true },
-    dia_semana: { type: String, required: true, trim: true },
-    situacao: { type: String, required: true, trim: true, enum: ["SÁBADO", "DOMINGO", "LETIVO", "NÃO LETIVO","FERIADO", "PONTO FACULTATIVO", "FÉRIAS", "PLANEJAMENTO", "CONSELHO DE CLASSE", "RECESSO"] },
-    eventos: [EventoSchema] // Lista de eventos
+const diaSchema = new mongoose.Schema ({
+    dia: {type: Number, require: true},
+    dia_semana: {type: String, require: true, enum:["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]},
+    situacao: {type: String, require: true, enum:["FERIADO", "FÉRIAS", "PLANEJAMENTO", "LETIVO", "PONTO FACULTATIVO", "CONSELHO DE CLASSE", "RECESSO", "NÃO LETIVO", "SÁBADO", "DOMINGO"]},
+    eventos: [eventoSchema]
 });
 
-const MesSchema = new mongoose.Schema({
-    mes: { type: String, required: true, trim: true },
-    ano: { type: Number, required: true },
-    dias: [DiaSchema] // Lista de dias no mês
+const calendarioSchema = new mongoose.Schema ({
+    mes: { type: String, require: true},
+    ano: { type: Number, require: true},
+    dias: [diaSchema]
 });
 
-const CalendarioEscolarSchema = new mongoose.Schema({
-    calendario_escolar: [MesSchema] // Lista de meses com os dias e eventos
-});
-
-const CalendarioEscolar = mongoose.model('CalendarioEscolar', CalendarioEscolarSchema);
+const CalendarioEscolar = mongoose.model('CalendarioEscolar', calendarioSchema);
 
 export default CalendarioEscolar;
