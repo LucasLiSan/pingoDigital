@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const yearLabel = document.getElementById("year");
     const schoolDaysCurrent = document.getElementById("shoolDaysCurrent");
 
-    const apiUrl = "/calendario"; // URL para acessar sua API
+    const apiUrl = "/dias"; // URL para acessar sua API
 
     // Fetch calendar data from MongoDB
     async function fetchCalendarData(year, month) {
