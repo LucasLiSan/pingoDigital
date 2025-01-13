@@ -583,17 +583,18 @@ main {
 }
 
 #bodyCalendar span:hover {
-    background-color: var(--colorPalletOne);
+    background-color: var(--colorPalletTwo);
     color: #FFFFFF;
 }
 
 #bodyCalendar span:focus {
-    background-color: var(--colorPalletThree);
+    background-color: var(--colorPalletOne);
     color: #FFFFFF;
 }
 
 .events {
     width: 55%;
+    height: 46rem;
     margin-top: 1rem;
     display: flex;
     border: solid 1px #000000;
@@ -601,6 +602,7 @@ main {
     flex-wrap: wrap;
     align-content: flex-start;
     justify-content: center;
+    overflow-y: scroll;
 }
 
 .event {
@@ -618,7 +620,7 @@ main {
 }
 
 .event:nth-child(odd) {
-    background-color: var(--colorPalletThree);
+    background-color: var(--colorPalletOne);
     color: #FFFFFF;
 }
 

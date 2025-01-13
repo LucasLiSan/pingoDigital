@@ -16,10 +16,20 @@ calendarioRoutes.get("/calendario", calendarioController.renderCalendarPage);
     /* 3º Endpoint: Listar todos */
     calendarioRoutes.get("/dias", calendarioController.getAllDays);
 
-    /* 4º Endpoint: Atualizar calendário */
+    /* 4º Endpoint: Listar um mês */
+    calendarioRoutes.get("/calendario/id/:id", calendarioController.getCalendarById);
+
+    /* 5º Endpoint: Atualizar calendário */
     calendarioRoutes.patch("/calendario/:id", calendarioController.updateCalendar);
 
-    /* 5º Endpoint: Deletar calendário */
+    /* 6º Endpoint: Atualizar um dia específico */
+    calendarioRoutes.patch("/calendario/dia/:dayId", calendarioController.updateDay);
+
+    /* 7º Endpoint: Deletar calendário */
     calendarioRoutes.delete("/calendario/:id", calendarioController.deleteCalendar);
+
+    /* 8º Endpoint: Deletar dia especifico*/
+    calendarioRoutes.delete("/calendario/:calendarioId/dia/:diaId", calendarioController.deleteSpecificDay);
+
 
 export default calendarioRoutes;

@@ -59,6 +59,23 @@ const getAllDays = async (req, res) => {
     }
 }
 
+/* --- Listar um mês --- */
+const getCalendarById = async (req, res) => {
+    try {
+        const { id } = req.params; // ID passado como parâmetro na URL
+        const calendario = await calendarioService.getById(id);
+
+        if (!calendario) {
+            return res.status(404).json({ message: `Nenhum calendário encontrado para o ID: ${id}` });
+        }
+
+        res.status(200).json({ calendario });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ err: "Erro ao buscar calendário pelo ID." });
+    }
+};
+
 /* --- Atualizar calendário --- */
 const updateCalendar = async (req, res) => {
     try {
@@ -75,6 +92,23 @@ const updateCalendar = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ err: "Erro ao atualizar o calendário." });
+    }
+};
+
+const updateDay = async (req, res) => {
+    try {
+        const { dayId } = req.params; // ID do dia
+        const updatedDay = req.body; // Dados atualizados do dia
+
+        const updatedCalendar = await calendarioService.updateDay(dayId, updatedDay);
+
+        res.status(200).json({
+            Success: "Dia atualizado com sucesso",
+            calendario: updatedCalendar,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ err: "Erro ao atualizar o dia." });
     }
 };
 
@@ -97,11 +131,26 @@ const deleteCalendar = async (req, res) => {
     }
 };
 
+const deleteSpecificDay = async (req, res) => {
+    try {
+        const { calendarioId, diaId } = req.params; // IDs passados como parâmetros na URL
+
+        const updatedCalendar = await calendarioService.deleteDay(calendarioId, diaId);
+        res.status(200).json({ Success: "Dia removido com sucesso", calendario: updatedCalendar });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ err: "Erro ao remover o dia." });
+    }
+};
+
 export default {
     renderCalendarPage,
     createNewDay,
     createMultipleDays,
     getAllDays,
+    getCalendarById,
     updateCalendar,
-    deleteCalendar
+    updateDay,
+    deleteCalendar,
+    deleteSpecificDay
 };
