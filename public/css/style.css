@@ -180,6 +180,8 @@ main {
     height: 100%;
     display: flex;
     justify-content: space-around;
+    overflow-x: scroll;
+    padding: 0 0 0 9rem;
 }
 
 .container {
@@ -188,52 +190,52 @@ main {
     top: 50%;
     position: relative;
     transform: translate(-50%, -50%);
-    font-family: arbotek-rounded, sans-serif;
-    font-style: normal;
-    font-weight: 200;
+    margin: 0 3rem;
 }
 
-#image {
-    background-image: url('https://static-00.iconduck.com/assets.00/teacher-illustration-1001x1024-plu4q319.png'), linear-gradient(var(--colorPalletOne), var(--colorPalletOne));
-    background-size: cover;
+.image {
+    background-image: url('../assets/imgs/LogoHome.png'), linear-gradient(var(--colorPalletTwo), var(--colorPalletThree));
+    background-size: inherit;
+    background-repeat: no-repeat;
+    background-position: center;
     height: 280px;
-    width: 350px;
+    width: 300px;
     border-radius: 10px;
-    box-shadow: 0px 18px 60px black;
+    box-shadow: 0.4rem 0.2rem 0px 0.1rem var(--colorPalletOne);
     overflow: hidden;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-#image h2 {
+.image h2 {
     text-align: center;
     margin-top: 170px;
-    color: rgb(245, 237, 237);
-    text-shadow: 3px 3px 5px black;
+    color: #000000;
 }
 
-#image p {
+.image p {
     text-align: center;
     margin-top: 10px;
-    color: rgb(206, 185, 185);
-    text-shadow: 3px 3px 5px black;
+    color: #000000;
+    font-size: 1.4rem;
+    text-transform: uppercase;
 }
 
-#content {
+.content {
     height: 80px;
-    width: 290px;
+    width: 230px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: white;
     left: 10%;
     position: relative;
     z-index: -1;
-    box-shadow: 0px 5px 50px black;
+    box-shadow: 0.4rem 0.2rem 0px 0.1rem var(--colorPalletOne);
     top: -30%;
 }
 
-#button {
+.button {
     height: 60px;
     width: 250px;
     background-color: rgb(243, 94, 119);
@@ -248,13 +250,13 @@ main {
     transition: 0.5s;
 }
 
-#button:hover {
-    background-color: white;
-  cursor: pointer;
-  box-shadow: 0px 5px 50px white;
+.button:hover {
+    background-color: var(--colorPalletThree);
+    cursor: pointer;
+    box-shadow: 0px 5px 50px white;
 }
 
-#button h2 {
+.button h2 {
     padding-top: 15px;
     color: white;
     letter-spacing: 3px;
@@ -262,12 +264,12 @@ main {
     transition: 0.3s;
 }
 
-#button h2:hover {
+.button h2:hover {
     color: rgb(243, 94, 119);
   cursor: pointer;
 }
 
-#content {
+.content {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -287,7 +289,7 @@ main {
     padding-left: 25px;
 }
 
-#num {
+.num {
     font-size: x-large;
     font-weight: 500;
     letter-spacing: 1px;
@@ -295,7 +297,7 @@ main {
     color: rgb(236, 42, 149);
 }
 
-#image button {
+.image button {
     padding: 5px 10px;
     border: 0.5px solid rgb(153, 141, 141);
     background-color: rgba(0, 0, 0, 0.3);
@@ -306,11 +308,11 @@ main {
     transition: 0.3s;
 }
 
-#image button:focus {
+.image button:focus {
     outline: none;
 }
 
-#image button:hover {
+.image button:hover {
     background-color: rgb(243, 94, 119);
     border: none;
 }
