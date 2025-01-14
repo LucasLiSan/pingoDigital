@@ -167,6 +167,156 @@ main {
     background-color: var(--colorPalletThree);
 }
 
+/* -- docente.ejs -- */
+
+.mainDocentes {
+    height: 40rem;
+    display: flex;
+    justify-content: center;
+}
+
+.sectionDocentes {
+    width: 75rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.container {
+    height: 400px;
+    width: 300px;
+    top: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    font-family: arbotek-rounded, sans-serif;
+    font-style: normal;
+    font-weight: 200;
+}
+
+#image {
+    background-image: url('https://static-00.iconduck.com/assets.00/teacher-illustration-1001x1024-plu4q319.png'), linear-gradient(var(--colorPalletOne), var(--colorPalletOne));
+    background-size: cover;
+    height: 280px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0px 18px 60px black;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#image h2 {
+    text-align: center;
+    margin-top: 170px;
+    color: rgb(245, 237, 237);
+    text-shadow: 3px 3px 5px black;
+}
+
+#image p {
+    text-align: center;
+    margin-top: 10px;
+    color: rgb(206, 185, 185);
+    text-shadow: 3px 3px 5px black;
+}
+
+#content {
+    height: 80px;
+    width: 290px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+    left: 10%;
+    position: relative;
+    z-index: -1;
+    box-shadow: 0px 5px 50px black;
+    top: -30%;
+}
+
+#button {
+    height: 60px;
+    width: 250px;
+    background-color: rgb(243, 94, 119);
+    left: 17%;
+    top: -70%;
+    position: relative;
+    z-index: -2;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 5px 50px rgb(236, 79, 139);
+    transition: 0.5s;
+}
+
+#button:hover {
+    background-color: white;
+  cursor: pointer;
+  box-shadow: 0px 5px 50px white;
+}
+
+#button h2 {
+    padding-top: 15px;
+    color: white;
+    letter-spacing: 3px;
+    font-weight: 200;
+    transition: 0.3s;
+}
+
+#button h2:hover {
+    color: rgb(243, 94, 119);
+  cursor: pointer;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    transition: 0.5s;
+}
+
+.pens,
+.followers,
+.projects {
+    padding-top: 15px;
+    padding-right: 1.5rem;
+    color: rgb(143, 145, 146);
+    font-size: small;
+}
+
+.pens {
+    padding-left: 25px;
+}
+
+#num {
+    font-size: x-large;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding-bottom: 5px;
+    color: rgb(236, 42, 149);
+}
+
+#image button {
+    padding: 5px 10px;
+    border: 0.5px solid rgb(153, 141, 141);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#image button:focus {
+    outline: none;
+}
+
+#image button:hover {
+    background-color: rgb(243, 94, 119);
+    border: none;
+}
+
+/* -- -- */
+
 /* -- localizacao.ejs -- */
 
 .localizacao {
@@ -453,7 +603,6 @@ main {
 .currentDate {
     width: 100%;
     height: 5rem;
-    font-family: var(--fontTwo);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -514,7 +663,6 @@ main {
 .schoolDays {
     width: 100%;
     height: 2rem;
-    font-family: var(--fontTwo);
     text-transform: uppercase;
     text-align: center;
     align-content: center;
@@ -1051,4 +1199,12 @@ footer {
 
     .imgLogo { background-size: 30rem; }
     .headLogos h3 { font-size: 1rem; }
+
+    .mainCalendar {
+        overflow-x: scroll;
+    }
+
+    .articleCalendar {
+        width: 75rem;
+    }
 }
