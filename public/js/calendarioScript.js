@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Fetch calendar data from the API
     async function fetchCalendarData() {
         try {
-            const response = await fetch("http://localhost:8080/dias"); // Altere para a URL da sua API
+            const response = await fetch(`/dias`); // Altere para a URL da sua API
             if (!response.ok) {
                 throw new Error(`Erro ao buscar dados: ${response.statusText}`);
             }
