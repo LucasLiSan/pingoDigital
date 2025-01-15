@@ -1,5 +1,5 @@
-const cardapioController = (req, res) => {
+const renderCardapioPage = (req, res) => {
     res.render('cardapio');
 };
 
-export default cardapioController;
+export default renderCardapioPage;

@@ -1,9 +1,76 @@
 <%- include('partials/header.ejs') %>
 
-            <main>
+        <main class="mainCardapio">
+            <article class="articleCardapio">
                 <section>
-                    <h1>CARDÁPIO</h1>
+                    <div class="rope">
+                        <img src="https://notbigmuzzy.github.io/codepen/example1/rope.png" class="rope-left">
+                        <img src="https://notbigmuzzy.github.io/codepen/example1/rope.png" class="rope-right">
+                    </div>
+                    <div class="page1 page">
+                        <img src="https://notbigmuzzy.github.io/codepen/example1/plate1.png" class="plate1">
+                        <div class="body-wrap">
+                            <h1 class="page1-title">M E N U</h1>
+                            <div class="page1-desc">
+                                <h3 class="currentDay"> 
+                                    <button id="prevDay" aria-label="Dia anterior">&lt;</button>
+                                    <span id="day">14</span> de <span id="mouth">Novembro</span> 
+                                    <button id="nextDay" aria-label="Dia seguinte">&gt;</button>
+                                </h3>
+                                <br>
+                                <hr>
+                                <br>
+                                <p>O <a href="https://drive.google.com/drive/folders/1XatPlXdx48UtT_xStuwUiQJL4YZPJGkP?usp=sharing" target="_blank">cardápio das EMEBs e CRECHES</a> é definido pela equipe da Divisão de Gestão de Políticas Públicas da Alimentação Escolar.</p>
+                                <p>O cardápio do dia pode sofrer alterações dependendo da disponibilidade dos itens de preparo</p>
+                                <p>As imagens são meramente ilustrativas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page2 page">
+                        <img src="https://notbigmuzzy.github.io/codepen/example1/grapes.png" class="grapes">
+                        <div class="body-wrap">
+                            <div class="pg2-middle-wrap">
+                                <div class="pg2-green-back"></div>
+                                <div class="pg2-white-desc"></div>
+                                <div class="pg2-photo-wrap">
+                                    <div class="pg2-photo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page3 page">
+                        <img src="https://notbigmuzzy.github.io/codepen/example1/leafs.png" class="leafs">
+                        <div class="body-wrap">
+                            <div class="pg3-middle-wrap">
+                                <div class="pg3-red-back"></div>
+                                <div class="pg3-photo-wrap">
+                                    <div class="pg3-photo"></div>
+                                </div>
+                                <div class="pg3-white-desc"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page4 page">
+                        <img src="https://notbigmuzzy.github.io/codepen/example1/dessert.png" class="dessert">
+                        <div class="body-wrap">
+                            <div class="pg4-middle-wrap">
+                                <div class="pg4-bezh-back"></div>
+                                <div class="pg4-white-desc"></div>
+                                <div class="pg4-photo-wrap">
+                                    <div class="pg4-photo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page5 page">
+                        <div class="body-wrap">
+                            <h3>CARDÁPIO PARA INTOLERANTES A LACTOSE</h3>
+                        </div>
+                    </div>                        
                 </section>
-            </main>
+            </article>
+        </main>
+
+        <script src="js/cardapioScript.js"></script>
 
 <%- include('partials/footer.ejs') %>
