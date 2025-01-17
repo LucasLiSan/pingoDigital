@@ -567,7 +567,30 @@ main {
 
 /* -- calendario.ejs -- */
 
-.articleCalendar { align-content: flex-start; }
+.articleCalendar { 
+    height: 100%;
+    align-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.calendarBody {
+    width: 100%;
+    height: 85%;
+}
+
+.calendarInfo {
+    width: 50%;
+    height: 15%;
+    align-content: center;
+}
+
+.calendarInfo h3 {
+    font-family: var(--fontOne);
+    text-align: justify;
+}
 
 .currentDate {
     width: 100%;
