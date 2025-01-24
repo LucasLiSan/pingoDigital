@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const desjejumSchema = new mongoose.Schema(
-    { itens: [{ type: String }] },
+    { 
+        itens: [{ type: String }],
+        pic: { type: String }
+    },
     { _id: false }
 );
 
@@ -13,13 +16,17 @@ const almocoDiaSchema = new mongoose.Schema(
 const almocoSchema = new mongoose.Schema(
     {
         prato_do_dia: { type: String, required: true },
-        almoco_do_dia: [almocoDiaSchema]
+        almoco_do_dia: [almocoDiaSchema],
+        pic: { type: String }
     },
     { _id: false }
 );
 
 const sobremesaSchema = new mongoose.Schema(
-    { itens: [{ type: String }] },
+    { 
+        itens: [{ type: String }],
+        pic: { type: String }
+    },
     { _id: false }
 );
 
