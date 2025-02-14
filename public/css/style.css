@@ -1653,6 +1653,10 @@ footer {
     nav > ul { width: 60%; }
 }
 
+@media (width < 1281px) {
+    .local { width: 60%; }
+}
+
 @media (width < 769px) {
     header { background-size: inherit; }
     nav { justify-content: flex-start; }
