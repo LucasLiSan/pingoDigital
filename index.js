@@ -5,7 +5,7 @@ import ip from "ip";
 import multer from "multer";
 
 /* ----------  BANCO DE DADOS ---------- */
-import connect from "./config/dbConfig.js";
+import mongoose from "./config/dbConfig.js";
 //mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
 
 /* ----------  IMPORTAÇÃO DE MODELS ---------- */
@@ -50,8 +50,6 @@ const port = 3000;
 const myServer = ip.address();
 const renderPort = '0.0.0.0';
 console.log(myServer);
-
-connect();
 
 app.listen(port, renderPort, (error) => {
     if(error) {console.log(error); }

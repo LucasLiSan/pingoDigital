@@ -1,20 +1,11 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 
-dotenv.config(); // Carrega variáveis do .env
+const connect = () => { mongoose.connect(`mongodb+srv://lukassantanargtsp:admin@cluster0.qb7z0.mongodb.net/api-pingoDigital?retryWrites=true&w=majority&appName=Cluster0`); }
 
-const connect = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/api-pingoDigital");
-        console.log("Conectado com sucesso ao MongoDB.");
-    } catch (error) {
-        console.error("Erro ao conectar com o MongoDB:", error);
-        process.exit(1); // Encerra o processo em caso de falha
-    }
-};
+const connection = mongoose.connection;
+connection.on("error", () => { console.log("Erro ao conectar com o MongoDB.")});
+connection.on("open", () => { console.log("Conectado com sucesso ao MongoDB.")});
 
-mongoose.connection.on("error", (err) => {
-    console.error("Erro na conexão com o MongoDB:", err);
-});
+connect();
 
-export default connect;
+export default mongoose;
