@@ -170,6 +170,32 @@ main {
 
 /* -- docente.ejs -- */
 
+.achadosSection {
+    width: 100%;
+    height: 100%;
+}
+
+.album {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.pics {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.pics img {
+    width: 70%;
+    margin: 1rem;
+}
+
+/* -- -- */
+
+/* -- docente.ejs -- */
+
 .mainDocentes {
     height: 40rem;
     display: flex;
