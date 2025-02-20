@@ -170,9 +170,14 @@ main {
 
 /* -- docente.ejs -- */
 
+.achadosMain {
+    height: 50rem;
+}
+
 .achadosSection {
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
 }
 
 .album {
@@ -187,9 +192,23 @@ main {
     justify-items: center;
 }
 
-.pics img {
-    width: 70%;
+.perdidos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.perdidos img {
+    width: 60%;
     margin: 1rem;
+}
+
+.perdidos label, .perdidos span {
+    width: 100%;
 }
 
 /* -- -- */
