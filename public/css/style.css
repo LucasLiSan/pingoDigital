@@ -168,7 +168,7 @@ main {
     background-color: var(--colorPalletThree);
 }
 
-/* -- docente.ejs -- */
+/* -- achados.ejs -- */
 
 .achadosMain {
     height: 50rem;
@@ -209,6 +209,40 @@ main {
 
 .perdidos label, .perdidos span {
     width: 100%;
+    height: 2rem;
+    font-size: 1.2rem;
+    align-content: center;
+    text-transform: uppercase;
+}
+
+.perdidos button {
+    width: 9rem;
+    height: 2rem;
+    display: flex;
+    border-radius: 0.5rem;
+}
+
+.perdidos a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: var(--fontFour);
+    letter-spacing: 1px;
+    background: var(--colorPalletTwo);
+    color: var(--colorPalletThree);
+    align-content: center;
+    border-radius: 0.5rem;
+}
+
+.perdidos a:hover {
+    background: var(--colorPalletThree);
+    color: var(--colorPalletOne);
+}
+
+.perdidos a:active {
+    background: var(--colorPalletOne);
+    color: var(--colorPalletTwo);
 }
 
 /* -- -- */
