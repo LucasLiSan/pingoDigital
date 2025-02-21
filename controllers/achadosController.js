@@ -117,7 +117,7 @@ const getLostItems = async (req, res) => {
 const markItemAsReturned = async (req, res) => {
     try {
         const { id } = req.params; // ID do item
-        const { dono, dono_turma } = req.body;
+        let { dono, dono_turma, data_devolucao } = req.body;
 
         // Verifica se o item existe
         const existingItem = await achadosService.getOne(id);
@@ -125,8 +125,12 @@ const markItemAsReturned = async (req, res) => {
             return res.status(404).json({ error: "Item não encontrado." });
         }
 
+        if (data_devolucao) {
+            const [day, month, year] = data_devolucao.split("/");
+            data_devolucao = new Date(`${year}-${month}-${day}T00:00:00Z`); // Usa UTC para evitar erros de fuso
+        }
+
         // Passa a data de devolução e as informações do dono para o serviço
-        const data_devolucao = new Date();
         await achadosService.markAsReturned(existingItem.item, dono, dono_turma, data_devolucao);
 
         res.status(200).json({ success: `Item '${existingItem.item}' marcado como DEVOLVIDO.` });
