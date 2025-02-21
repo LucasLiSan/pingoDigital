@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <img class="pic" src="${item.pic}" alt="${item.desc_item}">
                 <label class="item" for="${item.item}">${item.item}</label>
                 <span class="desc_item">${item.desc_item}</span>
-                <span class="data">Data achada: ${new Date(item.data).toLocaleDateString("pt-BR")}</span>
+                <span class="data">Encontrado: ${new Date(item.data).toLocaleDateString("pt-BR")}</span>
                 <span class="tempoRestante">Tempo restante: ${tempoRestanteText}</span>
                 <button>
                     <a class="linkWhats" href="https://api.whatsapp.com/send?phone=551338225152&text=Ol%C3%A1,%20o%20item%20${encodeURIComponent(item.item)}%20pertence%20ao(a)%20meu(minha)%20filho(a)." target="_blank">
