@@ -1,12 +1,12 @@
 /* ----------  IMPORTAÇÃO DE MÓDULOS ---------- */
 import express from "express";
 import ip from "ip";
-import mongoose from "mongoose";
+//import mongoose from "mongoose";
 import multer from "multer";
 
 /* ----------  BANCO DE DADOS ---------- */
-//import mongoose from "./config/dbConfig.js";
-mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
+import mongoose from "./config/dbConfig.js";
+//mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
 
 /* ----------  IMPORTAÇÃO DE MODELS ---------- */
 import Student from "./models/students.js";
@@ -17,6 +17,7 @@ import calendarioRoutes from "./routes/calendarioRoutes.js";
 import cardapioRoutes from "./routes/cardapioRoutes.js";
 import docentesRoutes from './routes/docentesRoute.js';
 import homeRoutes from './routes/homeRoute.js';
+import horaRoutes from "./routes/horaTrabFuncRoute.js";
 import localizacaoRoutes from "./routes/localizacaoRoute.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import sectorRoutes from "./routes/sectorStreetsRoutes.js"
@@ -39,6 +40,7 @@ app.use('/', calendarioRoutes);
 app.use('/', cardapioRoutes);
 app.use('/', docentesRoutes);
 app.use('/', homeRoutes);
+app.use('/', horaRoutes);
 app.use('/', localizacaoRoutes);
 app.use('/', loginRoutes);
 app.use('/', sectorRoutes);
@@ -52,7 +54,7 @@ const myServer = ip.address();
 const renderPort = '0.0.0.0';
 console.log(myServer);
 
-app.listen(port, (error) => {
+app.listen(port, renderPort, (error) => {
     if(error) {console.log(error); }
     console.log(`API rodando em http://localhost:${port}.`);
 });
