@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Object.values(sections).forEach(section => section.style.display = "none");
 
     // Exibe a seção "Normas" ao carregar a página
-    sections.sm1.style.display = "flex";
+    sections.sm3.style.display = "flex";
 
     // Adiciona evento de clique para cada <li>
     Object.keys(sections).forEach(id => {
