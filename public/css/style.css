@@ -1805,14 +1805,63 @@ main {
 }
 
 .normasEscolares p:nth-child(odd) {
-    background-color: rgba(244, 195, 1, 0.5);
+    background-color: rgba(97, 44, 138, 0.5);
+    color: #FFFFFF;
 }
 
 #portarias {
-    width: 40%;
-    height: 40%;
-    background-color: green;
-    display: block;
+    width: 90%;
+    height: 60%;
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-around;
+}
+
+#portarias div {
+    width: 45%;
+    margin: 1rem;
+}
+
+#portarias div:nth-child(odd) {
+    background-color: var(--colorPalletOne);
+    color: #FFFFFF;
+}
+
+#portarias div:nth-child(odd) > ul a {
+    color: #FFFFFF;
+}
+
+#portarias label {
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+#portarias ul {
+    width: 100%;
+    height: 10rem;
+    list-style: none;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+#portarias li {
+    padding: 0.3rem;
+}
+
+#portarias a {
+    color: #000000;
+}
+
+#portarias h2 {
+    width: 100%;
+    height: 3rem;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    text-align: center;
+    align-content: center;
 }
 
 /* -- -- */
