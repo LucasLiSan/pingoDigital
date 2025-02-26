@@ -13,6 +13,7 @@ import Student from "./models/students.js";
 
 /* ----------  IMPORTAÇÃO DE ROTAS ---------- */
 import achadosRoutes from "./routes/achadosRoutes.js";
+import aulaRoutes from "./routes/horaEducFisicRoutes.js"
 import calendarioRoutes from "./routes/calendarioRoutes.js";
 import cardapioRoutes from "./routes/cardapioRoutes.js";
 import docentesRoutes from './routes/docentesRoute.js';
@@ -36,6 +37,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', achadosRoutes);
+app.use('/', aulaRoutes);
 app.use('/', calendarioRoutes);
 app.use('/', cardapioRoutes);
 app.use('/', docentesRoutes);

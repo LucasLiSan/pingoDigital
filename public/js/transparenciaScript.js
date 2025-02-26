@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+//Horario de trabalho dos funcionarios
 document.addEventListener("DOMContentLoaded", () => {
     const tabelaBody = document.querySelector(".horariosFuncionarios tbody");
 
@@ -81,5 +82,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Chama a função ao carregar a página
     carregarHorarios();
+});
+
+//Horario de trabalho dos funcionarios
+document.addEventListener("DOMContentLoaded", () => {
+    const tabelaBodyEF = document.querySelector(".horariosEducacaoFisica tbody");
+
+    async function carregarAulas() {
+        try {
+            // Faz a requisição para a API
+            const respostaEF = await fetch("/aulasEF"); // Altere para a URL correta da sua API
+            const dadosEF = await respostaEF.json();
+
+            if (dadosEF.aulas && dadosEF.aulas.length > 0) {
+                tabelaBodyEF.innerHTML = ""; // Limpa a tabela antes de inserir novos dados
+
+                // Ordena os funcionários pelo nome em ordem alfabética
+                dadosEF.aulas.sort((a, b) => a.nomeProf.localeCompare(b.nomeProf));
+
+                // Percorre os dados e cria as linhas da tabela
+                dadosEF.aulas.forEach(aula => {
+                    const linhaEF = document.createElement("tr");
+
+                    linhaEF.innerHTML = `
+                        <td>${aula.matricula}</td>
+                        <td>${aula.nomeProf}</td>
+                        <td>${aula.DiaSemana}</td>
+                        <td>${aula.horaIn || "-"}</td>
+                        <td>${aula.horaOut || "-"}</td>
+                        <td>${aula.turma || "-"}</td>
+                    `;
+
+                    tabelaBodyEF.appendChild(linhaEF);
+                });
+            } else {
+                tabelaBodyEF.innerHTML = "<tr><td colspan='9'>Nenhum horário encontrado.</td></tr>";
+            }
+        } catch (error) {
+            console.error("Erro ao carregar horários:", error);
+            tabelaBodyEF.innerHTML = "<tr><td colspan='9'>Erro ao carregar dados.</td></tr>";
+        }
+    }
+
+    // Chama a função ao carregar a página
+    carregarAulas();
 });
 

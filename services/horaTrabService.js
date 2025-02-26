@@ -35,7 +35,7 @@ class horaTrabalhoService {
     /* --- Método DELETE --- */
     async delete(id) {
         try {
-            await Book.findByIdAndDelete(id);
+            await HorarioFuncionarios.findByIdAndDelete(id);
             console.log(`Horario id: ${id} deletado com sucesso.`);
         } catch (error) { console.log(error); }
     }
