@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
         sm1: document.getElementById("horarioFunc"),
         sm2: document.getElementById("horarioEducFis"),
         sm3: document.getElementById("normas"),
-        sm4: document.getElementById("portarias")
+        sm4: document.getElementById("portarias"),
+        sm5: document.getElementById("patrimonio"),
     };
 
     // Oculta todas as seções inicialmente
