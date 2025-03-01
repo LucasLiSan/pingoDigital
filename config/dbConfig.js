@@ -1,10 +1,18 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const connect = () => { mongoose.connect(`mongodb+srv://lukassantanargtsp:admin@cluster0.qb7z0.mongodb.net/api-pingoDigital?retryWrites=true&w=majority&appName=Cluster0`); }
+dotenv.config(); // Carrega as variáveis do .env (caso esteja rodando localmente)
+
+const connect = () => {
+    mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+};
 
 const connection = mongoose.connection;
-connection.on("error", () => { console.log("Erro ao conectar com o MongoDB.")});
-connection.on("open", () => { console.log("Conectado com sucesso ao MongoDB.")});
+connection.on("error", () => console.log("Erro ao conectar com o MongoDB."));
+connection.on("open", () => console.log("Conectado com sucesso ao MongoDB."));
 
 connect();
 
