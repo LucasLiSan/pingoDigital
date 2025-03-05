@@ -99,3 +99,61 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+// Script para o cardápio do dia
+document.addEventListener("DOMContentLoaded", async () => {
+    let currentDate = new Date();
+
+    const loadCardapio = async (date) => {
+        try {
+            const response = await fetch ('/diascardapio');
+            const data = await response.json();
+
+            const diaAtual = date.getDate();
+            const mesAtual = date.toLocaleString('pt-BR', { month: 'long' });
+            const anoAtual = date.getFullYear();
+
+            // Procurar os dados do mês e ano no JSON
+            const cardapioEncontrado = data.cardapios.find(item => item.ano === anoAtual);
+
+            if (cardapioEncontrado) {
+                const cardapioRegular = cardapioEncontrado.cardapio_regular.find(mesItem => 
+                    mesItem.mes.toLowerCase() === mesAtual.toLowerCase()
+                );
+
+                if (cardapioRegular) {
+                    const diaData = cardapioRegular.dias.find(d => d.dia === diaAtual);
+                    if (diaData) {
+                        document.querySelector('#day').textContent = diaAtual;
+                        document.querySelector('#mouth').textContent = mesAtual;
+                    } else {
+                        console.log('Nenhum cardápio encontrado para o dia selecionado.');
+                    }
+                } else {
+                    console.log('Nenhum cardápio encontrado para este mês.');
+                }
+            } else {
+                console.log('Nenhum cardápio encontrado para este ano.');
+            }
+
+        } catch (error) {
+            console.error('Erro ao carregar o cardápio:', error);
+        }
+
+    }
+
+    // Carregar o cardápio do dia atual inicialmente
+    await loadCardapio(currentDate);
+
+    // Funções de navegação entre os dias
+    document.getElementById("prevDay").addEventListener("click", async () => {
+        currentDate.setDate(currentDate.getDate() - 1);
+        await loadCardapio(currentDate);
+    });
+
+    document.getElementById("nextDay").addEventListener("click", async () => {
+        currentDate.setDate(currentDate.getDate() + 1);
+        await loadCardapio(currentDate);
+    });
+
+});
