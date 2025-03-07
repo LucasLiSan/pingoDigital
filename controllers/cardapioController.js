@@ -45,6 +45,38 @@ const getAllCardapios = async (req, res) => {
     }
 };
 
+const getCardapioDoDia = async (req, res) => {
+    try {
+        const hoje = new Date();
+        const mes = hoje.toLocaleString('default', { month: 'long' }); // Ex: Março
+        const ano = hoje.getFullYear();
+        const dia = hoje.getDate();
+
+        const cardapio = await cardapioService.getAll();
+
+        // Encontrar o cardápio para o mês e ano atuais
+        const cardapioDoDia = cardapio
+            .flatMap(item => item.cardapio_regular)
+            .find(c => c.mes === mes && c.ano === ano);
+
+        if (!cardapioDoDia) {
+            return res.status(404).json({ err: 'Cardápio não encontrado para o mês e ano atuais.' });
+        }
+
+        // Encontrar o cardápio para o dia atual
+        const cardapioDiaAtual = cardapioDoDia.dias.find(d => d.dia === dia);
+
+        if (!cardapioDiaAtual) {
+            return res.status(404).json({ err: 'Cardápio não encontrado para o dia de hoje.' });
+        }
+
+        res.status(200).json({ cardapio: cardapioDiaAtual });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ err: 'Erro interno ao buscar cardápio.' });
+    }
+};
+
 /* --- Listar um cardápio específico --- */
 const getOneCardapio = async (req, res) => {
     try {
@@ -111,6 +143,7 @@ export default {
     createNewCardapio,
     createMultipleDays,
     getAllCardapios,
+    getCardapioDoDia,
     getOneCardapio,
     updateCardapio,
     deleteCardapio
