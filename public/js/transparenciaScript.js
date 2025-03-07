@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sm3: document.getElementById("normas"),
         sm4: document.getElementById("portarias"),
         sm5: document.getElementById("patrimonio"),
+        sm6: document.getElementById("vistorias"),
     };
 
     // Oculta todas as seções inicialmente

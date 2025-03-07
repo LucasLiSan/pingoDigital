@@ -102,90 +102,85 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Script para o cardápio do dia
 
-    // Função para substituir vírgulas por "&"
-    function formatarItens(itens) {
-        return itens.join(", ").replace(/,/g, " &");
-    }
+document.addEventListener("DOMContentLoaded", async () => {
+    const prevDayBtn = document.getElementById("prevDay");
+    const nextDayBtn = document.getElementById("nextDay");
+    const daySpan = document.getElementById("day");
+    const monthSpan = document.getElementById("mouth");
+    const desjejumTitle = document.querySelector(".pg2-white-desc h2");
+    const desjejumPhoto = document.querySelector(".pg2-photo");
+    const almocoTitle = document.querySelector(".pg3-white-desc h2");
+    const almocoDesc = document.querySelector(".pg3-white-desc p");
+    const almocoPhoto = document.querySelector(".pg3-photo");
+    const sobremesaTitle = document.querySelector(".pg4-white-desc h2");
+    const sobremesaPhoto = document.querySelector(".pg4-photo");
 
-    // Função para obter o cardápio baseado no dia e mês atual
-    async function carregarCardapioDia(dia, mes) {
+    let currentDate = new Date();
+    let currentDay = currentDate.getDate();
+    let currentMonth = currentDate.getMonth(); // Índice do mês (0 = Janeiro, 11 = Dezembro)
+    let currentYear = currentDate.getFullYear();
+
+    const monthNames = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+
+    async function fetchCardapio() {
         try {
-            const resposta = await fetch(`/cardapio/${mes.toLowerCase()}/${dia}`); // Novo endpoint baseado em dia e mês
-            const dados = await resposta.json();
-
-            if (!dados.cardapio) {
-                console.error("Cardápio não encontrado.");
-                return;
-            }
-
-            const cardapio = dados.cardapio;
-
-            // Desjejum
-            const desjejum = cardapio.desjejum[0];
-            const desjejumItens = formatarItens(desjejum.itens);
-            document.querySelector('.pg2-white-desc h2').textContent = desjejumItens;
-            document.querySelector('.pg2-photo').style.backgroundImage = `url('${desjejum.pic}')`;
-
-            // Almoço
-            const almoco = cardapio.almoco[0];
-            document.querySelector('.pg3-white-desc h2').textContent = almoco.prato_do_dia;
-            const almocoItens = formatarItens(almoco.almoco_do_dia[0].itens);
-            document.querySelector('.pg3-white-desc p').textContent = almocoItens;
-            document.querySelector('.pg3-photo').style.backgroundImage = `url('${almoco.pic}')`;
-
-            // Sobremesa
-            const sobremesa = cardapio.sobremesa[0];
-            const sobremesaItens = formatarItens(sobremesa.itens);
-            document.querySelector('.pg4-white-desc h2').textContent = `Sobremesa - ${sobremesaItens}`;
-            document.querySelector('.pg4-photo').style.backgroundImage = `url('${sobremesa.pic}')`;
+            const response = await fetch(`/diascardapio`);
+            const data = await response.json();
+            return data.cardapios;
         } catch (error) {
-            console.error("Erro ao carregar o cardápio:", error);
+            console.error("Erro ao buscar o cardápio:", error);
+            return [];
         }
     }
 
-    // Função para atualizar a data exibida no DOM
-    function atualizarDataDisplay(dia, mes) {
-        document.querySelector('#day').textContent = dia;
-        document.querySelector('#mouth').textContent = mes;
-    }
+    async function updateCardapio(day, month, year) {
+        const cardapios = await fetchCardapio();
+        const monthName = monthNames[month];
 
-    // Função para manipular os botões de navegação
-    function configurarBotoesDeNavegacao() {
-        const btnPrev = document.getElementById('prevDay');
-        const btnNext = document.getElementById('nextDay');
+        const cardapioMes = cardapios.find(c => 
+            c.cardapio_regular.some(m => m.mes === monthName && m.ano === year)
+        );
+        if (!cardapioMes) return;
 
-        let diaAtual = parseInt(document.querySelector('#day').textContent);
-        const mesAtual = document.querySelector('#mouth').textContent;
+        const cardapioData = cardapioMes.cardapio_regular.find(m => m.mes === monthName && m.ano === year);
+        const diaData = cardapioData.dias.find(d => d.dia === day);
+        if (!diaData) return;
 
-        btnPrev.addEventListener('click', () => {
-            if (diaAtual > 1) {
-                diaAtual--;
-            } else {
-                diaAtual = 31; // Supondo que o mês tenha 31 dias, você pode querer ajustar isso com base no mês
-            }
-            atualizarDataDisplay(diaAtual, mesAtual);
-            carregarCardapioDia(diaAtual, mesAtual);
-        });
-
-        btnNext.addEventListener('click', () => {
-            if (diaAtual < 31) {
-                diaAtual++;
-            } else {
-                diaAtual = 1; // Volta para o primeiro dia do mês
-            }
-            atualizarDataDisplay(diaAtual, mesAtual);
-            carregarCardapioDia(diaAtual, mesAtual);
-        });
-    }
-
-    // Função inicial que carrega o cardápio para o dia atual
-    function inicializar() {
-        const diaAtual = parseInt(document.querySelector('#day').textContent);
-        const mesAtual = document.querySelector('#mouth').textContent;
+        // Atualiza desjejum
+        desjejumTitle.textContent = diaData.desjejum[0].itens.join(" & ");
+        desjejumPhoto.style.backgroundImage = `url(/images/${diaData.desjejum[0].pic})`;
         
-        carregarCardapioDia(diaAtual, mesAtual);
-        configurarBotoesDeNavegacao();
+        // Atualiza almoço
+        almocoTitle.textContent = diaData.almoco[0].prato_do_dia;
+        almocoDesc.textContent = diaData.almoco[0].almoco_do_dia[0].itens.join(" & ");
+        almocoPhoto.style.backgroundImage = `url(/images/${diaData.almoco[0].pic})`;
+        
+        // Atualiza sobremesa
+        sobremesaTitle.textContent = diaData.sobremesa[0].itens.join(" & ");
+        sobremesaPhoto.style.backgroundImage = `url(/images/${diaData.sobremesa[0].pic})`;
     }
 
-    // Chama a função inicial ao carregar a página
-    document.addEventListener('DOMContentLoaded', inicializar);
+    function updateDateDisplay() {
+        daySpan.textContent = currentDay.toString().padStart(2, '0');
+        monthSpan.textContent = monthNames[currentMonth];
+    }
+
+    function changeDay(increment) {
+        currentDate.setDate(currentDate.getDate() + increment);
+        currentDay = currentDate.getDate();
+        currentMonth = currentDate.getMonth();
+        currentYear = currentDate.getFullYear();
+
+        updateDateDisplay();
+        updateCardapio(currentDay, currentMonth, currentYear);
+    }
+
+    prevDayBtn.addEventListener("click", () => changeDay(-1));
+    nextDayBtn.addEventListener("click", () => changeDay(1));
+
+    updateDateDisplay();
+    updateCardapio(currentDay, currentMonth, currentYear);
+});

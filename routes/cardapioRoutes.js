@@ -16,8 +16,6 @@ cardapioRouter.get('/cardapio', cardapioController.renderCardapioPage);
     /* 3º Endpoint: Listar todos */
     cardapioRouter.get("/diascardapio", cardapioController.getAllCardapios);
 
-    cardapioRouter.get("/cardapio/diadia", cardapioController.getCardapioDoDia);
-
     /* 4º Endpoint: Listar um */
     cardapioRouter.get("/diacardapio/:id", cardapioController.getOneCardapio);
 
