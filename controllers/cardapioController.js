@@ -65,24 +65,28 @@ const getOneCardapio = async (req, res) => {
     }
 };
 
-/* --- Atualizar informações de um cardápio --- */
-const updateCardapio = async (req, res) => {
+/* --- Atualizar prato do dia --- */
+const updateCardapioController = async (req, res) => {
     try {
-        if (ObjectId.isValid(req.params.id)) {
-            const id = req.params.id;
-            const cardapioData = req.body;
-            const existingCardapio = await cardapioService.getOne(id);
-            if (!existingCardapio) {
-                return res.status(404).json({ err: 'Cardápio não encontrado.' });
-            }
-            const updatedCardapio = await cardapioService.update(id, cardapioData);
-            res.status(200).json({ Success: `Cardápio para o mês '${updatedCardapio.cardapio_regular[0].mes}' atualizado com sucesso.` });
-        } else {
-            res.sendStatus(400); // Bad Request
+        if (!ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ error: "ID inválido" });
         }
+
+        const id = req.params.id;
+        const { mes, ano, dias } = req.body;
+
+        if (!dias || !Array.isArray(dias) || dias.length === 0) {
+            return res.status(400).json({ error: "É necessário pelo menos um dia para atualizar" });
+        }
+
+        const diaAtualizado = await cardapioService.updateCardapio(id, mes, ano, dias[0]);
+
+        res.status(200).json({
+            message: `Dia ${dias[0].dia} atualizado/adicionado com sucesso.`,
+            cardapio: diaAtualizado
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ err: 'Erro interno do servidor.' });
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -112,6 +116,6 @@ export default {
     createMultipleDays,
     getAllCardapios,
     getOneCardapio,
-    updateCardapio,
+    updateCardapioController,
     deleteCardapio
 };

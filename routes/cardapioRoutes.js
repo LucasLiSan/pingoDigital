@@ -20,7 +20,7 @@ cardapioRouter.get('/cardapio', cardapioController.renderCardapioPage);
     cardapioRouter.get("/diacardapio/:id", cardapioController.getOneCardapio);
 
     /* 5º Endpoint: Editar */
-    cardapioRouter.patch("/diacardapio/:id", cardapioController.updateCardapio);
+    cardapioRouter.patch("/pratododia/:id", cardapioController.updateCardapioController);
 
     /* 6º Endpoint: Deletar */
     cardapioRouter.delete("/diacardapio/:id", cardapioController.deleteCardapio);

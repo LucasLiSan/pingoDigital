@@ -151,16 +151,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Atualiza desjejum
         desjejumTitle.textContent = diaData.desjejum[0].itens.join(" & ");
-        desjejumPhoto.style.backgroundImage = `url(/images/${diaData.desjejum[0].pic})`;
+        desjejumPhoto.style.backgroundImage = `url(${diaData.desjejum[0].pic})`;
         
         // Atualiza almoço
         almocoTitle.textContent = diaData.almoco[0].prato_do_dia;
         almocoDesc.textContent = diaData.almoco[0].almoco_do_dia[0].itens.join(" & ");
-        almocoPhoto.style.backgroundImage = `url(/images/${diaData.almoco[0].pic})`;
+        almocoPhoto.style.backgroundImage = `url(${diaData.almoco[0].pic})`;
         
         // Atualiza sobremesa
         sobremesaTitle.textContent = diaData.sobremesa[0].itens.join(" & ");
-        sobremesaPhoto.style.backgroundImage = `url(/images/${diaData.sobremesa[0].pic})`;
+        sobremesaPhoto.style.backgroundImage = `url(${diaData.sobremesa[0].pic})`;
     }
 
     function updateDateDisplay() {

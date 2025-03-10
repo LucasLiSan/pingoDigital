@@ -56,15 +56,44 @@ class CardapioService {
     }
 
     /* --- Método UPDATE --- */
-    async update(id, cardapioData) {
+    async updateCardapio(id, mes, ano, novoDia) {
         try {
-            const updatedCardapio = await CardapioEscolarRegular.findByIdAndUpdate(id, cardapioData, { new: true });
-            console.log(`Cardápio com ID ${id} atualizado com sucesso.`);
-            return updatedCardapio;
+            const cardapio = await CardapioEscolarRegular.findOne({
+                "_id": id,
+                "cardapio_regular.mes": mes,
+                "cardapio_regular.ano": ano
+            });
+    
+            if (!cardapio) {
+                throw new Error("Cardápio não encontrado.");
+            }
+    
+            let cardapioMesAno = cardapio.cardapio_regular.find(c => c.mes === mes && c.ano === ano);
+    
+            if (!cardapioMesAno) {
+                throw new Error("Mês e Ano não encontrados.");
+            }
+    
+            let diaExistente = cardapioMesAno.dias.find(d => d.dia === novoDia.dia);
+    
+            if (diaExistente) {
+                // Se o dia já existe, atualiza os dados
+                diaExistente.desjejum = novoDia.desjejum;
+                diaExistente.almoco = novoDia.almoco;
+                diaExistente.sobremesa = novoDia.sobremesa;
+            } else {
+                // Se o dia não existe, adiciona ao array
+                cardapioMesAno.dias.push(novoDia);
+            }
+    
+            await cardapio.save();
+            console.log(`Dia ${novoDia.dia} atualizado/adicionado com sucesso.`);
+            return cardapio;
         } catch (error) {
-            console.error(`Erro ao atualizar o cardápio com ID ${id}:`, error);
+            console.error("Erro ao atualizar/adicionar o dia:", error.message);
+            throw error;
         }
-    }
+    }    
 
     /* --- Método DELETE --- */
     async delete(id) {
