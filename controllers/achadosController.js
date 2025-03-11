@@ -55,7 +55,7 @@ const getAllItems = async (req, res) => {
 const getOneItem = async (req, res) => {
     try {
         const { itemCode } = req.params;
-        const item = await achadosService.getOne(itemCode);
+        const item = await achadosService.getOneItem(itemCode);
         if (!item) {
             return res.status(404).json({ error: "Item não encontrado." });
         }
@@ -69,16 +69,24 @@ const getOneItem = async (req, res) => {
 /* --- Atualizar um item pelo ID --- */
 const updateItem = async (req, res) => {
     try {
-        const { id } = req.params;
+        if (!ObjectId.isValid(req.params.id)) {
+            return res.sendStatus(400); // Status 400: Bad Request (ID inválido)
+        }
+
+        const id = req.params.id;
         const { item, desc_item, pic, situacao, dono } = req.body;
-        
-        const existingItem = await achadosService.getOne(item);
+
+        const existingItem = await achadosService.getOne(id); // Busca pelo _id correto
         if (!existingItem) {
             return res.status(404).json({ error: "Item não encontrado." });
         }
 
-        await achadosService.update(id, item, desc_item, pic, situacao, dono);
-        res.status(200).json({ success: `Item '${item}' atualizado com sucesso.` });
+        const updatedItem = await achadosService.update(id, item, desc_item, pic, situacao, dono);
+        if (!updatedItem) {
+            return res.status(404).json({ error: "Erro ao atualizar: Item não encontrado." });
+        }
+
+        res.status(200).json({ success: `Item atualizado com sucesso.`, updatedItem });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro interno do servidor." });

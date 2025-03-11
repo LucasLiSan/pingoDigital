@@ -16,7 +16,7 @@ achadosRoutes.get("/perdidos", achadosController.getAllItems);
 achadosRoutes.get("/perdido/:itemCode", achadosController.getOneItem);
 
 /* 4º Endpoint: Atualizar um item */
-achadosRoutes.put("/perdido/:id", achadosController.updateItem);
+achadosRoutes.patch("/perdido/:id", achadosController.updateItem);
 
 /* 5º Endpoint: Deletar um item */
 achadosRoutes.delete("/perdido/:id", achadosController.deleteItem);

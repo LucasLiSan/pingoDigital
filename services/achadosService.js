@@ -21,8 +21,17 @@ class AchadosService {
         }
     }
 
+    /* --- Método READ (Listar um item específico por id) --- */
+    async getOne (id) {
+        try {
+            const item = await AchadosPerdidos.findOne({ _id: id});
+            return item;
+        } catch (error) { console.log(error); }
+    }
+
+
     /* --- Método READ (Listar um item específico por item) --- */
-    async getOne(itemCode) {
+    async getOneItem(itemCode) {
         try {
             return await AchadosPerdidos.findOne({ item: itemCode });
         } catch (error) {
@@ -33,10 +42,25 @@ class AchadosService {
     /* --- Método UPDATE (Atualizar um item perdido) --- */
     async update(id, item, desc_item, pic, situacao, dono) {
         try {
-            await AchadosPerdidos.findByIdAndUpdate(id, { item, desc_item, pic, situacao, dono });
+            const updateData = {};
+            if (item) updateData.item = item;
+            if (desc_item) updateData.desc_item = desc_item;
+            if (pic) updateData.pic = pic;
+            if (situacao) updateData.situacao = situacao; // Certifica-se de que a situação está sendo passada corretamente
+            if (dono) updateData.dono = dono;
+    
+            const updatedItem = await AchadosPerdidos.findByIdAndUpdate(id, updateData, { new: true });
+    
+            if (!updatedItem) {
+                console.log(`Item ID: ${id} não encontrado.`);
+                return null;
+            }
+    
             console.log(`Item ID: ${id} atualizado com sucesso.`);
+            return updatedItem;
         } catch (error) {
             console.error("Erro ao atualizar item:", error);
+            throw error;
         }
     }
 
