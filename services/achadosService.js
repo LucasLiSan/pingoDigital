@@ -40,12 +40,18 @@ class AchadosService {
     }
 
     /* --- Método UPDATE (Atualizar um item perdido) --- */
-    async update(id, item, desc_item, pic, situacao, dono) {
+    async update(id, item, desc_item, pic, data, situacao, dono) {
         try {
             const updateData = {};
             if (item) updateData.item = item;
             if (desc_item) updateData.desc_item = desc_item;
             if (pic) updateData.pic = pic;
+            // Converte data de "DD/MM/YYYY" para Date
+            if (data) {
+                const [day, month, year] = data.split("/");
+                data = new Date(`${year}-${month}-${day}T00:00:00Z`); // Usa UTC para evitar erros de fuso
+                updateData.data = data;
+            }
             if (situacao) updateData.situacao = situacao; // Certifica-se de que a situação está sendo passada corretamente
             if (dono) updateData.dono = dono;
     

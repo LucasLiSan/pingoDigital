@@ -74,14 +74,14 @@ const updateItem = async (req, res) => {
         }
 
         const id = req.params.id;
-        const { item, desc_item, pic, situacao, dono } = req.body;
+        const { item, desc_item, pic, data, situacao, dono } = req.body;
 
         const existingItem = await achadosService.getOne(id); // Busca pelo _id correto
         if (!existingItem) {
             return res.status(404).json({ error: "Item não encontrado." });
         }
 
-        const updatedItem = await achadosService.update(id, item, desc_item, pic, situacao, dono);
+        const updatedItem = await achadosService.update(id, item, desc_item, pic, data, situacao, dono);
         if (!updatedItem) {
             return res.status(404).json({ error: "Erro ao atualizar: Item não encontrado." });
         }
