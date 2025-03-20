@@ -4,10 +4,21 @@ class PatrimonioService {
     /* --- Método CADASTRAR --- */
     async create(codPat, descrition, situation, local, ue, lastCheck, obs, value, fiscal, patPic, history = null) {
         try {
+            if (typeof lastCheck === "string" && lastCheck.includes("/")) {
+                // Garante que a data está no formato esperado (DD/MM/YYYY)
+                const [day, month, year] = lastCheck.split("/");
+                lastCheck = new Date(`${year}-${month}-${day}T00:00:00Z`);
+            } else if (!lastCheck) {
+                lastCheck = null; // Se não for fornecido, deixa nulo
+            }
+    
             const newPat = new Patrimonio({ codPat, descrition, situation, local, ue, lastCheck, obs, value, fiscal, patPic, history });
             await newPat.save();
             return newPat;
-        } catch (error) { console.log("Erro ao cadastrar item:", error); }
+        } catch (error) {
+            console.error("Erro ao cadastrar item:", error);
+            throw error; // Propaga o erro para ser tratado no controller
+        }
     }
 
     /* --- Método READ --- */
@@ -54,14 +65,14 @@ class PatrimonioService {
                 if (fiscal) updateData.fiscal = fiscal;
                 if (patPic) updateData.patPic = patPic;
 
-                const updatedPat = await Patrimonio.findByIdAndUpdate(id, updateData, { new: true});
+                const updatedPat = await Patrimonio.findOneAndUpdate(codPat, updateData, { new: true});
 
                 if (!updatedPat) {
-                    console.log(`Item ID: ${id} não encontrado.`);
+                    console.log(`Item Patrimonio: ${codPat} não encontrado.`);
                     return null;
                 }
         
-                console.log(`Item ID: ${id} atualizado com sucesso.`);
+                console.log(`Item Patrimonio: ${codPat} atualizado com sucesso.`);
                 return updatedPat;
 
             } catch (error) {

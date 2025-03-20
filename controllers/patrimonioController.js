@@ -49,40 +49,69 @@ const getOnePat = async (req, res) => {
         if(!pat) {
             return res.status(404).json({ error: "Item não encontrado." });
         }
-        res.status(200).json({ item });
+        res.status(200).json({ pat });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro interno do servidor." });
     }
 }
 
-/* --- Atualizar infos de item de patrimonio pelo ID --- */
+/* --- Atualizar informações de um item de patrimônio --- */
 const updatePat = async (req, res) => {
     try {
+        const { codPat } = req.params;
+        const { descrition, situation, local, ue, lastCheck, obs, value, fiscal, patPic } = req.body;
 
+        const updatedPat = await patrimonioService.update(codPat, descrition, situation, local, ue, lastCheck, obs, value, fiscal, patPic);
+        
+        if (!updatedPat) {
+            return res.status(404).json({ error: "Item não encontrado." });
+        }
+
+        res.status(200).json({ success: `Patrimônio ${updatedPat.codPat} atualizado com sucesso.`, updatedPat });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro interno do servidor." });
     }
-}
+};
 
-/* --- Movimentação de item de patrimonio --- */
+/* --- Atualizar movimentação do patrimônio --- */
 const updateMove = async (req, res) => {
     try {
+        const { codPat } = req.params;
+        const { date, from, to, type } = req.body;
 
+        const updatedPat = await patrimonioService.updateSpot(codPat, date, from, to, type);
+        
+        if (!updatedPat) {
+            return res.status(404).json({ error: "Item não encontrado." });
+        }
+
+        res.status(200).json({ success: `Movimentação registrada para o patrimônio ${codPat}.`, updatedPat });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro interno do servidor." });
     }
-}
+};
 
-/* --- Deletar item do patrimonio --- */
-
+/* --- Deletar item de patrimônio --- */
 const deletePat = async (req, res) => {
     try {
-
+        const { id } = req.params;
+        
+        await patrimonioService.delete(id);
+        res.status(200).json({ success: `Patrimônio ID ${id} deletado com sucesso.` });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro interno do servidor." });
     }
+};
+
+export default {
+    createNewPat,
+    gettAllPats,
+    getOnePat,
+    updatePat,
+    updateMove,
+    deletePat
 }

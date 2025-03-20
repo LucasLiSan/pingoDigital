@@ -21,7 +21,8 @@ import homeRoutes from './routes/homeRoute.js';
 import horaRoutes from "./routes/horaTrabFuncRoute.js";
 import localizacaoRoutes from "./routes/localizacaoRoute.js";
 import loginRoutes from "./routes/loginRoutes.js";
-import sectorRoutes from "./routes/sectorStreetsRoutes.js"
+import patrimonioRoutes from "./routes/patrimonioRoutes.js";
+import sectorRoutes from "./routes/sectorStreetsRoutes.js";
 import sobreRoutes from "./routes/sobreRoute.js";
 import studentRoutes from "./routes/studentsRoutes.js";
 import transparenciaRoutes from "./routes/transparenciaRoutes.js";
@@ -45,6 +46,7 @@ app.use('/', homeRoutes);
 app.use('/', horaRoutes);
 app.use('/', localizacaoRoutes);
 app.use('/', loginRoutes);
+app.use('/', patrimonioRoutes);
 app.use('/', sectorRoutes);
 app.use('/', sobreRoutes);
 app.use('/', studentRoutes);
