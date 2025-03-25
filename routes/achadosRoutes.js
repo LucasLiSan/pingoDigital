@@ -25,6 +25,6 @@ achadosRoutes.delete("/perdido/:id", achadosController.deleteItem);
 achadosRoutes.get("/perdidos/perdidos", achadosController.getLostItems);
 
 /* 7º Endpoint: Marcar um item como DEVOLVIDO */
-achadosRoutes.patch("/perdido/:id/devolvido", achadosController.markItemAsReturned);
+achadosRoutes.patch("/perdido/:itemCode/devolvido", achadosController.markItemAsReturned);
 
 export default achadosRoutes;

@@ -124,11 +124,11 @@ const getLostItems = async (req, res) => {
 /* --- Marcar um item como DEVOLVIDO --- */
 const markItemAsReturned = async (req, res) => {
     try {
-        const { id } = req.params; // ID do item
+        const { itemCode } = req.params; // Pegamos o código único do item
         let { dono, dono_turma, data_devolucao } = req.body;
 
         // Verifica se o item existe
-        const existingItem = await achadosService.getOne(id);
+        const existingItem = await achadosService.getOneItem(itemCode);
         if (!existingItem) {
             return res.status(404).json({ error: "Item não encontrado." });
         }
