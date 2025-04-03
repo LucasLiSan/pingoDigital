@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     carregarHorarios();
 });
 
-//Horario de trabalho dos funcionarios
+//Horario de trabalho educação física
 document.addEventListener("DOMContentLoaded", () => {
     const tabelaBodyEF = document.querySelector(".horariosEducacaoFisica tbody");
 
@@ -130,3 +130,50 @@ document.addEventListener("DOMContentLoaded", () => {
     carregarAulas();
 });
 
+//Patrimônio
+document.addEventListener("DOMContentLoaded", () => {
+    const tabelaBodyPAT = document.querySelector(".patrimonio tbody");
+
+    async function carregarAulas() {
+        try {
+            // Faz a requisição para a API
+            const respostaPAT = await fetch("/patrimonios"); // Altere para a URL correta da sua API
+            const dadosPAT = await respostaPAT.json();
+
+            if (dadosPAT.pats && dadosPAT.pats.length > 0) {
+                tabelaBodyPAT.innerHTML = ""; // Limpa a tabela antes de inserir novos dados
+
+                // Ordena os funcionários pelo nome em ordem alfabética
+                dadosPAT.pats.sort((a, b) => a.codPat.localeCompare(b.codPat));
+
+                // Percorre os dados e cria as linhas da tabela
+                dadosPAT.pats.forEach(pat => {
+                    const linhaPAT = document.createElement("tr");
+
+                    linhaPAT.innerHTML = `
+                        <td>${pat.codPat}</td>
+                        <td>${pat.descrition}</td>
+                        <td>${pat.situation}</td>
+                        <td>${pat.local || "-"}</td>
+                        <td>${pat.ue || "-"}</td>
+                        <td>${pat.lastCheck || "-"}</td>
+                        <td>${pat.obs || "-"}</td>
+                        <td>${pat.value || "-"}</td>
+                        <td>${pat.fiscal || "-"}</td>
+                        <td>${pat.patPic || "-"}</td>
+                    `;
+
+                    tabelaBodyPAT.appendChild(linhaPAT);
+                });
+            } else {
+                tabelaBodyPAT.innerHTML = "<tr><td colspan='9'>Nenhum item encontrado.</td></tr>";
+            }
+        } catch (error) {
+            console.error("Erro ao carregar horários:", error);
+            tabelaBodyPAT.innerHTML = "<tr><td colspan='9'>Erro ao carregar dados.</td></tr>";
+        }
+    }
+
+    // Chama a função ao carregar a página
+    carregarAulas();
+});
