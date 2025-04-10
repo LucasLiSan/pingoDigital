@@ -154,6 +154,7 @@
                     </div>
                     <div id="patrimonio">
                         <h2>PATRIMÔNIO</h2>
+                        <button id="abrirMapa" style="margin: 20px;">📍 Ver Mapa de Patrimônio</button>
                         <table class="patrimonio horariosFuncionarios">
                             <thead>
                                 <tr>
@@ -173,6 +174,13 @@
                                 
                             </tbody>
                         </table>
+                        <div id="modalMapa" class="modal">
+                            <div class="modal-content">
+                              <span class="fechar">&times;</span>
+                              <h2>Mapa de Patrimônio</h2>
+                              <div id="mapaEscola" style="height: 600px;"></div>
+                            </div>
+                          </div>
                         <a href="https://docs.google.com/spreadsheets/d/1wumugXybJO41rOmdKVW0evthm4hAVpb2Qrx-TpS6rkQ/edit?usp=sharing">LISTA DE PATRIMÔNIO - EMEB PINGO DE GENTE</a>
                     </div>
                     <div id="vistorias">
@@ -233,7 +241,11 @@
                             </ul>
                         </div>
                     </div>
+                    
                 </section>
             </main>
+            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+            <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
             <script src="js/transparenciaScript.js"></script>
+            <script src="js/mapaCluster.js"></script>
 <%- include('partials/footer.ejs') %>

@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     const tabelaBodyPAT = document.querySelector(".patrimonio tbody");
 
-    async function carregarAulas() {
+    async function carregarPats() {
         try {
             // Faz a requisição para a API
             const respostaPAT = await fetch("/patrimonios"); // Altere para a URL correta da sua API
@@ -175,5 +175,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Chama a função ao carregar a página
-    carregarAulas();
+    carregarPats();
 });
