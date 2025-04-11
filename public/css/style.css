@@ -1899,6 +1899,26 @@ main {
     border: 2px solid #333;
 }
 
+#abrirMapa {
+    width: 11%;
+    height: 4%;
+    margin: 20px;
+    color: #000000;
+    font-weight: bolder;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 0.3rem;
+    background: var(--colorPalletTwo);
+    font-family: var(--fontFour);
+    box-shadow: 0.1rem 0.1rem 0px 0.1rem var(--colorPalletOne);
+}
+
+#abrirMapa:hover {
+    color: #ffffff;
+    background: var(--colorPalletOne);
+    box-shadow: 0.1rem 0.1rem 0px 0.1rem var(--colorPalletTwo);
+}
+
 .modal {
     display: none;
     position: fixed;
