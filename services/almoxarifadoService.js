@@ -19,6 +19,7 @@ class MaterialService {
   
       material.entradas.push(entrada);
       material.quantidadeAtual += entrada.quantidade;
+      material.status = "EM ESTOQUE";
       material.atualizadoEm = new Date();
       return await material.save();
     }
@@ -33,6 +34,11 @@ class MaterialService {
   
       material.saidas.push(saida);
       material.quantidadeAtual -= saida.quantidade;
+
+      if (material.quantidadeAtual = 0) {
+        material.status = "ESGOTADO";
+      }
+
       material.atualizadoEm = new Date();
       return await material.save();
     }

@@ -18,7 +18,7 @@ const materialSchema = new mongoose.Schema({
   descricao: String,
   marca: String,
   validade: Date,
-  cor: String,
+  cor: [{type: String}],
   medidas: {
     largura_cm: Number,
     comprimento_cm: Number,
@@ -37,6 +37,7 @@ const materialSchema = new mongoose.Schema({
     prateleira: String
   },
   quantidadeAtual: { type: Number, default: 0 },
+  status: { type: String, enum: ["EM ESTOQUE", "ESGOTADO"]},
   materialPic: [{type: String}],
   entradas: [entradaSchema],
   saidas: [saidaSchema],
