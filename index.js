@@ -26,6 +26,8 @@ import sectorRoutes from "./routes/sectorStreetsRoutes.js";
 import sobreRoutes from "./routes/sobreRoute.js";
 import studentRoutes from "./routes/studentsRoutes.js";
 import transparenciaRoutes from "./routes/transparenciaRoutes.js";
+import whatsappRoutes from "./routes/whatsappRoutes.js";
+
 import { render } from "ejs";
 
 /* ----------  INICIANDO O EXPRESS ---------- */
@@ -51,6 +53,7 @@ app.use('/', sectorRoutes);
 app.use('/', sobreRoutes);
 app.use('/', studentRoutes);
 app.use('/', transparenciaRoutes);
+app.use('/', whatsappRoutes);
 
 /* ----------\/ INICIANDO SERVIDOR \/---------- */
 const port = 8080;
