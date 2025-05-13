@@ -1,18 +1,19 @@
 /* ----------  IMPORTAÇÃO DE MÓDULOS ---------- */
 import express from "express";
 import ip from "ip";
-//import mongoose from "mongoose";
+import mongoose from "mongoose";
 import multer from "multer";
 
 /* ----------  BANCO DE DADOS ---------- */
-import mongoose from "./config/dbConfig.js";
-//mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
+//import mongoose from "./config/dbConfig.js";
+mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
 
 /* ----------  IMPORTAÇÃO DE MODELS ---------- */
 import Student from "./models/students.js";
 
 /* ----------  IMPORTAÇÃO DE ROTAS ---------- */
 import achadosRoutes from "./routes/achadosRoutes.js";
+import almoxarifadoRoutes from "./routes/almoxarifadoRoutes.js";
 import aulaRoutes from "./routes/horaEducFisicRoutes.js"
 import calendarioRoutes from "./routes/calendarioRoutes.js";
 import cardapioRoutes from "./routes/cardapioRoutes.js";
@@ -39,6 +40,7 @@ app.set('views', './views');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use('/', almoxarifadoRoutes);
 app.use('/', achadosRoutes);
 app.use('/', aulaRoutes);
 app.use('/', calendarioRoutes);
