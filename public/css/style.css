@@ -7,6 +7,7 @@
     --colorPalletOne: #612C8A;
     --colorPalletTwo: #F4C301;
     --colorPalletThree: #FF3366;
+    --colorPalletFour: #F2E2D3;
     --fontOne: 'Lexend', sans-serif;;
     --fontTwo: 'Bogart', sans-serif;
     --fontThree: 'Recoleta', sans-serif;
@@ -252,6 +253,219 @@ main {
     background: var(--colorPalletOne);
     color: var(--colorPalletTwo);
 }
+
+/* -- -- */
+
+/* -- almoxarifado.ejs -- */
+.almoxarifadoMain {
+    display: flex;
+	flex-direction: row;
+    flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.estoque {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	backdrop-filter: blur(8px);
+	background-color: rgba(0, 0, 0, 0.112);
+	box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+	border: 0px rgba(255, 255, 255, 0.4) solid;
+	border-bottom: 0px rgba(40, 40, 40, 0.35) solid;
+	border-right: 0px rgba(40, 40, 40, 0.35) solid;
+	padding: 5px 10px;
+	font-size: 0.8em;
+	border-radius: 4px;
+}
+
+.containerAlmoxarifado {
+	position: relative;
+	padding: 0 20px;
+}
+
+.containerAlmoxarifado .card {
+	position: relative;
+	width: 320px;
+	height: 450px;
+	border-radius: 20px;
+	background: linear-gradient(315deg, var(--colorPalletTwo), var(--colorPalletOne));
+	box-shadow: -6px -6px 1px var(--colorPalletFour), 6px 6px 1px var(--colorPalletOne);
+	overflow: hidden;
+}
+
+.containerAlmoxarifado .card:before {
+	content: " ";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #f4c30175;
+	clip-path: circle(150px at 80% 20%);
+	transition: 0.5s ease-in-out;
+}
+
+.containerAlmoxarifado .card:hover:before { clip-path: circle(300px at 80% -20%); }
+
+.containerAlmoxarifado .card:after {
+	content: "";
+	position: absolute;
+	top: 30%;
+	left: -20%;
+	font-size: 12em;
+	font-weight: 800;
+	font-style: italic;
+	color: rgba(255, 255, 255, 0.04);
+}
+
+.containerAlmoxarifado .card .imgBx {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 200;
+	width: 100%;
+	height: 220px;
+	transition: 0.5s ease-in-out;
+}
+.containerAlmoxarifado .card:hover .imgBx {
+	top: 0%;
+	transform: translateY(0%);
+}
+.containerAlmoxarifado .card .imgBx img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(-25deg);
+	width: 270px;
+}
+.containerAlmoxarifado .card .contentBx {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	transition: 1s;
+	z-index: 10;
+}
+.containerAlmoxarifado .card:hover .contentBx { height: 210px; }
+
+.containerAlmoxarifado .card .contentBx h2 {
+	position: relative;
+	font-weight: 600;
+	letter-spacing: 1px;
+	color: var(--colorPalletOne);
+}
+/* Shoe Size */
+.containerAlmoxarifado .card .contentBx .size,
+.containerAlmoxarifado .card .contentBx .color {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 8px 20px;
+	transition: 0.5s;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.containerAlmoxarifado .card:hover .contentBx .size {
+	opacity: 1;
+	visibility: visible;
+	translate-delay: 0.5s;
+}
+
+.containerAlmoxarifado .card:hover .contentBx .color {
+	opacity: 1;
+	visibility: visible;
+	translate-delay: 0.6s;
+}
+
+.containerAlmoxarifado .card .contentBx .size h3,
+.containerAlmoxarifado .card .contentBx .color h3 {
+	color: #fff;
+	font-weight: 300;
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	margin-right: 10px;
+}
+
+.containerAlmoxarifado .card .contentBx .size span {
+	width: 26px;
+	height: 26px;
+	text-align: center;
+	line-height: 26px;
+	font-size: 14px;
+	display: inline-block;
+	color: #111;
+	background: #fff;
+	margin: 0 5px;
+	transition: 0.5s;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+/* Shoe color */
+.containerAlmoxarifado .card .contentBx .color span {
+	width: 20px;
+	height: 20px;
+	background: #ff0;
+	border-radius: 50%;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.containerAlmoxarifado .card .contentBx .color span:nth-child(2) { background: #155eb4; }
+.containerAlmoxarifado .card .contentBx .color span:nth-child(3) { background: red; }
+.containerAlmoxarifado .card .contentBx .color span:nth-child(4) { background: black;}
+
+/* Button/ */
+.containerAlmoxarifado .card .contentBx button {
+	display: inline-block;
+	padding: 10px 20px;
+	background: #fff;
+	border-radius: 4px;
+	margin-top: 10px;
+	text-decoration: none;
+	font-weight: 600;
+	color: #111;
+	opacity: 0;
+	transform: translateY(50px);
+	transition: 0.5s;
+	border: none;
+}
+
+.containerAlmoxarifado .card:hover .contentBx button {
+	opacity: 1;
+	transform: translateY(0px);
+	transform-delay: 0.75s;
+	cursor: pointer;
+}
+
+.info {
+	position: absolute;
+	top: 1em;
+	left: 1em;
+	color: #fff;
+	cursor: pointer;
+	z-index: 300;
+}
+
+.text {
+	display: none;
+	color: #fff;
+	padding: 2em;
+	z-index: 299;
+	position: relative;
+	backdrop-filter: blur(20px);
+	background-color: rgba(0, 0, 0, 0.2);
+	height: 100%;
+	text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+.info:hover + .text { display: block; }
 
 /* -- -- */
 
