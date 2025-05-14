@@ -1,13 +1,21 @@
 import express from "express";
 import almoxarifadoController from "../controllers/almoxarifadoController.js";
 
-const almoxarifadoRouter = express.Router();
+const almoxarifadoRoutes = express.Router();
 
-almoxarifadoRouter.get("/almoxarifado", almoxarifadoController.renderAlmoxarifadoPage);
-almoxarifadoRouter.post("/materiais", almoxarifadoController.cadastrarMaterial);
-almoxarifadoRouter.get("/materiais", almoxarifadoController.listarMateriais);
-almoxarifadoRouter.get("/materiais/:codigoBarras", almoxarifadoController.buscarPorCodigo);
-almoxarifadoRouter.post("/materiais/:codigoBarras/entrada", almoxarifadoController.registrarEntrada);
-almoxarifadoRouter.post("/materiais/:codigoBarras/saida", almoxarifadoController.registrarSaida);
+// Página principal de materiais (EJS)
+almoxarifadoRoutes.get("/almoxarifado", almoxarifadoController.renderAlmoxarifadoPage);
 
-export default almoxarifadoRouter;
+// CRUD
+almoxarifadoRoutes.post("/materiais", almoxarifadoController.createNewMaterial);           // Criar novo material
+almoxarifadoRoutes.get("/materiais/lista", almoxarifadoController.getAllMaterials);       // Listar todos
+almoxarifadoRoutes.get("/materiais/:codigoBarras", almoxarifadoController.getMaterialByCodigo); // Buscar por código
+
+almoxarifadoRoutes.put("/materiais/:codigoBarras", almoxarifadoController.updateMaterial);     // Atualizar
+almoxarifadoRoutes.delete("/materiais/:codigoBarras", almoxarifadoController.deleteMaterial);  // Deletar
+
+// Movimentações
+almoxarifadoRoutes.post("/materiais/:codigoBarras/entrada", almoxarifadoController.registrarEntrada);
+almoxarifadoRoutes.post("/materiais/:codigoBarras/saida", almoxarifadoController.registrarSaida);
+
+export default almoxarifadoRoutes;
