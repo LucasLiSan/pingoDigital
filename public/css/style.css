@@ -1913,6 +1913,7 @@ main {
     flex-wrap: wrap;
     align-content: flex-start;
     justify-content: center;
+    overflow-y: scroll;
 }
 
 .menuTransp {
