@@ -258,12 +258,11 @@ main {
 
 /* -- almoxarifado.ejs -- */
 .almoxarifadoMain {
+    height: 100vh;
     display: flex;
-	flex-direction: row;
-    flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
+	align-items: center;	
+    overflow-y: scroll;
 }
 
 .estoque {
@@ -282,8 +281,11 @@ main {
 }
 
 .containerAlmoxarifado {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 	position: relative;
-	padding: 0 20px;
 }
 
 .containerAlmoxarifado .card {
@@ -338,8 +340,8 @@ main {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%) rotate(-25deg);
-	width: 270px;
+	transform: translate(-50%, -50%);
+	width: 240px;
 }
 .containerAlmoxarifado .card .contentBx {
 	position: absolute;
@@ -417,6 +419,11 @@ main {
 	cursor: pointer;
 }
 
+.containerAlmoxarifado .card .contentBx .size span:hover,
+.containerAlmoxarifado .card .contentBx .color span:hover {
+    border: solid #000000 2px;
+}
+
 .containerAlmoxarifado .card .contentBx .color span:nth-child(2) { background: #155eb4; }
 .containerAlmoxarifado .card .contentBx .color span:nth-child(3) { background: red; }
 .containerAlmoxarifado .card .contentBx .color span:nth-child(4) { background: black;}
@@ -435,6 +442,11 @@ main {
 	transform: translateY(50px);
 	transition: 0.5s;
 	border: none;
+}
+
+.containerAlmoxarifado .card .contentBx button:hover {
+    background: var(--colorPalletThree);
+    color: #ffffff;
 }
 
 .containerAlmoxarifado .card:hover .contentBx button {

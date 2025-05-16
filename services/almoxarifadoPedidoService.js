@@ -4,6 +4,12 @@ class PedidoService {
   // Criar um novo pedido
   async create(solicitante, materiais) {
     try {
+      for (let mat of materiais) {
+      const material = await Pedido.findOne({ codigoBarras: mat.codigoBarras });
+      if (material?.status === "ESGOTADO") {
+        mat.statusItem = "EM FALTA";
+      }
+    }
       const novoPedido = new Pedido({ solicitante, materiais });
       await novoPedido.save();
       return novoPedido;

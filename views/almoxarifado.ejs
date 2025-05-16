@@ -1,38 +1,14 @@
 <%- include('partials/header.ejs') %>
-
+        <div id="carrinho" class="carrinho">
+            <h3>🛒 Pedido Atual</h3>
+            <ul id="listaCarrinho"></ul>
+            <button id="enviarPedido">Finalizar Pedido</button>
+        </div>
         <main class="almoxarifadoMain">
-            <div class="containerAlmoxarifado">
-                <div class="card">
-                    <p class="estoque">ESTOQUE</p>
-
-                    <i class="info fas fa-info-circle"></i>
-                    <p class="text">
-                        Suede fabric pointed toe stylish cut front low heel sharp on-trend toe point raised heel drop sides unique silhouette. Bow detail metallic eyelets leather lining luxurious finish classic courts formal slingback square toe contrasting cap. Lace up fastening bow detailing high stiletto heel leather lining beautiful lace upper elegant peep toe t-bar strap. Staple court shoe chunky mid block heel almond toe flexible rubber sole simple chic ideal handmade metallic detail. Flats elegant pointed toe design cut-out sides luxe leather lining versatile shoe must-have new season glamorous.
-                    </p>
-
-                    <div class="imgBx">
-                        <img src="https://i.imgur.com/KuyqTcl.png" alt="a pair of blue and red ASICS sneakers">
-                    </div>
-                    <div class="contentBx">
-                        <h2>Asics</h2>
-                        <div class="size">
-                            <h3>Size :</h3>
-                            <span>6</span>
-                            <span>7</span>
-                            <span>8</span>
-                            <span>9</span>
-                            <span>10</span>
-                        </div>
-                        <div class="color">
-                            <h3>Color:</h3>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <button> Add to Cart</button>
-                    </div>
-                </div>
+            <div class="containerAlmoxarifado" id="containerAlmoxarifado"></div>
+                
             </div>
         </main>
 
+        <script src="js/almoxarifadoScript.js"></script>
 <%- include('partials/footer.ejs') %>
