@@ -1,11 +1,33 @@
+let carrinho = JSON.parse(localStorage.getItem("carrinhoAlmox")) || [];
+const listaCarrinho = document.getElementById("listaCarrinho");
+const btnEnviar = document.getElementById("enviarPedido");
+
+// Toast
+function showToast(msg) {
+    let toast = document.createElement("div");
+    toast.className = "toast-msg";
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.add("show");
+    }, 10);
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => document.body.removeChild(toast), 300);
+    }, 2000);
+}
+
 fetch("/materiais/lista")
     .then(res => res.json())
-    .then(data => renderMateriais(data.materiais))
+    .then(data => {
+        renderMateriais(data.materiais);
+        renderizarCarrinho(); // Garante sincronização visual ao carregar
+    })
     .catch(err => console.error("Erro ao buscar materiais:", err));
 
 function renderMateriais(materiais) {
     const container = document.getElementById("containerAlmoxarifado");
-    container.innerHTML = ""; // limpa antes
+    container.innerHTML = "";
 
     materiais.forEach(material => {
         const card = document.createElement("div");
@@ -13,7 +35,7 @@ function renderMateriais(materiais) {
 
         const estoque = document.createElement("p");
         estoque.className = "estoque";
-        if (material.status === "ESGOTADO") { estoque.classList.add("esgotado"); }
+        if (material.status === "ESGOTADO") estoque.classList.add("esgotado");
         estoque.textContent = material.status;
 
         const infoIcon = document.createElement("i");
@@ -68,14 +90,20 @@ function renderMateriais(materiais) {
         const button = document.createElement("button");
         button.className = "solicitar-btn";
 
-        // Verifica se já está no carrinho
-        if (carrinho.some(item => item.codigoBarras === material.codigoBarras)) {
+        const itemNoCarrinho = carrinho.some(item => item.codigoBarras === material.codigoBarras);
+        if (itemNoCarrinho) {
             button.textContent = "NO CARRINHO";
             button.classList.add("noHover");
             button.disabled = true;
         } else {
             button.textContent = material.status === "ESGOTADO" ? "SOLICITAR" : "ADICIONAR AO PEDIDO";
-            button.addEventListener("click", () => adicionarAoCarrinho(material));
+            button.addEventListener("click", () => {
+                adicionarAoCarrinho(material);
+                button.textContent = "NO CARRINHO";
+                button.classList.add("noHover");
+                button.disabled = true;
+                showToast("Item adicionado ao carrinho 🛒");
+            });
         }
 
         contentBx.appendChild(button);
@@ -85,24 +113,19 @@ function renderMateriais(materiais) {
         card.appendChild(descricao);
         card.appendChild(imgBx);
         card.appendChild(contentBx);
-
         container.appendChild(card);
     });
 }
 
-//Carrinho de compras
-
-let carrinho = JSON.parse(localStorage.getItem("carrinhoAlmox")) || [];
-const listaCarrinho = document.getElementById("listaCarrinho");
-const btnEnviar = document.getElementById("enviarPedido");
-
-function salvarCarrinho() { localStorage.setItem("carrinhoAlmox", JSON.stringify(carrinho)); }
+// Carrinho
+function salvarCarrinho() {
+    localStorage.setItem("carrinhoAlmox", JSON.stringify(carrinho));
+}
 
 function adicionarAoCarrinho(material) {
     const existente = carrinho.find(item => item.codigoBarras === material.codigoBarras);
     if (existente) {
         existente.quantidadeSolicitada += 1;
-        alert("Esse item já está no carrinho. A quantidade foi aumentada.");
     } else {
         carrinho.push({
             codigoBarras: material.codigoBarras,
@@ -117,10 +140,55 @@ function adicionarAoCarrinho(material) {
 }
 
 function removerDoCarrinho(index) {
+    const codigoRemovido = carrinho[index].codigoBarras;
     carrinho.splice(index, 1);
     salvarCarrinho();
     renderizarCarrinho();
+    atualizarBotaoNaVitrine(codigoRemovido);
 }
+
+function atualizarBotaoNaVitrine(codigoBarras) {
+    const cards = document.querySelectorAll(".card");
+  
+    cards.forEach(card => {
+      const titulo = card.querySelector("h2");
+      const statusTag = card.querySelector(".estoque");
+      const button = card.querySelector("button.solicitar-btn");
+  
+      if (!titulo || !statusTag || !button) return;
+  
+      const nome = titulo.textContent;
+      const status = statusTag.textContent;
+  
+      const aindaNoCarrinho = carrinho.find(item =>
+        item.nome === nome && item.codigoBarras === codigoBarras
+      );
+  
+      if (!aindaNoCarrinho) {
+        button.disabled = false;
+        button.classList.remove("noHover");
+  
+        // Aplica o texto com base no status atual do item
+        button.innerText = status === "ESGOTADO" ? "SOLICITAR" : "ADICIONAR AO PEDIDO";
+  
+        // Reanexa o evento de clique para permitir nova adição
+        button.addEventListener("click", () => {
+          const material = {
+            codigoBarras,
+            nome,
+            status
+          };
+          adicionarAoCarrinho(material);
+          button.innerText = "NO CARRINHO";
+          button.classList.add("noHover");
+          button.disabled = true;
+          showToast("Item adicionado ao carrinho 🛒");
+        }, { once: true });
+      }
+    });
+}
+  
+  
 
 function renderizarCarrinho() {
     listaCarrinho.innerHTML = "";
@@ -166,41 +234,69 @@ function renderizarCarrinho() {
     });
 }
 
-btnEnviar.addEventListener("click", async () => {
+// Envio do pedido
+btnEnviar.addEventListener("click", () => {
     if (carrinho.length === 0) {
-        alert("O carrinho está vazio. Adicione itens antes de enviar o pedido.");
-        return;
+      alert("O carrinho está vazio. Adicione itens antes de enviar o pedido.");
+      return;
     }
-
-    const nome = prompt("Seu nome:");
-    const setor = prompt("Setor ou sala:");
-
-    if (!nome || !setor) {
-        alert("Preencha nome e setor para continuar.");
-        return;
-    }
-
-    const solicitante = {
-        nome,
-        setor,
-        tipo: "PROFESSOR"
+  
+    const resumo = document.getElementById("resumoPedido");
+    resumo.innerHTML = "";
+  
+    carrinho.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${item.nome}</strong><br>
+        Quantidade: ${item.quantidadeSolicitada}<br>
+        Observação: ${item.observacao || "—"}
+      `;
+      resumo.appendChild(li);
+    });
+  
+    document.getElementById("modalConfirmacao").style.display = "flex";
+  
+    // Armazena nome/setor para usar após confirmar
+    window._solicitante = {
+      nome: prompt("Seu nome:"),
+      setor: prompt("Setor ou sala:"),
+      tipo: "PROFESSOR"
     };
-
-    try {
-        const res = await fetch("/pedidos", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ solicitante, materiais: carrinho })
-        });
-
-        if (res.ok) {
-            alert("Pedido enviado com sucesso!");
-            carrinho = [];
-            salvarCarrinho();
-            renderizarCarrinho();
-        } else { alert("Erro ao enviar pedido."); }
-    } catch (err) {
-        console.error("Erro:", err);
-        alert("Erro ao enviar pedido.");
+  });
+  
+  document.getElementById("cancelarEnvio").addEventListener("click", () => {
+    document.getElementById("modalConfirmacao").style.display = "none";
+  });
+  
+  document.getElementById("confirmarEnvio").addEventListener("click", async () => {
+    const modal = document.getElementById("modalConfirmacao");
+    modal.style.display = "none";
+  
+    const solicitante = window._solicitante;
+    if (!solicitante.nome || !solicitante.setor) {
+      alert("Nome e setor são obrigatórios.");
+      return;
     }
-});
+  
+    try {
+      const res = await fetch("/pedidos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ solicitante, materiais: carrinho })
+      });
+  
+      if (res.ok) {
+        alert("Pedido enviado com sucesso!");
+        carrinho = [];
+        salvarCarrinho();
+        renderizarCarrinho();
+        renderMateriais(await (await fetch("/materiais/lista")).json().materiais);
+      } else {
+        alert("Erro ao enviar pedido.");
+      }
+    } catch (err) {
+      console.error("Erro:", err);
+      alert("Erro ao enviar pedido.");
+    }
+  });
+  
