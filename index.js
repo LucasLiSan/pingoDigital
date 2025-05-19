@@ -1,12 +1,12 @@
 /* ----------  IMPORTAÇÃO DE MÓDULOS ---------- */
 import express from "express";
 import ip from "ip";
-import mongoose from "mongoose";
+//import mongoose from "mongoose";
 import multer from "multer";
 
 /* ----------  BANCO DE DADOS ---------- */
-//import mongoose from "./config/dbConfig.js";
-mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
+import mongoose from "./config/dbConfig.js";
+//mongoose.connect("mongodb://127.0.0.1:27017/api-pingoDigital");
 
 /* ----------  IMPORTAÇÃO DE MODELS ---------- */
 import Student from "./models/students.js";

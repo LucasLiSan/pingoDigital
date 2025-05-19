@@ -1,23 +1,33 @@
 <%- include('partials/header.ejs') %>
-        <div id="carrinho" class="carrinho">
-            <h3>🛒 Pedido Atual</h3>
-            <ul id="listaCarrinho"></ul>
-            <button id="enviarPedido">Finalizar Pedido</button>
+
+        <div id="carrinhoIcone" class="carrinho-icone" onclick="abrirCarrinhoModal()">
+          🛒 <span id="contadorCarrinho">0</span>
         </div>
+
+        <div id="modalCarrinho" class="modal-confirmacao">
+            <div class="modalCarrinho-content">
+                <h2>Itens no Pedido</h2>
+                <ul id="resumoCarrinho"></ul>
+                <div class="botoes-modal">
+                    <button id="finalizarPedido">✅ Finalizar Pedido</button>
+                    <button onclick="fecharCarrinhoModal()">❌ Fechar</button>
+                </div>
+            </div>
+        </div>
+
         <main class="almoxarifadoMain">
             <div class="containerAlmoxarifado" id="containerAlmoxarifado"></div>
                 
-            </div>
-            <div id="modalConfirmacao" class="modal-confirmacao">
-                <div class="modal-content">
-                  <h2>Confirmar Pedido</h2>
-                  <ul id="resumoPedido"></ul>
-                  <div class="botoes-modal">
-                    <button id="confirmarEnvio">✅ Confirmar</button>
-                    <button id="cancelarEnvio">❌ Cancelar</button>
-                  </div>
+            <div id="modalAlmoxarifadoConfirmacao" class="modal-confirmacao">
+                <div class="modalAlmoxarifado-content">
+                    <h2 id="tituloConfirmacao"></h2>
+                    <ul id="resumoPedido"></ul>
+                    <div class="botoes-modal">
+                        <button id="confirmarEnvio">✅ Confirmar</button>
+                        <button onclick="fecharConfirmacao()">❌ Cancelar</button>
+                    </div>
                 </div>
-              </div>              
+            </div>              
         </main>
 
         <script src="js/almoxarifadoScript.js"></script>
