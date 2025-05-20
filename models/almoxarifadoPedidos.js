@@ -1,15 +1,21 @@
 import mongoose from "mongoose";
 
 const itemPedidoSchema = new mongoose.Schema({
-    codigoBarras: { type: String, required: true },
+    codigoBarras: String,
     nome: String,
-    quantidadeSolicitada: { type: Number, required: true },
-    observacao: String, // exemplo: "Usar na Feira de Ciências", "Preciso para segunda-feira"
+    quantidadeSolicitada: Number,
+    corSelecionada: String,
+    tamanhoSelecionado: String,
+    observacao: String,
     statusItem: {
         type: String,
         enum: ["PENDENTE", "DISPONÍVEL", "EM FALTA", "SEPARADO", "ENTREGUE"],
         default: "PENDENTE"
-    }
+    },
+    entregas: [{
+        quantidade: Number,
+        dataEntrega: Date
+    }]
 });
 
 const pedidoSchema = new mongoose.Schema({

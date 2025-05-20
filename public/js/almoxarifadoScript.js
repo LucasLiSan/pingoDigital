@@ -95,6 +95,7 @@ fetch("/materiais/lista")
                 button.addEventListener("click", () => {
                     const copia = JSON.parse(JSON.stringify(material));
                     adicionarAoCarrinho(copia);
+
                     button.textContent = "NO CARRINHO";
                     button.classList.add("noHover");
                     button.disabled = true;
@@ -114,16 +115,20 @@ fetch("/materiais/lista")
 
     function adicionarAoCarrinho(material) {
         const existente = carrinho.find(item => item.codigoBarras === material.codigoBarras);
-        if (existente) { existente.quantidadeSolicitada += 1; }
-        else {
-            carrinho.push({
-                codigoBarras: material.codigoBarras,
-                nome: material.nome,
-                quantidadeSolicitada: 1,
-                observacao: "",
-                statusItem: material.status === "ESGOTADO" ? "EM FALTA" : "PENDENTE"
-            });
+
+        if (existente) {
+            console.warn("⚠️ Item já no carrinho. Ignorando nova adição:", material.codigoBarras);
+            return; // Proteção principal contra duplicações
         }
+
+        carrinho.push({
+            codigoBarras: material.codigoBarras,
+            nome: material.nome,
+            quantidadeSolicitada: 1,
+            observacao: "",
+            statusItem: material.status === "ESGOTADO" ? "EM FALTA" : "PENDENTE"
+        });
+
         salvarCarrinho();
         renderizarCarrinho();
     }
@@ -162,13 +167,17 @@ fetch("/materiais/lista")
                 button.classList.remove("noHover");
                 button.textContent = statusTag.textContent === "ESGOTADO" ? "SOLICITAR" : "ADICIONAR AO PEDIDO";
                 button.onclick = () => {
+                    if (button.disabled) return; // Proteção extra
+                    button.disabled = true; // Prevê múltiplos cliques rápidos
+
                     const materialOriginal = window.materiaisRenderizados.find(mat => mat.codigoBarras === codigo);
                     if (!materialOriginal) return console.warn("❗ Material não encontrado:", codigo);
+
                     const copia = JSON.parse(JSON.stringify(materialOriginal));
                     adicionarAoCarrinho(copia);
+
                     button.textContent = "NO CARRINHO";
                     button.classList.add("noHover");
-                    button.disabled = true;
                     showToast("Item adicionado ao carrinho 🛒");
                 };
             }
