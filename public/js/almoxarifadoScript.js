@@ -59,49 +59,67 @@ fetch("/materiais/lista")
             nome.textContent = material.nome;
             contentBx.appendChild(nome);
 
+            // Seletor de tamanhos
+            let tamanhoSelecionado = null;
             if (material.tamanhosDisponiveis?.length) {
-                const sizeDiv = document.createElement("div");
-                sizeDiv.className = "size";
-                sizeDiv.innerHTML = "<h3>Tamanhos:</h3>";
-                material.tamanhosDisponiveis.forEach(tam => {
-                    const span = document.createElement("span");
-                    span.textContent = tam;
-                    sizeDiv.appendChild(span);
-                });
-                contentBx.appendChild(sizeDiv);
+            const sizeDiv = document.createElement("div");
+            sizeDiv.className = "size";
+            sizeDiv.innerHTML = "<h3>Tamanhos:</h3>";
+            material.tamanhosDisponiveis.forEach((tam, i) => {
+                const label = document.createElement("label");
+                label.innerHTML = `<input type="radio" name="size-${material.codigoBarras}" value="${tam}"> ${tam}`;
+                sizeDiv.appendChild(label);
+            });
+            contentBx.appendChild(sizeDiv);
             }
 
+            // Seletor de cores
+            let corSelecionada = null;
             if (material.cor?.length) {
-                const colorDiv = document.createElement("div");
-                colorDiv.className = "color";
-                colorDiv.innerHTML = "<h3>Cores:</h3>";
-                material.cor.forEach(cor => {
-                    const span = document.createElement("span");
-                    span.style.background = cor;
-                    colorDiv.appendChild(span);
-                });
-                contentBx.appendChild(colorDiv);
+            const colorDiv = document.createElement("div");
+            colorDiv.className = "color";
+            colorDiv.innerHTML = "<h3>Cores:</h3>";
+            material.cor.forEach((cor, i) => {
+                const label = document.createElement("label");
+                label.innerHTML = `<input type="radio" name="cor-${material.codigoBarras}" value="${cor}"> <span style='display:inline-block;width:12px;height:12px;background:${cor};border-radius:50%;margin-left:4px;'></span>`;
+                colorDiv.appendChild(label);
+            });
+            contentBx.appendChild(colorDiv);
             }
 
             const button = document.createElement("button");
             button.className = "solicitar-btn";
-            const itemNoCarrinho = carrinho.some(item => item.codigoBarras === material.codigoBarras);
-            if (itemNoCarrinho) {
-                button.textContent = "NO CARRINHO";
-                button.classList.add("noHover");
-                button.disabled = true;
-            } else {
-                button.textContent = material.status === "ESGOTADO" ? "SOLICITAR" : "ADICIONAR AO PEDIDO";
-                button.addEventListener("click", () => {
-                    const copia = JSON.parse(JSON.stringify(material));
-                    adicionarAoCarrinho(copia);
+            button.textContent = material.status === "ESGOTADO" ? "SOLICITAR" : "ADICIONAR AO PEDIDO";
+            button.addEventListener("click", () => {
+            const cor = document.querySelector(`input[name='cor-${material.codigoBarras}']:checked`)?.value;
+            const tam = document.querySelector(`input[name='size-${material.codigoBarras}']:checked`)?.value;
 
-                    button.textContent = "NO CARRINHO";
-                    button.classList.add("noHover");
-                    button.disabled = true;
-                    showToast("Item adicionado ao carrinho 🛒");
-                }, { once: true });
+            const duplicado = carrinho.find(item =>
+                item.codigoBarras === material.codigoBarras &&
+                item.corSelecionada === cor &&
+                item.tamanhoSelecionado === tam
+            );
+
+            if (duplicado) {
+                alert("Essa combinação de cor e tamanho já está no carrinho.");
+                return;
             }
+
+            const item = {
+                codigoBarras: material.codigoBarras,
+                nome: material.nome,
+                quantidadeSolicitada: 1,
+                observacao: "",
+                statusItem: material.status === "ESGOTADO" ? "EM FALTA" : "PENDENTE",
+                corSelecionada: cor || null,
+                tamanhoSelecionado: tam || null
+            };
+
+            carrinho.push(item);
+            salvarCarrinho();
+            renderizarCarrinho();
+            showToast("Item adicionado ao carrinho 🛒");
+            });
 
             contentBx.appendChild(button);
             card.appendChild(estoque);
@@ -113,24 +131,41 @@ fetch("/materiais/lista")
         });
     }
 
-    function adicionarAoCarrinho(material) {
-        const existente = carrinho.find(item => item.codigoBarras === material.codigoBarras);
+    function abrirCarrinhoModal() {
+        const lista = document.getElementById("resumoCarrinho");
+        lista.innerHTML = "";
 
-        if (existente) {
-            console.warn("⚠️ Item já no carrinho. Ignorando nova adição:", material.codigoBarras);
-            return; // Proteção principal contra duplicações
-        }
-
-        carrinho.push({
-            codigoBarras: material.codigoBarras,
-            nome: material.nome,
-            quantidadeSolicitada: 1,
-            observacao: "",
-            statusItem: material.status === "ESGOTADO" ? "EM FALTA" : "PENDENTE"
+        carrinho.forEach((item, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <strong>${item.nome}</strong><br>
+                ${item.corSelecionada ? `Cor: <span style='display:inline-block;width:12px;height:12px;background:${item.corSelecionada};border-radius:50%;margin-left:4px;'></span><br>` : ""}
+                ${item.tamanhoSelecionado ? `Tamanho: ${item.tamanhoSelecionado}<br>` : ""}
+                Qtd: <input type="number" value="${item.quantidadeSolicitada}" min="1" data-index="${index}" class="inputQtd"><br>
+                Obs: <input type="text" value="${item.observacao}" data-index="${index}" class="inputObs" placeholder="Para que?"><br>
+                <button onclick="removerDoCarrinho(${index})">🗑️</button>
+            `;
+            lista.appendChild(li);
         });
 
-        salvarCarrinho();
-        renderizarCarrinho();
+        document.querySelectorAll(".inputQtd").forEach(input => {
+            input.addEventListener("change", e => {
+            const index = e.target.dataset.index;
+            carrinho[index].quantidadeSolicitada = parseInt(e.target.value);
+            salvarCarrinho();
+            renderizarCarrinho();
+            });
+        });
+
+        document.querySelectorAll(".inputObs").forEach(input => {
+            input.addEventListener("input", e => {
+            const index = e.target.dataset.index;
+            carrinho[index].observacao = e.target.value;
+            salvarCarrinho();
+            });
+        });
+
+        document.getElementById("modalCarrinho").style.display = "flex";
     }
 
     function removerDoCarrinho(index) {
