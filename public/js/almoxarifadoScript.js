@@ -319,10 +319,10 @@ if (btnFinalizar) {
         const setor = prompt("Setor ou sala:");
         if (!nome || !setor) return alert("Nome e setor obrigatórios");
 
-        const protocolo = Math.floor(Math.random() * 1000000);
-        document.getElementById("tituloConfirmacao").innerHTML = `Pedido nº ${protocolo} - ${nome}<br>Confirmação`;
-        window._protocolo = protocolo;
-        window._solicitante = { nome, setor, tipo: "PROFESSOR" };
+        const numPedido = Math.floor(Math.random() * 1000000);
+        document.getElementById("tituloConfirmacao").innerHTML = `Pedido nº ${numPedido} - ${nome}<br>Confirmação`;
+        window._protocolo = numPedido;
+        window._solicitante = { numPedido, nome, setor, tipo: "PROFESSOR" };
         atualizarResumoConfirmacao();
         document.getElementById("modalAlmoxarifadoConfirmacao").style.display = "flex";
     });

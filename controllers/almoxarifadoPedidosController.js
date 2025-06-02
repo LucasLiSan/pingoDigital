@@ -16,7 +16,7 @@ const createPedido = async (req, res) => {
   try {
     const { solicitante, materiais } = req.body;
 
-    if (!solicitante || !materiais || materiais.length === 0) {
+    if (!solicitante.numPedido || !solicitante || !materiais || materiais.length === 0) {
       return res.status(400).json({ error: "Dados de pedido incompletos." });
     }
 

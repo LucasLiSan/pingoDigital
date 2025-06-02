@@ -14,12 +14,14 @@ const itemPedidoSchema = new mongoose.Schema({
     },
     entregas: [{
         quantidade: Number,
-        dataEntrega: Date
+        dataEntrega: Date,
+        responsavel: String
     }]
 });
 
 const pedidoSchema = new mongoose.Schema({
     solicitante: {
+        numPedido: { type: Number, required: true},
         nome: { type: String, required: true },
         setor: String, // Ex: "3º Ano A", "Coordenação", "Direção"
         tipo: {

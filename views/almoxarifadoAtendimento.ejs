@@ -1,0 +1,29 @@
+<%- include('partials/header.ejs') %>
+
+        <main class="almoxarifadoAtendimento">
+            <section id="pedido">
+                <h2><span class="pedido">Pedido: 123456</span> <span class="statusPedido">PENDENTE</span></h2>
+                <div class="descricaoPedido">
+                    <div class="origemPedido">
+                        <span class="origem">SECRETARIA</span>
+                        <span class="dataPedido">02 DE JUNHO DE 2025</span>
+                    </div>
+                    <div class="itens">
+                        <div id="numItem">
+                            <span class="numItem">1</span>
+                            <span class="barCode">MTRL-20240515-PC001</span>
+                            <span class="item">Papel Cartão</span>
+                            <input type="color" name="cor" id="corItem" value="#155eb4">
+                            <span class="qtdPedido">1</span>
+                            <span class="localizacao">ARMARIO 1 - PRATELEIRA 2</span>
+                            <span class="statusPedido">PENDENTE</span>
+                            <div class="dataEntrega">
+                                <span class="entregaPrimeira">02 DE JUNHO DE 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+<%- include('partials/footer.ejs') %>
