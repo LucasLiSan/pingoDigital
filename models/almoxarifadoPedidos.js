@@ -13,9 +13,9 @@ const itemPedidoSchema = new mongoose.Schema({
         default: "PENDENTE"
     },
     entregas: [{
-        quantidade: Number,
-        dataEntrega: Date,
-        responsavel: String
+            quantidade: Number,
+            dataEntrega: Date,
+            responsavel: String
     }]
 });
 

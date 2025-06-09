@@ -574,6 +574,104 @@ main {
 
 /* -- -- */
 
+/* -- almoxarifadoAtendimento.ejs -- */
+
+.almoxarifadoAtendimento { 
+    height: 40rem;
+    overflow-y: scroll;
+    padding: 10px;
+}
+
+.almoxarifadoAtendimento section {
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.almoxarifadoAtendimento section:nth-child(odd) {
+    background-color: #f4c30180;
+}
+
+.almoxarifadoAtendimento h2 {
+    width: 100%;
+    height: 2rem;
+    align-content: center;
+}
+
+.statusPedido-geral {
+    color: #ffff00
+}
+
+.descricaoPedido {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.origemPedido {
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.origemPedido span {
+    width: 100%;
+    height: 3rem;
+    align-content: center;
+}
+
+.origem {
+    color: var(--colorPalletOne);
+    font-size: 2rem;
+}
+
+.itens {
+    width: 75%;
+}
+
+.itens > div {
+    height: 5rem;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 1fr 5.5rem 2.5rem 1fr 6rem 1fr;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+.itens > div input {
+    border: solid 2px;
+    width: 40px;
+    height: 30px;
+    background: none;
+}
+
+.itens > div:hover {
+    background-color: var(--colorPalletFour);
+}
+
+.statusPedido {
+    color: #ffff00;
+}
+
+.dataEntrega {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.5rem 1fr 5rem;
+    justify-items: center;
+}
+
+/* -- -- */
+
 /* -- docente.ejs -- */
 
 .mainDocentes {
