@@ -1,11 +1,11 @@
 import AtendimentoService from "../services/almoxarifadoAtendimentoService.js";
 
 const renderAtendimentoPage = (req, res) => {
-  try { res.render("almoxarifadoAtendimento"); }
-  catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao carregar a página de pedidos." });
-  }
+    try { res.render("almoxarifadoAtendimento"); }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao carregar a página de pedidos." });
+    }
 };
 
 const listarPedidosPendentes = async (req, res) => {
@@ -13,7 +13,7 @@ const listarPedidosPendentes = async (req, res) => {
         const pedidos = await AtendimentoService.listarPedidosPendentes();
         res.status(200).json({ pedidos });
     } catch (err) { res.status(500).json({ error: err.message }); }
-    };
+};
 
 const registrarEntregaItem = async (req, res) => {
     try {

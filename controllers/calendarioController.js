@@ -4,9 +4,8 @@ import moment from "moment";
 
 /* --- Renderizar a página do calendário --- */
 const renderCalendarPage = (req, res) => {
-    try {
-        res.render("calendario"); // Renderiza a página "calendario"
-    } catch (error) {
+    try { res.render("calendario"); }// Renderiza a página "calendario"
+    catch (error) {
         console.log(error);
         res.status(500).json({ err: "Erro ao carregar a página do calendário." }); // Status 500: Internal Server Error
     }
@@ -65,9 +64,7 @@ const getCalendarById = async (req, res) => {
         const { id } = req.params; // ID passado como parâmetro na URL
         const calendario = await calendarioService.getById(id);
 
-        if (!calendario) {
-            return res.status(404).json({ message: `Nenhum calendário encontrado para o ID: ${id}` });
-        }
+        if (!calendario) { return res.status(404).json({ message: `Nenhum calendário encontrado para o ID: ${id}` }); }
 
         res.status(200).json({ calendario });
     } catch (error) {
@@ -118,9 +115,7 @@ const deleteCalendar = async (req, res) => {
         const { id } = req.params; // ID do calendário a ser deletado
 
         // Verifica se o ID é válido
-        if (!ObjectId.isValid(id)) {
-            return res.status(400).json({ err: "ID inválido." });
-        }
+        if (!ObjectId.isValid(id)) { return res.status(400).json({ err: "ID inválido." }); }
 
         await calendarioService.delete(id);
 

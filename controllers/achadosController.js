@@ -1,11 +1,10 @@
 import achadosService from "../services/achadosService.js";
 import { ObjectId } from "mongodb";
 
-/* --- Renderizar a página do calendário --- */
+/* --- Renderizar a página do achados e perdidos --- */
 const renderAchadosPage = (req, res) => {
-    try {
-        res.render("achados"); // Renderiza a página "achados"
-    } catch (error) {
+    try { res.render("achados"); } // Renderiza a página "achados"
+    catch (error) {
         console.log(error);
         res.status(500).json({ err: "Erro ao carregar a página do achados e perdidos." }); // Status 500: Internal Server Error
     }
@@ -17,9 +16,7 @@ const createNewItem = async (req, res) => {
         let { item, desc_item, pic, data, situacao, dono } = req.body;
 
         // Verifica se `dono` foi enviado corretamente
-        if (typeof dono !== "object" || dono === null) {
-            dono = undefined; // Ou um objeto vazio: {}
-        }
+        if (typeof dono !== "object" || dono === null) { dono = undefined; } // Ou um objeto vazio: {}
 
         // Converte data de "DD/MM/YYYY" para Date
         if (data) {
@@ -28,9 +25,7 @@ const createNewItem = async (req, res) => {
         }
 
         // Verifica se `situacao` está dentro dos valores esperados
-        if (!["PERDIDO", "DEVOLVIDO", "DOADO"].includes(situacao)) {
-            return res.status(400).json({ error: "Valor inválido para 'situacao'." });
-        }
+        if (!["PERDIDO", "DEVOLVIDO", "DOADO"].includes(situacao)) { return res.status(400).json({ error: "Valor inválido para 'situacao'." }); }
 
         const newItem = await achadosService.create(item, desc_item, pic, data, situacao, dono);
         res.status(201).json({ success: `Item '${newItem.item}' cadastrado com sucesso.` });
@@ -56,9 +51,9 @@ const getOneItem = async (req, res) => {
     try {
         const { itemCode } = req.params;
         const item = await achadosService.getOneItem(itemCode);
-        if (!item) {
-            return res.status(404).json({ error: "Item não encontrado." });
-        }
+
+        if (!item) { return res.status(404).json({ error: "Item não encontrado." }); }
+        
         res.status(200).json({ item });
     } catch (error) {
         console.error(error);
@@ -77,14 +72,12 @@ const updateItem = async (req, res) => {
         const { item, desc_item, pic, data, situacao, dono } = req.body;
 
         const existingItem = await achadosService.getOne(id); // Busca pelo _id correto
-        if (!existingItem) {
-            return res.status(404).json({ error: "Item não encontrado." });
-        }
+
+        if (!existingItem) { return res.status(404).json({ error: "Item não encontrado." }); }
 
         const updatedItem = await achadosService.update(id, item, desc_item, pic, data, situacao, dono);
-        if (!updatedItem) {
-            return res.status(404).json({ error: "Erro ao atualizar: Item não encontrado." });
-        }
+        
+        if (!updatedItem) { return res.status(404).json({ error: "Erro ao atualizar: Item não encontrado." }); }
 
         res.status(200).json({ success: `Item atualizado com sucesso.`, updatedItem });
     } catch (error) {
@@ -98,11 +91,11 @@ const deleteItem = async (req, res) => {
     try {
         const { id } = req.params;
         const existingItem = await achadosService.getOne(id);
-        if (!existingItem) {
-            return res.status(404).json({ error: "Item não encontrado." });
-        }
+
+        if (!existingItem) { return res.status(404).json({ error: "Item não encontrado." }); }
 
         await achadosService.delete(id);
+        
         res.status(204).send(); // Código 204 (No Content)
     } catch (error) {
         console.error(error);
@@ -129,9 +122,8 @@ const markItemAsReturned = async (req, res) => {
 
         // Verifica se o item existe
         const existingItem = await achadosService.getOneItem(itemCode);
-        if (!existingItem) {
-            return res.status(404).json({ error: "Item não encontrado." });
-        }
+        
+        if (!existingItem) { return res.status(404).json({ error: "Item não encontrado." }); }
 
         if (data_devolucao) {
             const [day, month, year] = data_devolucao.split("/");
@@ -150,11 +142,11 @@ const markItemAsReturned = async (req, res) => {
 
 export default {
     renderAchadosPage,
-    createNewItem, 
-    getAllItems, 
+    createNewItem,
+    getAllItems,
     getOneItem, 
     updateItem, 
-    deleteItem, 
-    getLostItems, 
+    deleteItem,
+    getLostItems,
     markItemAsReturned
 };

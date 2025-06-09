@@ -3,9 +3,8 @@ import { ObjectId } from "mongodb";
 
 /* --- Renderizar a página principal do estoque --- */
 const renderAlmoxarifadoPage = (req, res) => {
-    try {
-        res.render("almoxarifado"); // View EJS
-    } catch (error) {
+    try { res.render("almoxarifado"); } // View EJS
+    catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro ao carregar a página do estoque." });
     }
@@ -39,9 +38,9 @@ const getMaterialByCodigo = async (req, res) => {
     try {
         const { codigoBarras } = req.params;
         const material = await materialService.getOneByCodigo(codigoBarras);
-        if (!material) {
-            return res.status(404).json({ error: "Material não encontrado." });
-        }
+
+        if (!material) { return res.status(404).json({ error: "Material não encontrado." }); }
+
         res.status(200).json({ material });
     } catch (error) {
         console.error(error);
@@ -84,9 +83,9 @@ const updateMaterial = async (req, res) => {
         const dados = req.body;
 
         const materialAtualizado = await materialService.update(codigoBarras, dados);
-        if (!materialAtualizado) {
-            return res.status(404).json({ error: "Material não encontrado para atualizar." });
-        }
+        
+        if (!materialAtualizado) { return res.status(404).json({ error: "Material não encontrado para atualizar." }); }
+        
         res.status(200).json({ success: "Material atualizado com sucesso.", materialAtualizado });
     } catch (error) {
         console.error(error);
@@ -99,11 +98,11 @@ const deleteMaterial = async (req, res) => {
     try {
         const { codigoBarras } = req.params;
         const material = await materialService.getOneByCodigo(codigoBarras);
-        if (!material) {
-            return res.status(404).json({ error: "Material não encontrado." });
-        }
+        
+        if (!material) { return res.status(404).json({ error: "Material não encontrado." }); }
 
         await materialService.delete(codigoBarras);
+        
         res.status(204).send(); // No content
     } catch (error) {
         console.error(error);
