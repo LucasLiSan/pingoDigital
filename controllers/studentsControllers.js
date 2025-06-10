@@ -62,14 +62,11 @@ const getOneStudent = async (req, res) => {
         if (ObjectId.isValid(req.params.id)) {
             const id = req.params.id;
             const student = await studentService.getOne(id);
-            if (!student) {
-                res.status(404).json({ err: 'Aluno não encontrado' }); // Cód. Status 404: Not Found
-            } else {
-                res.status(200).json({ student }); // Cód. Status 200: OK
-            }
-        } else {
-            res.sendStatus(400); // Cód. Status 400: Bad Request
-        }
+
+            if (!student) { res.status(404).json({ err: 'Aluno não encontrado' }); } // Cód. Status 404: Not Found
+            else { res.status(200).json({ student }); } // Cód. Status 200: OK
+
+        } else { res.sendStatus(400); } // Cód. Status 400: Bad Request
     } catch (error) {
         console.error(error);
         res.status(500).json({ err: 'Erro interno do servidor' }); // Cód. Status 500: Internal Server Error
@@ -84,14 +81,10 @@ const updateStudent = async (req, res) => {
             const updates = req.body;
             const updatedStudent = await studentService.update(id, updates);
 
-            if (!updatedStudent) {
-                res.status(404).json({ err: 'Aluno não encontrado' }); // Cód. Status 404: Not Found
-            } else {
-                res.status(200).json({ Success: `Aluno '${updatedStudent.nome.nome}' atualizado com sucesso` }); // Cód. Status 200: OK
-            }
-        } else {
-            res.sendStatus(400); // Cód. Status 400: Bad Request
-        }
+            if (!updatedStudent) { res.status(404).json({ err: 'Aluno não encontrado' }); } // Cód. Status 404: Not Found
+            else { res.status(200).json({ Success: `Aluno '${updatedStudent.nome.nome}' atualizado com sucesso` }); } // Cód. Status 200: OK
+
+        } else { res.sendStatus(400); } // Cód. Status 400: Bad Request
     } catch (error) {
         console.error(error);
         res.status(500).json({ err: 'Erro interno do servidor' }); // Cód. Status 500: Internal Server Error
@@ -105,18 +98,19 @@ const deleteStudent = async (req, res) => {
             const id = req.params.id;
             const deletedStudent = await studentService.delete(id);
 
-            if (!deletedStudent) {
-                res.status(404).json({ err: 'Aluno não encontrado' }); // Cód. Status 404: Not Found
-            } else {
-                res.status(204).json({ Success: `Aluno '${deletedStudent.nome.nome}' deletado com sucesso` }); // Cód. Status 204: No Content
-            }
-        } else {
-            res.sendStatus(400); // Cód. Status 400: Bad Request
-        }
+            if (!deletedStudent) { res.status(404).json({ err: 'Aluno não encontrado' }); } // Cód. Status 404: Not Found
+            else { res.status(204).json({ Success: `Aluno '${deletedStudent.nome.nome}' deletado com sucesso` }); } // Cód. Status 204: No Content
+        } else { res.sendStatus(400); } // Cód. Status 400: Bad Request
     } catch (error) {
         console.error(error);
         res.status(500).json({ err: 'Erro interno do servidor' }); // Cód. Status 500: Internal Server Error
     }
 };
 
-export default { createNewStudent, getAllStudents, getOneStudent, updateStudent, deleteStudent };
+export default { 
+    createNewStudent,
+    getAllStudents,
+    getOneStudent,
+    updateStudent,
+    deleteStudent
+};

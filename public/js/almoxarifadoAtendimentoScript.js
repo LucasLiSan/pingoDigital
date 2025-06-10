@@ -15,7 +15,7 @@ async function carregarPedidosAtendimento() {
                 "ENTREGUE": "#00ff00",
                 "CANCELADO": "#ff0000",
                 "PENDENTE": "#ffd000"
-            } [pedido.statusPedido] || "#aaa";
+            }[pedido.statusPedido] || "#aaa";
 
             const header = `
                 <h2><span class="pedido">Pedido: ${pedido.solicitante.numPedido}</span>
@@ -26,6 +26,7 @@ async function carregarPedidosAtendimento() {
                         ${pedido.solicitante?.setor && pedido.solicitante?.nome ? `${pedido.solicitante.setor} - ${pedido.solicitante.nome}` : "-"}
                     </span>
                     <span class="dataPedido">${dataFormatada.toUpperCase()}</span>
+                    <button id="${pedido.solicitante.numPedido}" class="btnAtender">ATENDER</button>
                 </div>
                 <div class="itens">
                     <div class="cabecalhoItens">
@@ -43,10 +44,29 @@ async function carregarPedidosAtendimento() {
             let corpo = "";
             let numItem = 1;
 
-            for (const item of pedido.materiais) {
-                const resMat = await fetch(`/materiais/${item.codigoBarras}`);
-                const { material } = await resMat.json();
+            // ⬇ Buscar materiais com localizações associadas ao pedido
+            const materiaisComLocal = await Promise.all(
+                pedido.materiais.map(async (item) => {
+                    const resMat = await fetch(`/materiais/${item.codigoBarras}`);
+                    const { material } = await resMat.json();
+                    return {
+                        item,
+                        material
+                    };
+                })
+            );
 
+            // ⬇ Ordenar por armário e prateleira
+            materiaisComLocal.sort((a, b) => {
+                const armA = a.material.localizacao?.armario || "";
+                const armB = b.material.localizacao?.armario || "";
+                const pratA = a.material.localizacao?.prateleira || "";
+                const pratB = b.material.localizacao?.prateleira || "";
+
+                return armA.localeCompare(armB) || pratA.localeCompare(pratB);
+            });
+
+            for (const { item, material } of materiaisComLocal) {
                 const localizacao = material?.localizacao ? `ARMARIO ${material.localizacao.armario} - PRATELEIRA ${material.localizacao.prateleira}` : "N/D";
 
                 const corCampo = item.corSelecionada ? `<input type="color" value="${item.corSelecionada}" disabled>` : "<input type='hidden'>";
@@ -68,7 +88,7 @@ async function carregarPedidosAtendimento() {
                     "EM FALTA": "#ff0000",
                     "DISPONÍVEL": "#00ff00",
                     "SEPARADO": "#ffd000"
-                } [item.statusItem] || "#aaa";
+                }[item.statusItem] || "#aaa";
 
                 corpo += `
                     <div id="#${numItem}Item">

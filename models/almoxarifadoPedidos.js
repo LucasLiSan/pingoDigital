@@ -9,7 +9,7 @@ const itemPedidoSchema = new mongoose.Schema({
     observacao: String,
     statusItem: {
         type: String,
-        enum: ["PENDENTE", "DISPONÍVEL", "EM FALTA", "SEPARADO", "ENTREGUE"],
+        enum: ["PENDENTE", "DISPONÍVEL", "EM FALTA", "SEPARADO", "ENTREGA PARCIAL", "ENTREGUE"],
         default: "PENDENTE"
     },
     entregas: [{
@@ -33,7 +33,7 @@ const pedidoSchema = new mongoose.Schema({
     materiais: [itemPedidoSchema],
     statusPedido: {
         type: String,
-        enum: ["PENDENTE", "EM SEPARAÇÃO", "PRONTO PARA ENTREGA", "ENTREGUE", "CANCELADO"],
+        enum: ["PENDENTE", "EM SEPARAÇÃO", "PRONTO PARA ENTREGA", "ENTREGUE", "ENTREGA PARCIAL", "CANCELADO"],
         default: "PENDENTE"
     },
     criadoEm: { type: Date, default: Date.now },

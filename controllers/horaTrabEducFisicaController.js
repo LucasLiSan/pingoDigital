@@ -30,8 +30,10 @@ const getOneHora = async (req, res) => {
         if(ObjectId.isValid(req.params.id)) {
             const id = req.params.id;
             const aula = await horaEducFisicService.getOne(id);
+            
             if(!aula) { res.status(404).json({ Success: 'Aula não encontrado.' }) } //Cód. Status 404: Not Found
             else { res.status(200).json({ aula })} //Cód. Status 200: OK
+
         } else { res.sendStatus(400); } //Cód. Status 400: Bad Request
     } catch (error) {
         console.log(error);
@@ -46,7 +48,9 @@ const updateHora = async (req, res) => {
             const id = req.params.id;
             const { matricula, nomeProf, DiaSemana, horaIn, horaOut, turma } = req.body;
             const existingAula = await horaEducFisicService.getOne(id);
+            
             if (!existingAula) { return res.status(404).json({ err: 'Aula não encontrado.' }); }
+            
             horaEducFisicService.update(id, matricula, nomeProf, DiaSemana, horaIn, horaOut, turma);
             res.status(200).json({ Success: `Aula '${existingAula.DiaSemana}' atualizado com sucesso.` }); //Cód. Status 200: OK
         } else { res.sendStatus(400); } //Cód. Status 400: Bad Request
@@ -62,7 +66,9 @@ const deleteHora = async (req, res) => {
         if(ObjectId.isValid(req.params.id)) {
             const id = req.params.id;
             const existingAula = await horaEducFisicService.getOne(id);
+            
             if (!existingAula) { return res.status(404).json({ err: 'Hora não encontrado.' }); }
+            
             horaEducFisicService.delete(id);
             res.status(204).json({ Success: `Livro '${existingAula.DiaSemana}' deletado com sucesso.` }); //Cód. Status 204: No content
         } else {res.sendStatus(400); } //Cód. Status 400: Bad Request
@@ -72,4 +78,10 @@ const deleteHora = async (req, res) => {
     }
 }
 
-export default { createNewHora, getAllHoras, getOneHora, updateHora, deleteHora };
+export default { 
+    createNewHora,
+    getAllHoras,
+    getOneHora,
+    updateHora,
+    deleteHora
+};

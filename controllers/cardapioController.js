@@ -49,7 +49,9 @@ const getOneCardapio = async (req, res) => {
         if (ObjectId.isValid(req.params.id)) {
             const id = req.params.id;
             const cardapio = await cardapioService.getOne(id);
+
             if (!cardapio) { res.status(404).json({ err: 'Cardápio não encontrado.' }); }
+            
             else { res.status(200).json({ cardapio }); }
         } else { res.sendStatus(400); }  // Bad Request
     } catch (error) {

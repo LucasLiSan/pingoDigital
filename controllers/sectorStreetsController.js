@@ -46,15 +46,11 @@ const getStreetsBySectorAndNeighborhood = async (req, res) => {
         const { setor, bairro } = req.query;
 
         // Verificar se "setor" está presente
-        if (!setor) {
-            return res.status(400).json({ error: "O campo 'setor' é obrigatório." });
-        }
+        if (!setor) { return res.status(400).json({ error: "O campo 'setor' é obrigatório." }); }
 
         // Montar o filtro dinâmico
         const filter = { setor };
-        if (bairro) {
-            filter.bairro = bairro;
-        }
+        if (bairro) { filter.bairro = bairro; }
 
         const streets = await Setor.find(filter, { bairro: 1, rua: 1, _id: 0 });
 
@@ -72,9 +68,7 @@ const searchStreetsBySector = async (req, res) => {
     try {
         const { query, setor } = req.query;
 
-        if (!query || query.length < 3) {
-            return res.status(400).json({ error: "A busca deve conter ao menos 3 caracteres." });
-        }
+        if (!query || query.length < 3) { return res.status(400).json({ error: "A busca deve conter ao menos 3 caracteres." }); }
 
         const streets = await Setor.find({
             setor: setor, // Filtra pelo setor
@@ -97,8 +91,10 @@ const getOneSector = async (req, res) => {
         if(ObjectId.isValid(req.params.id)) {
             const id = req.params.id;
             const sector = await sectorService.getOne(id);
+
             if(!sector) { res.status(404).json({ Success: 'Setor não encontrado.' }) } //Cód. Status 404: Not Found
             else { res.status(200).json({ sector })} //Cód. Status 200: OK
+
         } else { res.sendStatus(400); } //Cód. Status 400: Bad Request
     } catch (error) {
         console.log(error);
@@ -111,15 +107,11 @@ const searchHouse = async (req, res) => {
     try {
         const { street, number, neighborhood } = req.query;
 
-        if (!street) {
-            return res.status(400).json({ error: "O campo 'street' é obrigatório." });
-        }
+        if (!street) { return res.status(400).json({ error: "O campo 'street' é obrigatório." }); }
 
         const house = await sectorService.searchHouse(street, parseInt(number), neighborhood);
 
-        if (!house) {
-            return res.status(404).json({ message: "ENDEREÇO NÃO LOCALIZADO" });
-        }
+        if (!house) { return res.status(404).json({ message: "ENDEREÇO NÃO LOCALIZADO" }); }
 
         res.status(200).json({
             setor: house.setor,
@@ -139,21 +131,16 @@ const updateSector = async (req, res) => {
             const { rua, nomeAnterior, bairro, numero, setor, evento, detalhes } = req.body;
 
             const existingSector = await sectorService.getOne(id);
-            if (!existingSector) { 
-                return res.status(404).json({ err: 'Rua não encontrada.' }); 
-            }
+            
+            if (!existingSector) { return res.status(404).json({ err: 'Rua não encontrada.' }); }
 
-            const updatedSector = await sectorService.update(
-                id, rua, nomeAnterior, bairro, numero, setor, evento, detalhes
-            );
+            const updatedSector = await sectorService.update(id, rua, nomeAnterior, bairro, numero, setor, evento, detalhes);
 
             res.status(200).json({ 
                 Success: `Endereço '${existingSector.rua}', '${existingSector.bairro}' atualizado com sucesso.`,
                 updatedSector 
             });
-        } else {
-            res.sendStatus(400); // Código 400: Bad Request
-        }
+        } else { res.sendStatus(400); }  // Código 400: Bad Request
     } catch (error) {
         console.log(error);
         res.status(500).json({ err: 'Erro interno do servidor.' }); // Código 500: Internal Server Error
@@ -166,7 +153,9 @@ const deleteSector = async (req, res) => {
         if(ObjectId.isValid(req.params.id)) {
             const id = req.params.id;
             const existingSector = await sectorService.getOne(id);
+
             if (!existingSector) { return res.status(404).json({ err: 'Setor não encontrado.' }); }
+
             sectorService.delete(id);
             res.status(204).json({ Success: `Endereço '${sectorService.rua}' deletado com sucesso.` }); //Cód. Status 204: No content
         } else {res.sendStatus(400); } //Cód. Status 400: Bad Request

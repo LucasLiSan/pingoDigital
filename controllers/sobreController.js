@@ -1,5 +1,3 @@
-const renderSobrePage = (req, res) => {
-    res.render('sobre');
-};
+const renderSobrePage = (req, res) => { res.render('sobre'); };
 
 export default renderSobrePage;

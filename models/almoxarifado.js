@@ -21,7 +21,7 @@ const logSchema = new mongoose.Schema({
     destino: String,
     origem: String,
     fornecedor: String
-  });
+});
 
 const materialSchema = new mongoose.Schema({
     codigoBarras: { type: String, required: true, unique: true },

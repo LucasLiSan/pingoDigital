@@ -670,6 +670,18 @@ main {
     justify-items: center;
 }
 
+.btnAtender {
+    width: 7rem;
+    height: 3rem;
+    border-bottom: solid 0.2rem var(--colorPalletOne);
+    border-radius: 1rem;
+    background: var(--colorPalletTwo);
+    box-shadow: 1px 1px 0px 0.1rem var(--colorPalletOne);
+    font-weight: bold;
+}
+
+.btnAtender:hover { background: var(--colorPalletThree); }
+
 /* -- -- */
 
 /* -- docente.ejs -- */

@@ -30,9 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <span class="data">Encontrado: ${new Date(item.data).toLocaleDateString("pt-BR")}</span>
                 <span class="tempoRestante">Tempo restante: ${tempoRestanteText}</span>
                 <button>
-                    <a class="linkWhats" href="https://api.whatsapp.com/send?phone=551338225152&text=Ol%C3%A1,%20o%20item%20${encodeURIComponent(item.item)}%20pertence%20ao(a)%20meu(minha)%20filho(a)." target="_blank">
-                        SOLICITAR
-                    </a>
+                    <a class="linkWhats" href="https://api.whatsapp.com/send?phone=551338225152&text=Ol%C3%A1,%20o%20item%20${encodeURIComponent(item.item)}%20pertence%20ao(a)%20meu(minha)%20filho(a)." target="_blank"> SOLICITAR </a>
                 </button>
             `;
             
