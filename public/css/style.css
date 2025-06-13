@@ -682,6 +682,100 @@ main {
 
 .btnAtender:hover { background: var(--colorPalletThree); }
 
+.modal-contentAtendimento {
+    position: relative;
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 1rem;
+    border: 1px solid #888;
+    width: 70%;
+    height: 50%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    background: var(--colorPalletFour);
+}
+
+.modal-contentAtendimento h3 {
+    width: 100%;
+    height: 2rem;
+    align-content: center;
+}
+
+.modal-contentAtendimento form {
+    width: 100%;
+    height: 80%;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
+}
+
+.itensAtendimento-Cabecalho {
+    width: 100%;
+    height: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.itensAtendimento {
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 10px;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.itemEntrega {
+    width: 100%;
+    height: 35%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+.itemEntrega:nth-child(odd) {
+    background-color: #f4c30180;
+}
+
+.itemEntrega p {
+    text-transform: uppercase;
+}
+
+.modal-contentAtendimento form > button {
+    width: 10rem;
+    height: 3rem;
+    margin: 0 20px;
+    border-bottom: solid 0.2rem var(--colorPalletOne);
+    border-radius: 1rem;
+    background: var(--colorPalletTwo);
+    box-shadow: 1px 1px 0px 0.1rem var(--colorPalletOne);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.modal-contentAtendimento form > button:nth-child(odd) {
+    background: var(--colorPalletOne);
+    border-bottom: solid 0.2rem var(--colorPalletTwo);
+    box-shadow: 1px 1px 0px 0.1rem var(--colorPalletTwo);
+    color: #ffffff;
+}
+
+.modal-contentAtendimento form > button:hover { background: var(--colorPalletThree); }
+
 /* -- -- */
 
 /* -- docente.ejs -- */
@@ -2299,8 +2393,6 @@ main {
 #vistorias a {
     color: #000000;
 }
-
-
 
 #portarias h2,
 #vistorias h2,

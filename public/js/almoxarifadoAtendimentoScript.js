@@ -111,3 +111,61 @@ async function carregarPedidosAtendimento() {
 }
 
 window.addEventListener("DOMContentLoaded", carregarPedidosAtendimento);
+
+//abrir modal
+async function carregarPedidosParaModal(numPedido) {
+    try {
+        const res = await fetch("/pedidos/lista");
+        const { pedidos } = await res.json();
+        const pedido = pedidos.find(p => p.solicitante.numPedido === parseInt(numPedido));
+
+        if (!pedido) return alert("Pedido não encontrado.");
+
+        const container = document.getElementById("itensAtendimento");
+        container.innerHTML = "";
+        document.getElementById("tituloModal").textContent = `Atendimento - Pedido ${numPedido}`;
+
+        let i = 0;
+        for (const item of pedido.materiais) {
+            const resEstoque = await fetch(`/materiais/${item.codigoBarras}`);
+            const { material } = await resEstoque.json();
+            const qtdEstoque = material?.quantidadeAtual || 0;
+
+            const temCorOuTamanho = item.corSelecionada || item.tamanhoSelecionado;
+            const campoVariacoes = temCorOuTamanho
+                ? `
+                    ${item.corSelecionada ? `<p>Cor: <input type="color" value="${item.corSelecionada}" disabled></p>` : ""}
+                    ${item.tamanhoSelecionado ? `<p>Tamanho: ${item.tamanhoSelecionado}</p>` : ""}
+                `
+                : `<p>N/A</p>`;
+
+            const div = document.createElement("div");
+            div.className = "itemEntrega";
+            div.innerHTML = `
+                <p><strong>${item.codigoBarras}</strong></p>
+                <p>${item.nome}</p>
+                <p><strong>${qtdEstoque}</strong></p>
+                <p>Solicitado: ${item.quantidadeSolicitada}</p>
+                ${campoVariacoes}
+                <input type="number" name="entregaQtd-${i}" min="0" max="${qtdEstoque}" value="0">
+                <input type="text" name="responsavel-${i}" placeholder="Nome do responsável">
+                <input type="hidden" name="codigoBarras-${i}" value="${item.codigoBarras}">
+            `;
+            container.appendChild(div);
+            i++;
+        }
+
+        document.getElementById("modalAtendimento").style.display = "block";
+    } catch (err) {
+        console.error("Erro ao carregar pedido:", err);
+    }
+}
+
+function fecharModal() { document.getElementById("modalAtendimento").style.display = "none"; }
+
+document.addEventListener("click", e => {
+    if (e.target.classList.contains("btnAtender")) {
+        const numPedido = e.target.id;
+        carregarPedidosParaModal(numPedido);
+    }
+});

@@ -4,6 +4,29 @@
             
         </main>
 
+        <div id="modalAtendimento" class="modal" style="display:none;">
+            <div class="modal-contentAtendimento">
+                <h3 id="tituloModal">Atender Pedido</h3>
+                <form id="formAtendimento">
+                    <div class="itensAtendimento-Cabecalho">
+                        <span>CÓDIGO DE BARRA</span>
+                        <span>DESCRIÇÃO ITEM</span>
+                        <span>ESTOQUE ATUAL</span>
+                        <span>QTD SOLICITADA</span>
+                        <span>COR<br>TAMANHO</span>
+                        <span>QTD P/ ENTREGAR</span>
+                        <span>RESPONSÁVEL ENTREGA</span>
+                    </div>
+                    <div id="itensAtendimento" class="itensAtendimento">
+                    </div>
+                    <div class="btnsFormModal">
+                        <button type="submit">Registrar Entregas</button>
+                        <button type="button" onclick="fecharModal()">Fechar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <script src="js/almoxarifadoAtendimentoScript.js"></script>
 
 <%- include('partials/footer.ejs') %>
