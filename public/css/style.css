@@ -684,12 +684,11 @@ main {
 
 .modal-contentAtendimento {
     position: relative;
-    background-color: #fefefe;
     margin: 5% auto;
     padding: 1rem;
     border: 1px solid #888;
     width: 70%;
-    height: 50%;
+    height: 59%;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
@@ -713,16 +712,22 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     align-content: space-around;
+    overflow-y: scroll;
 }
 
 .itensAtendimento-Cabecalho {
     width: 100%;
-    height: 10%;
+    height: 20%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 15rem 20rem 8rem 8rem 10rem 8rem 15rem 15rem;
     align-content: center;
     align-items: center;
     justify-items: center;
+    overflow-x: scroll;
+}
+
+.itensAtendimento-Cabecalho span {
+    text-align: center;
 }
 
 .itensAtendimento {
@@ -734,28 +739,58 @@ main {
     justify-content: flex-start;
     margin: 10px;
     padding: 10px;
-    overflow-y: scroll;
 }
 
 .itemEntrega {
-    width: 100%;
     height: 35%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 15rem 20rem 8rem 8rem 10rem 8rem 15rem 15rem;
     align-items: center;
     justify-items: center;
-    justify-content: center;
+    justify-content: start;
 }
 
 .itemEntrega:nth-child(odd) {
     background-color: #f4c30180;
 }
 
+.itemEntrega:hover {
+    background: var(--colorPalletThree);
+    color: #ffffff;
+}
+
 .itemEntrega p {
     text-transform: uppercase;
 }
 
-.modal-contentAtendimento form > button {
+.colorSize {
+    width: 100%;
+    height: 90%;
+    text-align: center;
+}
+
+.itemEntrega input, .itemEntrega select {
+    width: 90%;
+    height: 90%;
+    text-align: center;
+    font-size: 1.5rem;
+    background: none;
+    color: #000000;
+    border: none;
+}
+
+.btnsFormModal {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    text-align: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btnsFormModal button {
     width: 10rem;
     height: 3rem;
     margin: 0 20px;
@@ -767,14 +802,14 @@ main {
     text-transform: uppercase;
 }
 
-.modal-contentAtendimento form > button:nth-child(odd) {
+.btnsFormModal button:nth-child(odd) {
     background: var(--colorPalletOne);
     border-bottom: solid 0.2rem var(--colorPalletTwo);
     box-shadow: 1px 1px 0px 0.1rem var(--colorPalletTwo);
     color: #ffffff;
 }
 
-.modal-contentAtendimento form > button:hover { background: var(--colorPalletThree); }
+.btnsFormModal button:hover { background: var(--colorPalletThree); }
 
 /* -- -- */
 

@@ -134,7 +134,7 @@ async function carregarPedidosParaModal(numPedido) {
             const temCorOuTamanho = item.corSelecionada || item.tamanhoSelecionado;
             const campoVariacoes = temCorOuTamanho
                 ? `
-                    ${item.corSelecionada ? `<p>Cor: <input type="color" value="${item.corSelecionada}" disabled></p>` : ""}
+                    ${item.corSelecionada ? `<p class="colorSize">Cor: <input type="color" value="${item.corSelecionada}" disabled></p>` : ""}
                     ${item.tamanhoSelecionado ? `<p>Tamanho: ${item.tamanhoSelecionado}</p>` : ""}
                 `
                 : `<p>N/A</p>`;
@@ -145,9 +145,17 @@ async function carregarPedidosParaModal(numPedido) {
                 <p><strong>${item.codigoBarras}</strong></p>
                 <p>${item.nome}</p>
                 <p><strong>${qtdEstoque}</strong></p>
-                <p>Solicitado: ${item.quantidadeSolicitada}</p>
+                <p>${item.quantidadeSolicitada}</p>
                 ${campoVariacoes}
                 <input type="number" name="entregaQtd-${i}" min="0" max="${qtdEstoque}" value="0">
+                <select  name="statusItem" id="statusItem">
+                    <option value="PENDENTE">PENDENTE</option>
+                    <option value="DISPONÍVEL">DISPONÍVEL</option>
+                    <option value="EM FALTA">EM FALTA</option>
+                    <option value="SEPARADO">SEPARADO</option>
+                    <option value="ENTREGA PARCIAL">ENTREGA PARCIAL</option>
+                    <option value="ENTREGUE">ENTREGUE</option>
+                </select>
                 <input type="text" name="responsavel-${i}" placeholder="Nome do responsável">
                 <input type="hidden" name="codigoBarras-${i}" value="${item.codigoBarras}">
             `;
