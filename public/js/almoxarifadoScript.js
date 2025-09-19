@@ -141,11 +141,12 @@ function abrirCarrinhoModal() {
     carrinho.forEach((item, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <strong>${item.nome}</strong><br>
-            ${item.corSelecionada ? `Cor: <span style='display:inline-block;width:12px;height:12px;background:${item.corSelecionada};border-radius:50%;margin-left:4px;'></span><br>` : ""}
-            ${item.tamanhoSelecionado ? `Tamanho: ${item.tamanhoSelecionado}<br>` : ""}
-            Qtd: <input type="number" value="${item.quantidadeSolicitada}" min="1" data-index="${index}" class="inputQtd"><br>
-            Obs: <input type="text" value="${item.observacao}" data-index="${index}" class="inputObs" placeholder="Para que?"><br>
+            <label class="lblItem">${item.nome}</label>
+            ${item.corSelecionada ? `<label class="lblColor">Cor:</label> 
+                <span style='display:inline-block;width:12px;height:12px;background:${item.corSelecionada};border-radius:50%;margin-left:4px;'></span>` : ""}
+            ${item.tamanhoSelecionado ? `Tamanho: ${item.tamanhoSelecionado}` : ""}
+            <label class="lblQtd">Qtd:</label> <input type="number" value="${item.quantidadeSolicitada}" min="1" data-index="${index}" class="inputQtd">
+            <label class="lblObs">Obs:</label> <input type="text" value="${item.observacao}" data-index="${index}" class="inputObs" placeholder="Para que?">
             <button onclick="removerDoCarrinho(${index})">🗑️</button>
         `;
         lista.appendChild(li);
@@ -252,42 +253,6 @@ function atualizarTodosBotoesDaVitrine() {
     });
 }
 
-function abrirCarrinhoModal() {
-    const lista = document.getElementById("resumoCarrinho");
-    lista.innerHTML = "";
-
-    carrinho.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <strong>${item.nome}</strong><br>
-            ${item.corSelecionada ? `Cor: <span style='display:inline-block;width:12px;height:12px;background:${item.corSelecionada};border-radius:50%;margin-left:4px;'></span><br>` : ""}
-            ${item.tamanhoSelecionado ? `Tamanho: ${item.tamanhoSelecionado}<br>` : ""}
-            Qtd: <input type="number" value="${item.quantidadeSolicitada}" min="1" data-index="${index}" class="inputQtd"><br>
-            Obs: <input type="text" value="${item.observacao}" data-index="${index}" class="inputObs"   placeholder="Para que?"><br>
-            <button onclick="removerDoCarrinho(${index})">🗑️</button>
-        `;
-        lista.appendChild(li);
-    });
-
-    document.querySelectorAll(".inputQtd").forEach(input => {
-        input.addEventListener("change", e => {
-            const index = e.target.dataset.index;
-            carrinho[index].quantidadeSolicitada = parseInt(e.target.value);
-            salvarCarrinho();
-            renderizarCarrinho();
-        });
-    });
-
-    document.querySelectorAll(".inputObs").forEach(input => {
-        input.addEventListener("input", e => {
-            const index = e.target.dataset.index;
-            carrinho[index].observacao = e.target.value;
-            salvarCarrinho();
-        });
-    });
-
-    document.getElementById("modalCarrinho").style.display = "flex";
-}
 
 // Atualiza exibição final na confirmação do pedido
 function atualizarResumoConfirmacao() {
@@ -296,7 +261,7 @@ function atualizarResumoConfirmacao() {
     carrinho.forEach(item => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <strong>${item.nome}</strong><br>
+            <label class="lblItemPedido">${item.nome}</strong><br>
             ${item.corSelecionada ? `Cor: <span style='display:inline-block;width:12px;height:12px;background:${item.corSelecionada};border-radius:50%;margin-left:4px;'></span><br>` : ""}
             ${item.tamanhoSelecionado ? `Tamanho: ${item.tamanhoSelecionado}<br>` : ""}
             Qtd: ${item.quantidadeSolicitada}<br>

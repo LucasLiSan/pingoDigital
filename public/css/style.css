@@ -552,21 +552,63 @@ main {
     font-size: 2rem;
 }
 
-  #resumoPedido {
+#resumoCarrinho {
+    list-style: none;
+}
+
+#resumoCarrinho li {
+    width: 45rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#resumoCarrinho li > label {
+    height: 3rem;
+    text-align: center;
+    align-content: center;
+    text-transform: uppercase;
+}
+
+.lblItem { width: 15rem;}
+.lblColor { width: 4rem;}
+.lblQtd { width: 5rem;}
+.lblObs { width: 3rem;}
+
+.inputQtd {
+    width: 3rem;
+    height: 2rem;
+    text-align: center;
+}
+
+.inputObs {
+    width: 10rem;
+    height: 2rem;
+}
+
+#resumoPedido {
     list-style: none;
     padding: 0;
     margin: 0 0 16px 0;
-  }
+}
   
-  #resumoPedido li {
+#resumoPedido li {
     margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 6px;
-  }
+}
+
+.lblItemPedido {
+    text-transform: uppercase;
+}
   
-  .botoes-modal {
+.botoes-modal {
     text-align: right;
-  }
+}
   
 .botoes-modal button {
     margin-left: 10px;
@@ -577,8 +619,7 @@ main {
 /* -- almoxarifadoAtendimento.ejs -- */
 
 .almoxarifadoAtendimento { 
-    height: 40rem;
-    overflow-y: scroll;
+    height: auto;
     padding: 10px;
 }
 
