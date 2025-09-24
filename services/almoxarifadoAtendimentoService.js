@@ -36,11 +36,9 @@ class AtendimentoService {
     // Registrar entrega parcial ou total de item
     async registrarEntrega(idPedido, codigoBarras, entrega) {
         const pedido = await Pedido.findById(idPedido);
-
         if (!pedido) throw new Error("Pedido não encontrado.");
 
         const item = pedido.materiais.find(i => i.codigoBarras === codigoBarras);
-
         if (!item) throw new Error("Item não encontrado.");
 
         item.entregas.push({
@@ -49,14 +47,29 @@ class AtendimentoService {
             responsavel: entrega.responsavel || "Desconhecido"
         });
 
-        const totalEntregue = item.entregas.reduce((sum, e) => sum + e.quantidade, 0);
+        // Se front passou status explícito, usar ele
+        if (entrega.statusItem) {
+            item.statusItem = entrega.statusItem;
+        } else {
+            // Se não, decide automaticamente
+            const totalEntregue = item.entregas.reduce((sum, e) => sum + e.quantidade, 0);
+            if (totalEntregue >= item.quantidadeSolicitada) {
+                item.statusItem = "ENTREGUE";
+            } else if (totalEntregue > 0) {
+                item.statusItem = "ENTREGA PARCIAL";
+            } else {
+                item.statusItem = "PENDENTE";
+            }
+        }
 
-        if (totalEntregue >= item.quantidadeSolicitada) { item.statusItem = "ENTREGUE"; }
-        else { item.statusItem = "SEPARADO"; }
-
-        // Atualiza status geral do pedido se necessário
-        const todosEntregues = pedido.materiais.every(i => i.statusItem === "ENTREGUE");
-        pedido.statusPedido = todosEntregues ? "ENTREGUE" : "EM SEPARAÇÃO";
+        // Atualizar status geral do pedido
+        if (pedido.materiais.every(i => i.statusItem === "ENTREGUE")) {
+            pedido.statusPedido = "ENTREGUE";
+        } else if (pedido.materiais.some(i => i.statusItem === "ENTREGA PARCIAL")) {
+            pedido.statusPedido = "ENTREGA PARCIAL";
+        } else {
+            pedido.statusPedido = "ENTREGA PARCIAL";
+        }
 
         pedido.atualizadoEm = new Date();
         await pedido.save();
