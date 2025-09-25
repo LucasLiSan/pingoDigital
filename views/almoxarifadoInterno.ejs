@@ -1,0 +1,42 @@
+<%- include('partials/header.ejs') %>
+
+        <main class="almoxarifadoInterno">
+            <div class="sidenav">
+                <div class="logo"><img src="../assets/imgs/LogoHome.png" alt=""></div>
+                <div class="searchbar">
+                    <input class="search">
+                    <button class="sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+                <div class="spacer"></div>
+                <button class="mbtn"  onclick="abrirAba('estoque')">
+                    <i class="fa fa-list icon" aria-hidden="true"></i> ESTOQUE
+                </button>
+                <button class="mbtn" onclick="abrirAba('pedidos')">
+                    <i class="fa fa-shopping-cart icon" aria-hidden="true"></i> PEDIDOS
+                </button>
+                <button class="mbtn" onclick="abrirAba('cadastro')">
+                    <i class="fa fa-bolt icon" aria-hidden="true"></i> CADASTRO
+                </button>
+            </div>
+            <div class="content-area">
+                <div class="almoxarifadoGeral">
+                    <div class="page-title">ALMOXARIFADO - MATERIAIS PEDAGÓGICOS E DE ESCRITÓRIO</div>
+                    <div class="page-desc">ESTOQUE ATUAL</div>
+
+                </div>
+                <div class="almoxarifadoPedidos" style="display: none;">
+                    <div class="page-title">ALMOXARIFADO - PEDIDOS</div>
+                    <div class="page-desc">LISTA DOS PEDIDOS</div>
+                    
+                </div>
+                <div class="almoxarifadoCadastro" style="display: none;">
+                    <div class="page-title">ALMOXARIFADO - CADASTRO</div>
+                    <div class="page-desc">CADASTRO DE MATERIAIS</div>
+                    
+                </div>
+            </div>
+        </main>
+
+        <script src="js/almoxarifadoInternoScript.js"></script>
+
+<%- include('partials/footer.ejs') %>

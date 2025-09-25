@@ -8,6 +8,14 @@ const renderAtendimentoPage = (req, res) => {
     }
 };
 
+const renderAtendimentoInternoPage = (req, res) => {
+    try { res.render("almoxarifadoInterno"); }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao carregar a página de pedidos." });
+    }
+};
+
 const listarPedidosPendentes = async (req, res) => {
     try {
         const pedidos = await AtendimentoService.listarPedidosPendentes();
@@ -46,6 +54,7 @@ const cancelarPedido = async (req, res) => {
 
 export default {
     renderAtendimentoPage,
+    renderAtendimentoInternoPage,
     listarPedidosPendentes,
     registrarEntregaItem,
     cancelarPedido

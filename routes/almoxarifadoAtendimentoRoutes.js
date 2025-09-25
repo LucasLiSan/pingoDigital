@@ -4,6 +4,7 @@ import almoxarifadoAtendimentoController from "../controllers/almoxarifadoAtendi
 const almoxarifadoAtendimentoRoutes = express.Router();
 
 almoxarifadoAtendimentoRoutes.get("/almoxarifadoAtendimento", almoxarifadoAtendimentoController.renderAtendimentoPage);
+almoxarifadoAtendimentoRoutes.get("/almoxarifadoInterno", almoxarifadoAtendimentoController.renderAtendimentoInternoPage);
 
 almoxarifadoAtendimentoRoutes.get("/atendimento/pendentes", almoxarifadoAtendimentoController.listarPedidosPendentes);
 almoxarifadoAtendimentoRoutes.put("/atendimento/:id/entrega", almoxarifadoAtendimentoController.registrarEntregaItem);
