@@ -502,25 +502,25 @@ main {
 }
 
 .carrinho-icone {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #612c8a;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 50px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 999;
-  box-shadow: 0 0 5px #000;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #612c8a;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 0 5px #000;
 }
 
 #contadorCarrinho {
-  background: #f00;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  margin-left: 6px;
+    background: #f00;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 6px;
 }
 
 .modal-confirmacao {
@@ -551,9 +551,7 @@ main {
     font-size: 2rem;
 }
 
-#resumoCarrinho {
-    list-style: none;
-}
+#resumoCarrinho { list-style: none; }
 
 #resumoCarrinho li {
     width: 45rem;
@@ -601,17 +599,9 @@ main {
     padding-bottom: 6px;
 }
 
-.lblItemPedido {
-    text-transform: uppercase;
-}
-  
-.botoes-modal {
-    text-align: right;
-}
-  
-.botoes-modal button {
-    margin-left: 10px;
-}
+.lblItemPedido { text-transform: uppercase; }
+.botoes-modal { text-align: right; }
+.botoes-modal button { margin-left: 10px; }
 
 /* -- -- */
 
@@ -634,9 +624,7 @@ main {
     align-items: center;
 }
 
-.almoxarifadoAtendimento section:nth-child(odd) {
-    background-color: #f4c30180;
-}
+.almoxarifadoAtendimento section:nth-child(odd) { background-color: #f4c30180; }
 
 .almoxarifadoAtendimento h2 {
     width: 100%;
@@ -644,9 +632,7 @@ main {
     align-content: center;
 }
 
-.statusPedido-geral {
-    color: #ffff00
-}
+.statusPedido-geral { color: #ffff00 }
 
 .descricaoPedido {
     width: 100%;
@@ -675,9 +661,7 @@ main {
     font-size: 2rem;
 }
 
-.itens {
-    width: 75%;
-}
+.itens { width: 75%; }
 
 .itens > div {
     height: 5rem;
@@ -696,12 +680,11 @@ main {
 }
 
 .itens > div:hover {
-    background-color: var(--colorPalletFour);
+    background-color: var(--colorPalletTwo);
+    border-radius: 1rem;
 }
 
-.statusPedido {
-    color: #ffff00;
-}
+.statusPedido { color: #ffff00; }
 
 .dataEntrega {
     width: 100%;
@@ -766,9 +749,7 @@ main {
     overflow-x: scroll;
 }
 
-.itensAtendimento-Cabecalho span {
-    text-align: center;
-}
+.itensAtendimento-Cabecalho span { text-align: center; }
 
 .itensAtendimento {
     width: 100%;
@@ -790,18 +771,14 @@ main {
     justify-content: start;
 }
 
-.itemEntrega:nth-child(odd) {
-    background-color: #f4c30180;
-}
+.itemEntrega:nth-child(odd) { background-color: #f4c30180; }
 
 .itemEntrega:hover {
     background: var(--colorPalletThree);
     color: #ffffff;
 }
 
-.itemEntrega p {
-    text-transform: uppercase;
-}
+.itemEntrega p { text-transform: uppercase; }
 
 .colorSize {
     width: 100%;
@@ -895,9 +872,85 @@ main {
     margin: 10px 20px 10px 20px;
 }
 
-.almoxarifadoPedidos section:nth-child(odd) {
-    background-color: var(--colorPalletFour);
+.almoxarifadoPedidos section:nth-child(odd) { background-color: var(--colorPalletFour); }
+
+.searchBarCadastro {
+    width: 35rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
+
+.searchBarCadastro label {
+    width: 15rem;
+    height: 100%;
+    text-align: end;
+    align-content: center;
+    font-size: 1.5rem;
+}
+
+.searchBarCadastro input { 
+    width: 235px; 
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.cadastroAlmoxarifado {
+    width: 40rem;
+    height: 50rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    justify-items: start;
+}
+
+.cadastroAlmoxarifado label {
+    width: 100%;
+    height: 3rem;
+    font-size: 1.5rem;
+    text-align: end;
+    align-content: center;
+}
+
+.cadastroAlmoxarifado input,
+.cadastroAlmoxarifado textarea,
+.cadastroAlmoxarifado select {
+    width: 310px;
+    height: 2rem;
+    border-right: 1px solid #dfe2e6;
+    border-top: 1px solid #dfe2e6;
+    border-bottom: 1px solid #dfe2e6;
+    border-left: 1px solid var(--colorPalletOne);
+    border-radius: 0px 12px 12px 0px;
+    margin-left: 10px;
+    font-size: 1rem;
+}
+
+.cadastroAlmoxarifado select {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.inptColor, .inptQtd {
+    width: 4rem !important;
+    border-radius: 0 !important;
+    text-align: center;
+    font-size: 1.5rem !important;
+}
+
+.flex {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex input { width: 8rem; }
+.flex input:nth-child(1) { border-radius: 12px 0px 0px 12px; }
+.flex input:nth-child(2) { border-radius: 0; }
 
 .content-bar {
     width: 150rem;
@@ -931,15 +984,15 @@ main {
 .logo img { width: 100%; }
 
 .search {
-  border-left:1px solid #dfe2e6;
-  border-top:1px solid #dfe2e6;
-  border-bottom:1px solid #dfe2e6;
-  border-right:1px solid var(--colorPalletOne);
-  border-radius:12px 0px 0px 12px;
-  padding:10px;
-  margin-left:20px;
-  width: 145px;
-  font-family: var(--fontFour);
+    border-left:1px solid #dfe2e6;
+    border-top:1px solid #dfe2e6;
+    border-bottom:1px solid #dfe2e6;
+    border-right:1px solid var(--colorPalletOne);
+    border-radius:12px 0px 0px 12px;
+    padding:10px;
+    margin-left:20px;
+    width: 145px;
+    font-family: var(--fontFour);
 }
 
 .search:focus{ outline:none; }
@@ -1033,7 +1086,6 @@ main {
 }
 
 .mnubtn:focus { outline:none; }
-
 .mnubtn:hover { background:black; }
 
 .mnubtn:active {
@@ -1064,56 +1116,58 @@ main {
 }
 
 @media only screen and (max-width: 1160px) {
-  body{
-    padding:0;
-    margin:0;
-    font-size:14px;
-  }
-  .sidenav{
-    height:100%;
-    border-radius:0px;
-  }
-    .content-area{
-    height:100%;
-      width:calc(100% - 250px);
-      border-radius:0px;
-  }
+    body {
+        padding:0;
+        margin:0;
+        font-size:14px;
+    }
+
+    .sidenav {
+        height:100%;
+        border-radius:0px;
+    }
+
+    .content-area {
+        height:100%;
+        width:calc(100% - 250px);
+        border-radius:0px;
+    }
 }
+
 @media only screen and (max-width: 780px) {
-  body{
-    padding:0;
-    margin:0;
-    font-size:13px;
-  }
-  .sidenav{
-    height:100%;
-    border-radius:0px;
-    left:-251px;
-  }
-    .content-area{
-    height:100%;
-      width:calc(100%);
-      border-radius:0px;
-      margin-left:0px;
-  }
-  .mobilebar{
-  background:#fff;
-  box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.06);
-  display:block;
-}
-  .content-bar{
-    grid-template-columns: 0fr 1fr 0fr;
-  }
-  .itemprice{
-    display:none;
-  }
-  .itemstock{
-    display:none;
-  }
-  .cbbtn{
-  margin-top:5px;
-    margin-right:5px;
-}
+    body {
+        padding:0;
+        margin:0;
+        font-size:13px;
+    }
+
+    .sidenav {
+        height:100%;
+        border-radius:0px;
+        left:-251px;
+    }
+
+    .content-area {
+        height:100%;
+        width:calc(100%);
+        border-radius:0px;
+        margin-left:0px;
+    }
+
+    .mobilebar {
+        background:#fff;
+        box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.06);
+        display:block;
+    }
+
+    .content-bar { grid-template-columns: 0fr 1fr 0fr; }
+    .itemprice { display:none; }
+    .itemstock { display:none; }
+
+    .cbbtn {
+        margin-top:5px;
+        margin-right:5px;
+    }
 }
 
 /* -- -- */
@@ -1202,9 +1256,7 @@ main {
     font-size: small;
 }
 
-.pens {
-    padding-left: 25px;
-}
+.pens { padding-left: 25px; }
 
 .num {
     font-size: x-large;
@@ -1225,9 +1277,7 @@ main {
     transition: 0.3s;
 }
 
-.image button:focus {
-    outline: none;
-}
+.image button:focus { outline: none; }
 
 .image button:hover {
     background-color: rgb(243, 94, 119);
@@ -1428,9 +1478,7 @@ main {
     border: 1px dashed var(--colorPalletOne);
 }
 
-#search-house .inputSearch select {
-    width: 20%;
-}
+#search-house .inputSearch select { width: 20%; }
 
 .house {
     width: 100%;
@@ -1502,9 +1550,7 @@ main {
     text-transform: uppercase;
 }
 
-.docsMatricula li {
-    height: 2rem;
-}
+.docsMatricula li { height: 2rem; }
 
 #numero {
     width: 12%;
@@ -2628,9 +2674,7 @@ main {
 }
 
 .horariosFuncionarios thead { height: 3rem; }
-
 .horariosFuncionarios tr:nth-child(odd) { background-color: rgb(97 44 138 / 50%); }
-
 .horariosFuncionarios tr:hover { background-color: rgba(244, 195, 1, 0.5); }
 
 #normas {
@@ -2812,9 +2856,7 @@ main {
     cursor: pointer;
 }
 
-.fechar:hover {
-    color: #000;
-}
+.fechar:hover { color: #000; }
 
 /* -- -- */
 
@@ -3010,38 +3052,14 @@ footer {
     }
 
     .imgLogo { background-size: inherit; }
-
-    .headLogos h3 {
-        font-size: 1rem;
-    }
-
-    .docsMatricula {
-        width: 61%;
-    }
-
-    #numero {
-        width: 17%;
-    }
-
-    .menuTransp {
-        justify-content: flex-start;
-    }
-
-    #horarioFunc {
-        justify-content: flex-start
-    }
-
-    .horariosFuncionarios {
-        height: 125rem;
-    }
-
-    #normas {
-        overflow: auto;
-    }
-
-    .normasEscolares {
-        width: auto;
-    }
+    .headLogos h3 { font-size: 1rem; }
+    .docsMatricula { width: 61%; }
+    #numero { width: 17%; }
+    .menuTransp { justify-content: flex-start; }
+    #horarioFunc { justify-content: flex-start }
+    .horariosFuncionarios { height: 125rem; }
+    #normas { overflow: auto; }
+    .normasEscolares { width: auto; }
 }
 
 @media (width < 426px) {
@@ -3111,7 +3129,6 @@ footer {
     }
 
     .subMenu li { width: 12.9rem; }
-
     .subMenu .first:hover { border-radius: 0; }
 
     footer {
@@ -3173,12 +3190,6 @@ footer {
 
     .imgLogo { background-size: 30rem; }
     .headLogos h3 { font-size: 1rem; }
-
-    .mainCalendar {
-        overflow-x: scroll;
-    }
-
-    .articleCalendar {
-        width: 75rem;
-    }
+    .mainCalendar { overflow-x: scroll; }
+    .articleCalendar { width: 75rem; }
 }

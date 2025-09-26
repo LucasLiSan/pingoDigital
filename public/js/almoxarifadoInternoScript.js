@@ -223,3 +223,120 @@ async function carregarPedidosAtendimento() {
 }
 
 window.addEventListener("DOMContentLoaded", carregarPedidosAtendimento);
+
+// ===============================
+// Abrir modal para atender pedido
+// ===============================
+async function carregarPedidosParaModal(numPedido) {
+    try {
+        const res = await fetch("/pedidos/lista");
+        const { pedidos } = await res.json();
+        const pedido = pedidos.find(p => p.solicitante.numPedido === parseInt(numPedido));
+
+        if (!pedido) return alert("Pedido não encontrado.");
+
+        const container = document.getElementById("itensAtendimento");
+        container.innerHTML = "";
+        document.getElementById("tituloModal").textContent = `Atendimento - Pedido ${numPedido}`;
+
+        let i = 0;
+        for (const item of pedido.materiais) {
+            // Ignorar itens já concluídos
+            if (item.statusItem === "ENTREGUE") continue;
+
+            const resEstoque = await fetch(`/materiais/${item.codigoBarras}`);
+            const { material } = await resEstoque.json();
+            const qtdEstoque = material?.quantidadeAtual || 0;
+
+            const totalEntregue = (item.entregas || []).reduce((sum, e) => sum + e.quantidade, 0);
+            const saldo = Math.max(item.quantidadeSolicitada - totalEntregue, 0);
+
+            const temCorOuTamanho = item.corSelecionada || item.tamanhoSelecionado;
+            const campoVariacoes = temCorOuTamanho
+                ? `
+                    ${item.corSelecionada ? `<p class="colorSize">Cor: <input type="color" value="${item.corSelecionada}" disabled></p>` : ""}
+                    ${item.tamanhoSelecionado ? `<p>Tamanho: ${item.tamanhoSelecionado}</p>` : ""}
+                `
+                : `<p>N/A</p>`;
+
+            const div = document.createElement("div");
+            div.className = "itemEntrega";
+            div.innerHTML = `
+                <p><strong>${item.codigoBarras}</strong></p>
+                <p>${item.nome}</p>
+                <p><strong>${qtdEstoque}</strong></p>
+                <p>${saldo} <small>(de ${item.quantidadeSolicitada})</small></p>
+                ${campoVariacoes}
+                <input type="number" name="entregaQtd-${i}" min="0" max="${saldo}" value="0">
+                <select name="statusItem-${i}">
+                    <option value="PENDENTE">PENDENTE</option>
+                    <option value="DISPONÍVEL">DISPONÍVEL</option>
+                    <option value="EM FALTA">EM FALTA</option>
+                    <option value="SEPARADO">SEPARADO</option>
+                    <option value="ENTREGA PARCIAL">ENTREGA PARCIAL</option>
+                    <option value="ENTREGUE">ENTREGUE</option>
+                </select>
+                <input type="text" name="responsavel-${i}" placeholder="Nome do responsável">
+                <input type="hidden" name="codigoBarras-${i}" value="${item.codigoBarras}">
+            `;
+            container.appendChild(div);
+            i++;
+        }
+
+        document.getElementById("modalAtendimento").style.display = "block";
+        document.getElementById("formAtendimento").dataset.idPedido = pedido._id;
+    } catch (err) { console.error("Erro ao carregar pedido:", err); }
+}
+
+function fecharModal() { document.getElementById("modalAtendimento").style.display = "none"; }
+
+// ===============================
+// Eventos
+// ===============================
+document.addEventListener("click", e => {
+    if (e.target.classList.contains("btnAtender")) {
+        const numPedido = e.target.id;
+        carregarPedidosParaModal(numPedido);
+    }
+});
+
+// ===============================
+// Submeter formulário de entregas
+// ===============================
+document.getElementById("formAtendimento").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+    const idPedido = e.target.dataset.idPedido;
+
+    const entradas = [];
+    for (let [key, value] of form.entries()) {
+        if (key.startsWith("codigoBarras-")) {
+            const i = key.split("-")[1];
+            entradas.push({
+                itemId: form.get(`itemId-${i}`),
+                codigoBarras: value, // ainda pode mandar, mas não é o identificador principal
+                quantidade: parseInt(form.get(`entregaQtd-${i}`)) || 0,
+                responsavel: form.get(`responsavel-${i}`) || "Desconhecido",
+                statusItem: form.get(`statusItem-${i}`) || null
+            });
+        }
+    }
+
+    try {
+        for (const entrega of entradas) {
+            await fetch(`/atendimento/${idPedido}/entrega`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    codigoBarras: entrega.codigoBarras,
+                    quantidade: entrega.quantidade,
+                    responsavel: entrega.responsavel,
+                    statusItem: entrega.statusItem
+                })
+            });
+        }
+        fecharModal();
+        carregarPedidosAtendimento();
+    } catch (err) { console.error("Erro ao registrar entrega:", err); }
+});

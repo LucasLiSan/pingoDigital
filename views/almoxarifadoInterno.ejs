@@ -32,7 +32,86 @@
                 <div class="almoxarifadoCadastro" style="display: none;">
                     <div class="page-title">ALMOXARIFADO - CADASTRO</div>
                     <div class="page-desc">CADASTRO DE MATERIAIS</div>
+                    <div class="searchbar searchBarCadastro">
+                        <label for="search">CÓDIGO DE BARRAS</label>
+                        <input class="search">
+                        <button class="sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    <form action="" class="cadastroAlmoxarifado">
+                        <label>Nome</label>
+                        <input type="text" name="nome" required>
+
+                        <label>Descrição</label>
+                        <textarea name="descricao"></textarea>
+
+                        <label>Marca</label>
+                        <input type="text" name="marca">
+
+                        <label>Validade</label>
+                        <input type="date" name="validade">
+
+                        <label>Cor</label>
+                        <input type="color" name="cor" class="inptColor">
+
+                        <label>Medidas (cm)</label>
+                        <div class="flex">
+                            <input type="number" name="largura_cm" placeholder="Largura">
+                            <input type="number" name="comprimento_cm" placeholder="Comprimento">
+                            <input type="number" name="altura_cm" placeholder="Altura">
+                        </div>
+
+                        <label>Peso (g)</label>
+                        <input type="number" name="peso_gramas">
+
+                        <label>Tamanho numérico</label>
+                        <input type="number" name="tamanho_numerico">
+
+                        <label>Volume (ml)</label>
+                        <input type="number" name="volume_ml">
+
+                        <label>Localização</label>
+                        <div class="flex">
+                            <input type="text" name="armario" placeholder="Armário">
+                            <input type="text" name="prateleira" placeholder="Prateleira">
+                        </div>
+
+                        <label>Quantidade Atual</label>
+                        <input type="number" name="quantidadeAtual" value="0" class="inptQtd">
+
+                        <label>Categoria</label>
+                        <select name="categoria">
+                            <option value="ESCOLAR">Escolar</option>
+                            <option value="ESCRITÓRIO">Escritório</option>
+                            <option value="OUTROS">Outros</option>
+                        </select>
+
+                        <button type="submit">Cadastrar Material</button>
+                    </form>
                     
+                </div>
+
+                <div id="modalAtendimento" class="modal" style="display:none;">
+                    <div class="modal-contentAtendimento">
+                        <h3 id="tituloModal">Atender Pedido</h3>
+                        <form id="formAtendimento">
+                            <div class="itensAtendimento-Cabecalho">
+                                <span>CÓDIGO DE BARRA</span>
+                                <span>DESCRIÇÃO ITEM</span>
+                                <span>ESTOQUE ATUAL</span>
+                                <span>QTD SOLICITADA</span>
+                                <span>COR<br>TAMANHO</span>
+                                <span>QTD P/ <br> ENTREGA</span>
+                                <span>STATUS</span>
+                                <span>RESPONSÁVEL <br> ENTREGA</span>
+                            </div>
+                            <div id="itensAtendimento" class="itensAtendimento">
+                            </div>
+                            <div class="btnsFormModal">
+                                <button type="submit">Registrar Entregas</button>
+                                <button type="button" onclick="fecharModal()">Fechar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </main>
