@@ -901,9 +901,8 @@ main {
     height: 50rem;
     display: grid;
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
-    justify-items: center;
     justify-items: start;
 }
 
@@ -924,9 +923,11 @@ main {
     border-top: 1px solid #dfe2e6;
     border-bottom: 1px solid #dfe2e6;
     border-left: 1px solid var(--colorPalletOne);
-    border-radius: 0px 12px 12px 0px;
+    border-radius: 12px 12px 12px 12px;
     margin-left: 10px;
-    font-size: 1rem;
+    font-size: 1.7rem;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .cadastroAlmoxarifado select {
@@ -938,7 +939,7 @@ main {
     width: 4rem !important;
     border-radius: 0 !important;
     text-align: center;
-    font-size: 1.5rem !important;
+    
 }
 
 .flex {
@@ -949,8 +950,23 @@ main {
 }
 
 .flex input { width: 8rem; }
-.flex input:nth-child(1) { border-radius: 12px 0px 0px 12px; }
-.flex input:nth-child(2) { border-radius: 0; }
+
+.btnCadastroAlmoxarifado {
+    width: 13rem;
+    height: 3rem;
+    color: #FFFFFF;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 0.3rem;
+    background: var(--colorPalletOne);
+    text-transform: uppercase;
+}
+
+.btnCadastroAlmoxarifado:hover { 
+    background-color: var(--colorPalletTwo);
+    color: #000000;
+}
 
 .content-bar {
     width: 150rem;

@@ -9,6 +9,18 @@ class MaterialService {
             if (!data.codigoBarras || data.codigoBarras.trim() === "") {
                 data.codigoBarras = gerarCodigoBarras();
             }
+
+            // 🚨 Garante entrada inicial obrigatória
+            if (!data.entradas || !data.entradas.length) {
+                throw new Error("É obrigatório informar fornecedor e quantidade inicial.");
+            }
+
+            const entradaInicial = data.entradas[0];
+
+            data.quantidadeAtual = entradaInicial.quantidade;
+            data.status = entradaInicial.quantidade > 0 ? "EM ESTOQUE" : "ESGOTADO";
+            data.atualizadoEm = new Date();
+
             const material = new Material(data);
             await material.save();
             return material;

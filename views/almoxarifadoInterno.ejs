@@ -32,12 +32,12 @@
                 <div class="almoxarifadoCadastro" style="display: none;">
                     <div class="page-title">ALMOXARIFADO - CADASTRO</div>
                     <div class="page-desc">CADASTRO DE MATERIAIS</div>
-                    <div class="searchbar searchBarCadastro">
-                        <label for="search">CÓDIGO DE BARRAS</label>
-                        <input class="search">
-                        <button class="sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
-                    <form action="" class="cadastroAlmoxarifado">
+                    <form action="" class="cadastroAlmoxarifado" id="formCadastroMaterial">
+                            <label for="search">CÓDIGO DE BARRAS</label>
+                            <div class="serchBarbtn">
+                                <input class="searchBar">
+                                <button class="sbtn"><i class="fa fa-search searchBtn" aria-hidden="true"></i></button>
+                            </div>
                         <label>Nome</label>
                         <input type="text" name="nome" required>
 
@@ -85,7 +85,10 @@
                             <option value="OUTROS">Outros</option>
                         </select>
 
-                        <button type="submit">Cadastrar Material</button>
+                        <label for="fornecedor">FORNECEDOR</label>
+                        <input type="text" name="fornecedor" class="inptFornecedor">
+
+                        <button class="btnCadastroAlmoxarifado" type="submit">Cadastrar Material</button>
                     </form>
                     
                 </div>

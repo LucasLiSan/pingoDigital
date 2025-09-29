@@ -340,3 +340,132 @@ document.getElementById("formAtendimento").addEventListener("submit", async (e) 
         carregarPedidosAtendimento();
     } catch (err) { console.error("Erro ao registrar entrega:", err); }
 });
+
+// ===============================
+// ABA CADASTRO
+// ===============================
+document.querySelector(".searchBtn").addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const codigoBarras = document.querySelector(".searchBar").value.trim();
+  if (!codigoBarras) {
+    alert("Digite um código de barras para buscar.");
+    return;
+  }
+
+  try {
+    const res = await fetch(`/materiais/${codigoBarras}`);
+    if (!res.ok) {
+      alert("❌ Material não encontrado.");
+      return;
+    }
+
+    const { material } = await res.json();
+
+    // Preenche os campos do formulário
+    const form = document.getElementById("formCadastroMaterial");
+    form.querySelector("[name='nome']").value = material.nome || "";
+    form.querySelector("[name='descricao']").value = material.descricao || "";
+    form.querySelector("[name='marca']").value = material.marca || "";
+    form.querySelector("[name='validade']").value = material.validade ? material.validade.split("T")[0] : "";
+    form.querySelector("[name='cor']").value = material.cor?.[0] || "#000000";
+    form.querySelector("[name='largura_cm']").value = material.medidas?.largura_cm || "";
+    form.querySelector("[name='comprimento_cm']").value = material.medidas?.comprimento_cm || "";
+    form.querySelector("[name='altura_cm']").value = material.medidas?.altura_cm || "";
+    form.querySelector("[name='peso_gramas']").value = material.peso_gramas || "";
+    form.querySelector("[name='tamanho_numerico']").value = material.tamanho_numerico || "";
+    form.querySelector("[name='volume_ml']").value = material.volume_ml || "";
+    form.querySelector("[name='armario']").value = material.localizacao?.armario || "";
+    form.querySelector("[name='prateleira']").value = material.localizacao?.prateleira || "";
+    form.querySelector("[name='quantidadeAtual']").value = material.quantidadeAtual || 0;
+    form.querySelector("[name='categoria']").value = material.categoria || "OUTROS";
+
+    alert(`✅ Material '${material.nome}' carregado para edição.`);
+
+  } catch (err) {
+    console.error("Erro ao buscar material:", err);
+    alert("Erro ao buscar material: " + err.message);
+  }
+});
+
+document.getElementById("formCadastroMaterial").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const codigoBarras = document.querySelector(".searchBar").value.trim();
+
+  const dados = {
+    nome: form.nome.value,
+    descricao: form.descricao.value,
+    marca: form.marca.value,
+    validade: form.validade.value || null,
+    cor: form.cor.value ? [form.cor.value] : [],
+    medidas: {
+      largura_cm: form.largura_cm.value ? Number(form.largura_cm.value) : null,
+      comprimento_cm: form.comprimento_cm.value ? Number(form.comprimento_cm.value) : null,
+      altura_cm: form.altura_cm.value ? Number(form.altura_cm.value) : null
+    },
+    peso_gramas: form.peso_gramas.value ? Number(form.peso_gramas.value) : null,
+    tamanho_numerico: form.tamanho_numerico.value ? Number(form.tamanho_numerico.value) : null,
+    volume_ml: form.volume_ml.value ? Number(form.volume_ml.value) : null,
+    localizacao: {
+      armario: form.armario.value,
+      prateleira: form.prateleira.value
+    },
+    quantidadeAtual: form.quantidadeAtual.value ? Number(form.quantidadeAtual.value) : 0,
+    categoria: form.categoria.value,
+  };
+
+  const entrada = {
+    fornecedor: form.fornecedor.value,
+    quantidade: Number(form.quantidadeAtual.value),
+    data: new Date()
+  };
+
+  try {
+    if (codigoBarras) {
+      // 🔎 Verifica se material já existe
+      const checkRes = await fetch(`/materiais/${codigoBarras}`);
+      if (checkRes.ok) {
+        // 📌 Já existe → Atualiza dados + cria entrada
+        await fetch(`/materiais/${codigoBarras}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados)
+        });
+
+        await fetch(`/materiais/${codigoBarras}/entrada`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(entrada)
+        });
+
+        alert(`✅ Material '${dados.nome}' atualizado e entrada registrada.`);
+
+      } else {
+        // 📌 Não existe → Cria novo com código fornecido
+        await fetch(`/materiais`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...dados, codigoBarras })
+        });
+        alert(`🆕 Novo material '${dados.nome}' cadastrado.`);
+      }
+    } else {
+      // 📌 Sem código → Cria novo (service gera o código)
+      await fetch(`/materiais`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      });
+      alert(`🆕 Novo material '${dados.nome}' cadastrado com código gerado automaticamente.`);
+    }
+
+    form.reset();
+    document.querySelector(".search").value = "";
+
+  } catch (err) {
+    console.error("Erro ao cadastrar/atualizar material:", err);
+    alert("❌ Erro ao cadastrar/atualizar material.");
+  }
+});
