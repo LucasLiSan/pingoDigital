@@ -90,7 +90,7 @@ async function carregarEstoque() {
 					${tamanho || "-"}
 				</div>
 				<div class="itemPlace">
-					${mat.localizacao?.armario ? `Armário ${mat.localizacao.armario}, Prat. ${mat.localizacao.prateleira}` : "-"}
+					${mat.estoques && mat.estoques.length ? mat.estoques.map(e => `Armário ${e.armario}, Prat. ${e.prateleira} (${e.quantidade})`).join("<br>") : "-"}
 				</div>
 				<div class="itemCat">
 					${mat.categoria}
@@ -188,7 +188,7 @@ async function carregarPedidosAtendimento() {
 			});
 
 			for (const { item, material } of materiaisComLocal) {
-				const localizacao = material?.localizacao ? `ARMARIO ${material.localizacao.armario} - PRATELEIRA ${material.localizacao.prateleira}` : "N/D";
+				const localizacao = (material?.estoques && material.estoques.length) ? material.estoques.map(e => `ARMÁRIO ${e.armario} - PRAT. ${e.prateleira} (${e.quantidade})`).join("<br>") : "N/D";
 				const corCampo = item.corSelecionada ? `<input type="color" value="${item.corSelecionada}" disabled>` : "<input type='hidden'>";
 				const tamCampo = item.tamanhoSelecionado ? `<input type='text' value="${item.tamanhoSelecionado}" disabled>` : "<input type='hidden'>";
 
@@ -409,17 +409,25 @@ document.getElementById("formCadastroMaterial").addEventListener("submit", async
 		peso_gramas: form.peso_gramas.value ? Number(form.peso_gramas.value) : null,
 		tamanho_numerico: form.tamanho_numerico.value ? Number(form.tamanho_numerico.value) : null,
 		volume_ml: form.volume_ml.value ? Number(form.volume_ml.value) : null,
-		localizacao: {
-			armario: form.armario.value,
-			prateleira: form.prateleira.value
-		},
+		estoques: [
+			{
+				armario: form.armario.value,
+				prateleira: form.prateleira.value,
+				quantidade: form.quantidadeAtual.value ? Number(form.quantidadeAtual.value) : 0,
+				atualizadoEm: new Date()
+			}
+		],
 		quantidadeAtual: form.quantidadeAtual.value ? Number(form.quantidadeAtual.value) : 0,
 		categoria: form.categoria.value,
 	};
 	const entrada = {
 		fornecedor: form.fornecedor.value,
 		quantidade: Number(form.quantidadeAtual.value),
-		data: new Date()
+		data: new Date(),
+		localizacao: {
+			armario: form.armario.value,
+			prateleira: form.prateleira.value
+		}
 	};
 	try {
 		if (codigoBarras) {

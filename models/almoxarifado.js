@@ -43,10 +43,14 @@ const materialSchema = new mongoose.Schema({
     peso_gramas: Number,
     tamanho_numerico: Number,
     volume_ml: Number,
-    localizacao: {
-        armario: String,
-        prateleira: String
-    },
+    estoques: [
+        {
+            armario: String,
+            prateleira: String,
+            quantidade: Number,
+            atualizadoEm: { type: Date, default: Date.now }
+        }
+    ],
     quantidadeAtual: { type: Number, default: 0 },
     status: { type: String, enum: ["EM ESTOQUE", "ESGOTADO"]},
     categoria: {

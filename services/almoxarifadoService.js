@@ -48,11 +48,36 @@ class MaterialService {
             const material = await Material.findOne({ codigoBarras });
             if (!material) throw new Error("Material não encontrado");
 
+            // ✅ REGISTRA ENTRADA
             material.entradas.push(entrada);
-            material.quantidadeAtual += entrada.quantidade;
-            material.atualizadoEm = new Date();
 
-            // Adiciona log
+            // ✅ ATUALIZA LOCALIZAÇÃO E ESTOQUES
+            const { armario, prateleira } = entrada.localizacao || {};
+            if (armario && prateleira) {
+                const existente = material.estoques.find(
+                    e => e.armario === armario && e.prateleira === prateleira
+                );
+
+                if (existente) {
+                    existente.quantidade += entrada.quantidade;
+                    existente.atualizadoEm = new Date();
+                } else {
+                    material.estoques.push({
+                        armario,
+                        prateleira,
+                        quantidade: entrada.quantidade,
+                        atualizadoEm: new Date()
+                    });
+                }
+            }
+
+            // ✅ RECALCULA TOTAL GERAL
+            material.quantidadeAtual = material.estoques.reduce(
+                (soma, e) => soma + e.quantidade,
+                0
+            );
+
+            // ✅ ADICIONA LOG
             material.logs.push({
                 tipo: "ENTRADA",
                 quantidade: entrada.quantidade,
@@ -60,7 +85,9 @@ class MaterialService {
                 fornecedor: entrada.fornecedor
             });
 
+            // ✅ ATUALIZA STATUS
             material.status = material.quantidadeAtual > 0 ? "EM ESTOQUE" : "ESGOTADO";
+            material.atualizadoEm = new Date();
 
             await material.save();
             return material;
@@ -105,11 +132,62 @@ class MaterialService {
     // Atualizar um material
     async update(codigoBarras, dadosAtualizados) {
         try {
-            const material = await Material.findOneAndUpdate({ codigoBarras }, dadosAtualizados, { new: true });
+            const material = await Material.findOne({ codigoBarras });
             if (!material) {
                 console.log(`Material com código ${codigoBarras} não encontrado.`);
                 return null;
             }
+
+            // ======== 🔹 Atualizar campos básicos ======== //
+            material.nome = dadosAtualizados.nome || material.nome;
+            material.descricao = dadosAtualizados.descricao || material.descricao;
+            material.marca = dadosAtualizados.marca || material.marca;
+            material.validade = dadosAtualizados.validade || material.validade;
+            material.cor = dadosAtualizados.cor?.length ? dadosAtualizados.cor : material.cor;
+            material.medidas = {
+                largura_cm: dadosAtualizados.medidas?.largura_cm ?? material.medidas?.largura_cm,
+                comprimento_cm: dadosAtualizados.medidas?.comprimento_cm ?? material.medidas?.comprimento_cm,
+                altura_cm: dadosAtualizados.medidas?.altura_cm ?? material.medidas?.altura_cm,
+            };
+            material.peso_gramas = dadosAtualizados.peso_gramas ?? material.peso_gramas;
+            material.tamanho_numerico = dadosAtualizados.tamanho_numerico ?? material.tamanho_numerico;
+            material.volume_ml = dadosAtualizados.volume_ml ?? material.volume_ml;
+            material.categoria = dadosAtualizados.categoria || material.categoria;
+
+            // ======== 🔹 Atualizar/Adicionar Estoques ======== //
+            if (dadosAtualizados.localizacao && dadosAtualizados.quantidadeAtual > 0) {
+                const { armario, prateleira } = dadosAtualizados.localizacao;
+                const qtd = dadosAtualizados.quantidadeAtual;
+
+                const idx = material.estoques.findIndex(
+                    (e) =>
+                    e.armario.toUpperCase() === armario.toUpperCase() &&
+                    e.prateleira.toUpperCase() === prateleira.toUpperCase()
+                );
+
+                if (idx >= 0) {
+                    // Já existe → atualiza quantidade e data
+                    material.estoques[idx].quantidade = qtd;
+                    material.estoques[idx].atualizadoEm = new Date();
+                } else {
+                    // Novo local → adiciona
+                    material.estoques.push({
+                        armario,
+                        prateleira,
+                        quantidade: qtd,
+                        atualizadoEm: new Date(),
+                    });
+                }
+
+                // Atualiza total
+                material.quantidadeAtual = material.estoques.reduce((sum, e) => sum + (e.quantidade || 0), 0 );
+            }
+
+            // ======== 🔹 Atualizar status e data ======== //
+            material.status = material.quantidadeAtual > 0 ? "EM ESTOQUE" : "ESGOTADO";
+            material.atualizadoEm = new Date();
+
+            await material.save();
             return material;
         } catch (error) {
             console.error("Erro ao atualizar material:", error);

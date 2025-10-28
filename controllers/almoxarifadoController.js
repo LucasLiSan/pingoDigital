@@ -49,18 +49,75 @@ const getMaterialByCodigo = async (req, res) => {
 };
 
 /* --- Registrar entrada de material --- */
-const registrarEntrada = async (req, res) => {
-    try {
-        const { codigoBarras } = req.params;
-        const entrada = req.body;
+export const registrarEntrada = async (req, res) => {
+  try {
+    const { codigoBarras } = req.params;
+    const { fornecedor, quantidade, data, localizacao } = req.body;
 
-        const materialAtualizado = await materialService.addEntrada(codigoBarras, entrada);
-        res.status(200).json({ success: "Entrada registrada com sucesso.", materialAtualizado });
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ error: error.message });
+    const material = await materialService.getOneByCodigo(codigoBarras);
+    if (!material) {
+      return res.status(404).json({ erro: "Material não encontrado." });
     }
+
+    // ======== 🔹 Atualizar ESTOQUES ======== //
+    const { armario, prateleira } = localizacao;
+    const idx = material.estoques.findIndex(
+      (e) =>
+        e.armario.toUpperCase() === armario.toUpperCase() &&
+        e.prateleira.toUpperCase() === prateleira.toUpperCase()
+    );
+
+    if (idx >= 0) {
+      // Já existe local → soma a quantidade
+      material.estoques[idx].quantidade += quantidade;
+      material.estoques[idx].atualizadoEm = new Date();
+    } else {
+      // Novo local → adiciona entrada
+      material.estoques.push({
+        armario,
+        prateleira,
+        quantidade,
+        atualizadoEm: new Date(),
+      });
+    }
+
+    // ======== 🔹 Atualizar QUANTIDADE TOTAL ======== //
+    material.quantidadeAtual = material.estoques.reduce(
+      (sum, e) => sum + (e.quantidade || 0),
+      0
+    );
+
+    // ======== 🔹 Atualizar ENTRADAS (histórico) ======== //
+    material.entradas.push({
+      fornecedor,
+      quantidade,
+      data,
+    });
+
+    // ======== 🔹 Atualizar LOG ======== //
+    material.logs.push({
+      tipo: "ENTRADA",
+      quantidade,
+      data,
+      fornecedor,
+    });
+
+    // Atualiza data de modificação geral
+    material.atualizadoEm = new Date();
+
+    await material.save();
+
+    res.json({
+      sucesso: true,
+      mensagem: "Entrada registrada com sucesso.",
+      material,
+    });
+  } catch (err) {
+    console.error("Erro ao registrar entrada:", err);
+    res.status(500).json({ erro: "Erro ao registrar entrada." });
+  }
 };
+
 
 /* --- Registrar saída de material --- */
 const registrarSaida = async (req, res) => {
