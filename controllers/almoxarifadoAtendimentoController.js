@@ -1,18 +1,20 @@
 import AtendimentoService from "../services/almoxarifadoAtendimentoService.js";
 
 const renderAtendimentoPage = (req, res) => {
-    try { res.render("almoxarifadoAtendimento"); }
-    catch (error) {
+    try {
+        res.render("almoxarifadoAtendimento");
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro ao carregar a página de pedidos." });
     }
 };
 
 const renderAtendimentoInternoPage = (req, res) => {
-    try { res.render("almoxarifadoInterno"); }
-    catch (error) {
+    try {
+        res.render("almoxarifadoInterno");
+    } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Erro ao carregar a página de pedidos." });
+        res.status(500).json({ error: "Erro ao carregar a página interna." });
     }
 };
 
@@ -20,7 +22,9 @@ const listarPedidosPendentes = async (req, res) => {
     try {
         const pedidos = await AtendimentoService.listarPedidosPendentes();
         res.status(200).json({ pedidos });
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 const registrarEntregaItem = async (req, res) => {
@@ -49,7 +53,9 @@ const cancelarPedido = async (req, res) => {
         const { id } = req.params;
         const cancelado = await AtendimentoService.cancelarPedido(id);
         res.status(200).json({ success: "Pedido cancelado.", cancelado });
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 export default {
